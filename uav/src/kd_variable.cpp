@@ -328,8 +328,8 @@ void kd_variable::Startkd_variable(void) {
             break;
         
         case 2:
-            l2->SetText("Control: Sliding force-position");
-            Thread::Info("Sliding force-position\n");
+            //l2->SetText("Control: Sliding force-position");
+            //Thread::Info("Sliding force-position\n");
             break;
     }
 
@@ -379,9 +379,7 @@ void kd_variable::sliding_ctrl(Euler &torques){
     
     float ze = z - refAltitude;
     
-    Vector3Df we = currentAngularRates - refAngularRates;
-    
-    u_sliding->SetValues(ze,zp,we,currentQuaternion,refQuaternion);
+    u_sliding->SetValues(ze,zp,currentAngularRates,refAngularRates,currentQuaternion,refQuaternion);
     
     u_sliding->Update(GetTime());
     

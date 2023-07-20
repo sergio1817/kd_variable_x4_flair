@@ -56,10 +56,15 @@ Sliding::Sliding(const LayoutPosition *position, string name): ControlLaw(positi
     T = new DoubleSpinBox(reglages_groupbox->NewRow(), "period, 0 for auto", " s", 0, 1, 0.001,3);
     k1 = new DoubleSpinBox(reglages_groupbox->NewRow(), "k1:", 0, 5000, 0.1, 3);
     k2 = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "k2:", 0, 5000, 0.1, 3);
-    gamma = new DoubleSpinBox(reglages_groupbox->NewRow(), "gamma:", -500, 500, 0.0001, 3);
-    p = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "p:", 0, 50000, 1, 3);
-    alpha = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "alpha:", 0, 50000, 0.5, 3);
-    k = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "k:", 0, 50000, 0.5, 3);
+    gamma_roll = new DoubleSpinBox(ori->NewRow(), "gamma_roll:", 0, 500, 0.001, 3);
+    gamma_pitch = new DoubleSpinBox(ori->LastRowLastCol(), "gamma_pitch:", 0, 500, 0.001, 3);
+    gamma_yaw = new DoubleSpinBox(ori->LastRowLastCol(), "gamma_yaw:", 0, 500, 0.001, 3);
+    alpha_roll = new DoubleSpinBox(ori->NewRow(), "alpha_roll:", 0, 50000, 0.5, 3);
+    alpha_pitch = new DoubleSpinBox(ori->LastRowLastCol(), "alpha_pitch:", 0, 50000, 0.5, 3);
+    alpha_yaw = new DoubleSpinBox(ori->LastRowLastCol(), "alpha_yaw:", 0, 50000, 0.5, 3);
+    k = new DoubleSpinBox(ori->NewRow(), "k:", 0, 50000, 0.5, 3);
+    p = new DoubleSpinBox(ori->LastRowLastCol(), "p:", 0, 50000, 1, 3);
+    lo = new Label(ori->LastRowLastCol(), "Latencia ori");
     Kd = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "Kd:", 0, 50000, 0.5, 3);
     sat_r = new DoubleSpinBox(reglages_groupbox->NewRow(), "sat roll:", 0, 1, 0.1);
     sat_p = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "sat pitch:", 0, 1, 0.1);
@@ -75,8 +80,8 @@ Sliding::Sliding(const LayoutPosition *position, string name): ControlLaw(positi
     
     t0 = double(GetTime())/1000000000;
     
-    sgnp = Vector3Df(0,0,0);
-    sgn = Vector3Df(0,0,0);
+    sgnori_p << 0,0,0;
+    sgnori << 0,0,0;
     
     
 }
@@ -87,8 +92,8 @@ void Sliding::Reset(void) {
     first_update = true;
     t0 = 0;
     t0 = double(GetTime())/1000000000;
-    sgnp = Vector3Df(0,0,0);
-    sgn = Vector3Df(0,0,0);
+    sgnori_p << 0,0,0;
+    sgnori << 0,0,0;
 //    pimpl_->i = 0;
 //    pimpl_->first_update = true;
 }
@@ -222,7 +227,7 @@ void Sliding::UpdateFrom(const io_data *data) {
 
     Eigen::Vector3f nur = nuq + gammao*sgnori;
 
-    tau = -Kdm*nur;
+    Eigen::Vector3f tau = -Kdm*nur;
 
     flair::core::Time dt_ori = GetTime() - t0_o;
 
@@ -230,11 +235,11 @@ void Sliding::UpdateFrom(const io_data *data) {
     
     Trs =  (m->Value()*(k1->Value()*zp + k2->Value()*ze + g->Value()))/(cosf(currentAngles.pitch)*cosf(currentAngles.roll));
     
-    tau_roll = (float)tau.x/km->Value();
+    tau_roll = (float)tau(0)/km->Value();
     
-    tau_pitch = (float)tau.y/km->Value();
+    tau_pitch = (float)tau(1)/km->Value();
     
-    tau_yaw = (float)tau.z/km->Value();
+    tau_yaw = (float)tau(2)/km->Value();
     
     Tr = (float)Trs/km->Value();
     
@@ -248,9 +253,9 @@ void Sliding::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(1, 0, tau_pitch);
     state->SetValueNoMutex(2, 0, tau_yaw);
     state->SetValueNoMutex(3, 0, Tr);
-    state->SetValueNoMutex(4, 0, nur.x);
-    state->SetValueNoMutex(5, 0, nur.y);
-    state->SetValueNoMutex(6, 0, nur.z);
+    state->SetValueNoMutex(4, 0, nur(0));
+    state->SetValueNoMutex(5, 0, nur(1));
+    state->SetValueNoMutex(6, 0, nur(2));
     state->ReleaseMutex();
 
 

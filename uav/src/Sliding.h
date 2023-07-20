@@ -28,17 +28,17 @@ namespace flair {
     }
 }
 
-/*! \class Linear
-* \brief Class defining a Linear
+/*! \class Sliding
+* \brief Class defining a Sliding
 */
 
     
     
 namespace flair {
     namespace filter {
-    /*! \class Linear
+    /*! \class Sliding
     *
-    * \brief Class defining a Linear
+    * \brief Class defining a Sliding
     */
         class Sliding : public ControlLaw {
     
@@ -54,11 +54,12 @@ public:
   *
   * \param ze Error en z
   * \param zp Error en zp
-  * \param we Error en w
+  * \param w  Velocidad angular actual
+  * \param wd Velocidad angular deseada
   * \param q  Cuaternio actual
   * \param qd Cuaternio deseado
   */
-    void SetValues(float ze, float zp, flair::core::Vector3Df we, flair::core::Quaternion q, flair::core::Quaternion qd);
+    void SetValues(float ze, float zp, flair::core::Vector3Df w, flair::core::Vector3Df wd, flair::core::Quaternion q, flair::core::Quaternion qd);
     
     void UseDefaultPlot(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot2(const flair::gui::LayoutPosition *position);
@@ -72,6 +73,8 @@ private:
     flair::core::Matrix *state;
 
     flair::gui::DoubleSpinBox *T, *k1, *k2, *gamma, *alpha, *k, *Kd, *sat_r, *sat_p, *sat_y, *sat_t, *m, *g, *km, *p;
+    flair::gui::DoubleSpinBox *alpha_roll, *alpha_pitch, *alpha_yaw;
+    flair::gui::DoubleSpinBox *gamma_roll, *gamma_pitch, *gamma_yaw;
     
     float Sat(float value, float borne);
     
@@ -79,7 +82,7 @@ private:
     
     bool first_update;
     
-    flair::core::Vector3Df sgnp, sgn;
+    Eigen::Vector3f sgnori_p, sgnori;
     
     
 };
