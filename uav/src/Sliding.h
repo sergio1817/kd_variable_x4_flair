@@ -16,6 +16,7 @@
 #include <Object.h>
 #include <ControlLaw.h>
 #include <Vector3D.h>
+#include <Eigen/Dense>
 
 namespace flair {
     namespace core {
@@ -25,6 +26,8 @@ namespace flair {
     namespace gui {
         class LayoutPosition;
         class DoubleSpinBox;
+        class CheckBox;
+        class Label;
     }
 }
 
@@ -75,6 +78,9 @@ private:
     flair::gui::DoubleSpinBox *T, *k1, *k2, *gamma, *alpha, *k, *Kd, *sat_r, *sat_p, *sat_y, *sat_t, *m, *g, *km, *p;
     flair::gui::DoubleSpinBox *alpha_roll, *alpha_pitch, *alpha_yaw;
     flair::gui::DoubleSpinBox *gamma_roll, *gamma_pitch, *gamma_yaw;
+    flair::gui::DoubleSpinBox *Kd_roll, *Kd_pitch, *Kd_yaw;
+
+    flair::gui::Label *lo;
     
     float Sat(float value, float borne);
     

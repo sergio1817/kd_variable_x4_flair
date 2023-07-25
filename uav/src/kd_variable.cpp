@@ -208,7 +208,7 @@ void kd_variable::ComputeCustomTorques(Euler &torques) {
         
         case 2:
             //sliding_ctrl_force(torques);
-            //break;
+            break;
     }
     
 }

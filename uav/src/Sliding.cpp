@@ -26,6 +26,7 @@
 #include <DataPlot1D.h>
 #include <cmath>
 #include <Euler.h>
+#include <Label.h>
 
 using std::string;
 using namespace flair::core;
@@ -56,16 +57,18 @@ Sliding::Sliding(const LayoutPosition *position, string name): ControlLaw(positi
     T = new DoubleSpinBox(reglages_groupbox->NewRow(), "period, 0 for auto", " s", 0, 1, 0.001,3);
     k1 = new DoubleSpinBox(reglages_groupbox->NewRow(), "k1:", 0, 5000, 0.1, 3);
     k2 = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "k2:", 0, 5000, 0.1, 3);
-    gamma_roll = new DoubleSpinBox(ori->NewRow(), "gamma_roll:", 0, 500, 0.001, 3);
-    gamma_pitch = new DoubleSpinBox(ori->LastRowLastCol(), "gamma_pitch:", 0, 500, 0.001, 3);
-    gamma_yaw = new DoubleSpinBox(ori->LastRowLastCol(), "gamma_yaw:", 0, 500, 0.001, 3);
-    alpha_roll = new DoubleSpinBox(ori->NewRow(), "alpha_roll:", 0, 50000, 0.5, 3);
-    alpha_pitch = new DoubleSpinBox(ori->LastRowLastCol(), "alpha_pitch:", 0, 50000, 0.5, 3);
-    alpha_yaw = new DoubleSpinBox(ori->LastRowLastCol(), "alpha_yaw:", 0, 50000, 0.5, 3);
-    k = new DoubleSpinBox(ori->NewRow(), "k:", 0, 50000, 0.5, 3);
-    p = new DoubleSpinBox(ori->LastRowLastCol(), "p:", 0, 50000, 1, 3);
-    lo = new Label(ori->LastRowLastCol(), "Latencia ori");
-    Kd = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "Kd:", 0, 50000, 0.5, 3);
+    gamma_roll = new DoubleSpinBox(reglages_groupbox->NewRow(), "gamma_roll:", 0, 500, 0.001, 3);
+    gamma_pitch = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "gamma_pitch:", 0, 500, 0.001, 3);
+    gamma_yaw = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "gamma_yaw:", 0, 500, 0.001, 3);
+    alpha_roll = new DoubleSpinBox(reglages_groupbox->NewRow(), "alpha_roll:", 0, 50000, 0.5, 3);
+    alpha_pitch = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "alpha_pitch:", 0, 50000, 0.5, 3);
+    alpha_yaw = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "alpha_yaw:", 0, 50000, 0.5, 3);
+    k = new DoubleSpinBox(reglages_groupbox->NewRow(), "k:", 0, 50000, 0.5, 3);
+    p = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "p:", 0, 50000, 1, 3);
+    lo = new Label(reglages_groupbox->LastRowLastCol(), "Latencia reglages_groupbox");
+    Kd_roll = new DoubleSpinBox(reglages_groupbox->NewRow(), "Kd_rol:", 0, 50000, 0.5, 3);
+    Kd_pitch = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "Kd_pitch:", 0, 50000, 0.5, 3);
+    Kd_yaw = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "Kd_yaw:", 0, 50000, 0.5, 3);
     sat_r = new DoubleSpinBox(reglages_groupbox->NewRow(), "sat roll:", 0, 1, 0.1);
     sat_p = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "sat pitch:", 0, 1, 0.1);
     sat_y = new DoubleSpinBox(reglages_groupbox->LastRowLastCol(), "sat yaw:", 0, 1, 0.1);
