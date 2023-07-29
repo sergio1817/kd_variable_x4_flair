@@ -1,34 +1,31 @@
 #ifndef DILWAC_H
 #define DILWAC_H
 
+#include <Eigen/Dense>
+#include "ANN.h"
+#include "CNN.h"
+
 class DILWAC
 {
     public:
-        DILWAC();
+        DILWAC(const uint16_t DoF, const uint16_t criticDoF);
         ~DILWAC();
 
-        Eigen::MatrixXf learn(float delta_t);
-        
-        void setLearningParameters(const uint16_t gamma, const uint8_t P, const uint16_t kc, const uint8_t sq_eps);
-        
-        void setLevant(float alpha_l, float lamb_l);
+        void setANN(const Eigen::MatrixXf& Lambda_);
+        void setCNN(const int gamma_, const int penality_, Eigen::MatrixXf& GammaC_, float alpha_l, float lamb_l);
+        void setRewardPolicy(float goal_, uint16_t penality_);
+
+        Eigen::MatrixXf learnDampingInjection(const Eigen::VectorXf& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep,const Eigen::VectorXf& sq,const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, float delta_t);
 
     private:
-        uint16_t gamma, kc;
-        uint8_t P; 
-        float kc, gamma_e, sq_eps;
+        float* goal;
+        uint16_t* penality;
         
-        Eigen::MatrixXf Lambda, GammaC, wa, xa, Psi, xc, xcp;
-        Eigen::VectorXf r, ec, wc, J, uc, Jp, int_ec, we;
-        Eigen::Quaternion q, qd, qp, qpd, qe, qep;
 
-        Eigen::MatrixXf DILWAC::ANN(const Eigen::MatrixXf& xa, const Eigen::MatrixXf& wa);
-        Eigen::MatrixXf DILWAC::squareKD(const Eigen::MatrixXf ANN);
-        Eigen::MatrixXf DILWAC::wa_update(const Eigen::MatrixXf& Lambda, const Eigen::MatrixXf& Psi);
-        void Psi(const Eigen::VectorXf Sq, const Eigen::VectorXf Jp, Eigen::MatrixXf& Psi);
-        void CNN(const Eigen::VectorXf& wc, const Eigen::MatrixXf& xc, Eigen::VectorXf& J) 
-        Eigen::VectorXf wc_update(const Eigen::MatrixXf& GammaC, const Eigen::VectorXf& ec, const Eigen::VectorXf& r, const Eigen::MatrixXf& xc, const Eigen::VectorXf& wc,const Eigen::MatrixXf& xcp);
+        ANN actor;
+        CNN critic;
 
+        Eigen::VectorXf rewardPolicy(const Eigen::VectorXf& sq);
 };
 
 #endif // DILWAC_H

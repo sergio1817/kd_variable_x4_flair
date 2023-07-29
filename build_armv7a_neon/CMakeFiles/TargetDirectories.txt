@@ -1,0 +1,17 @@
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/CMakeFiles/install/local.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/CMakeFiles/install.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/CMakeFiles/list_install_components.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/CMakeFiles/rebuild_cache.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/CMakeFiles/edit_cache.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/simulator/CMakeFiles/install/local.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/simulator/CMakeFiles/install.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/simulator/CMakeFiles/list_install_components.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/simulator/CMakeFiles/rebuild_cache.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/simulator/CMakeFiles/edit_cache.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/uav/CMakeFiles/install/local.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/uav/CMakeFiles/rebuild_cache.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/uav/CMakeFiles/edit_cache.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/uav/CMakeFiles/install.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/uav/CMakeFiles/list_install_components.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/uav/CMakeFiles/kd_variable_nrt.dir
+/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv7a_neon/uav/CMakeFiles/kd_variable_rt.dir
