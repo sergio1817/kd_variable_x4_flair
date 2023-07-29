@@ -71,8 +71,8 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
         //targetVrpn=new MetaVrpnObject("target");
     }
     
-    getFrameworkManager()->AddDeviceToLog(jr3);
-    jr3->Start();
+    //getFrameworkManager()->AddDeviceToLog(jr3);
+    //jr3->Start();
 
     //set vrpn as failsafe altitude sensor for mamboedu as us in not working well for the moment
     if(uav->GetType()=="mamboedu") {
@@ -89,6 +89,21 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     
     Tab *lawTab2 = new Tab(getFrameworkManager()->GetTabWidget(), "control laws custom");
     TabWidget *tabWidget2 = new TabWidget(lawTab2->NewRow(), "laws");
+
+    Tab *acTab = new Tab(getFrameworkManager()->GetTabWidget(), "AC");
+    TabWidget *acTabWidget = new TabWidget(acTab->NewRow(), "setup");
+    setupLawTabAC = new Tab(acTabWidget, "Setup AC");
+    setupLawTabACp = new Tab(acTabWidget, "Plots");
+
+    GroupBox *actorBox = new GroupBox(setupLawTabAC->NewRow(), "Actor");
+    GroupBox *criticBox = new GroupBox(setupLawTabAC->NewRow(), "Critic");
+
+
+    Lambda = new DoubleSpinBox(actorBox->NewRow(), "Lambda", -2, 2, 0.1, 2);
+
+    Gamma_c = new DoubleSpinBox(criticBox->NewRow(), "Gamma_c", -2, 2, 0.1, 2);
+    r = new DoubleSpinBox(criticBox->LastRowLastCol(), "r", -2, 2, 0.1, 2);
+    p = new DoubleSpinBox(criticBox->LastRowLastCol(), "p", -2, 2, 0.1, 2);
     
     setupLawTab2 = new Tab(tabWidget2, "Setup Sliding");
     setupLawTab3 = new Tab(tabWidget2, "Setup Sliding Pos");
