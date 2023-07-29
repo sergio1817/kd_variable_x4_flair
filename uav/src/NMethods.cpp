@@ -21,6 +21,17 @@ Eigen::Vector3f rk4_vec(const Eigen::Vector3f iC, const Eigen::Vector3f iCdt, co
     return integral;
 }
 
+Eigen::VectorXf rk4_vec(const Eigen::VectorXf iC, const Eigen::VectorXf iCdt, const float dt)
+{
+    int n = iC.size();
+    Eigen::VectorXf integral(n);
+
+    for(int i = 0; i < n; i++)
+    {
+        integral(i) = rk4(function1d, iC(i), iCdt(i);
+    }
+    return integral;
+}
 
 /*! \fn function1d.
  */

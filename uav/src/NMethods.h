@@ -54,6 +54,8 @@ float signth(const float a, const float p);
 
 Eigen::Vector3f signth(const Eigen::Vector3f a, const float p);
 
+Eigen::VectorXf rk4_vec(const Eigen::VectorXf iC, const Eigen::VectorXf iCdt, const float dt);
+
 
 
 class Levant_diff{
