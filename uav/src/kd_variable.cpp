@@ -176,6 +176,7 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     
     control_select=new ComboBox(groupbox->NewRow(),"select control");
     control_select->AddItem("Sliding");
+    control_select->AddItem("Sliding_kd_var");
     control_select->AddItem("Sliding Pos");
     //control_select->AddItem("Sliding Force-Position");
     
