@@ -4,17 +4,17 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/ANN.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/CNN.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/DILWAC.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/NMethods.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/Sliding.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/Sliding_force.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/Sliding_pos.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/TargetEthJR3.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/TargetEthJR3.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/TargetJR3.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/TargetJR3.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/kd_variable.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.o"
-  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/main.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/kd_variable_nrt.dir/src/main.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/ANN.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/CNN.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/DILWAC.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/NMethods.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/Sliding.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/Sliding_force.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/Sliding_pos.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/TargetEthJR3.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/TargetEthJR3.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/TargetJR3.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/TargetJR3.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/kd_variable.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/main.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/kd_variable_nrt.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

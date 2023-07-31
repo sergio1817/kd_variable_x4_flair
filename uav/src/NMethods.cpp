@@ -28,7 +28,23 @@ Eigen::VectorXf rk4_vec(const Eigen::VectorXf iC, const Eigen::VectorXf iCdt, co
 
     for(int i = 0; i < n; i++)
     {
-        integral(i) = rk4(function1d, iC(i), iCdt(i);
+        integral(i) = rk4(function1d, iC(i), iCdt(i), dt);
+    }
+    return integral;
+}
+
+Eigen::MatrixXf rk4_vec(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float dt)
+{
+    int rows = iC.rows();
+    int cols = iC.cols();
+    Eigen::MatrixXf integral(rows, cols);
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            integral(i, j) = rk4(function1d, iC(i, j), iCdt(i, j), dt);
+        }
     }
     return integral;
 }

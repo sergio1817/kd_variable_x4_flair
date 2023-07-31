@@ -46,7 +46,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair/build
+CMAKE_BINARY_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64
 
 # Include any dependencies generated for this target.
 include simulator/CMakeFiles/kd_variable_simulator_nrt.dir/depend.make
@@ -59,16 +59,16 @@ include simulator/CMakeFiles/kd_variable_simulator_nrt.dir/flags.make
 
 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o: simulator/CMakeFiles/kd_variable_simulator_nrt.dir/flags.make
 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o: ../simulator/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o"
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator && g++  --sysroot=/opt/robomap3/2.1.3/core2-64/sysroots/core2-64-poky-linux  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o -c /home/ateverz/Documents/projects/kd_variable_x4_flair/simulator/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o"
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator && g++  --sysroot=/opt/robomap3/2.1.3/core2-64/sysroots/core2-64-poky-linux  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o -c /home/ateverz/Documents/projects/kd_variable_x4_flair/simulator/src/main.cpp
 
 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.i"
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator && g++  --sysroot=/opt/robomap3/2.1.3/core2-64/sysroots/core2-64-poky-linux $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ateverz/Documents/projects/kd_variable_x4_flair/simulator/src/main.cpp > CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator && g++  --sysroot=/opt/robomap3/2.1.3/core2-64/sysroots/core2-64-poky-linux $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ateverz/Documents/projects/kd_variable_x4_flair/simulator/src/main.cpp > CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.i
 
 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.s"
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator && g++  --sysroot=/opt/robomap3/2.1.3/core2-64/sysroots/core2-64-poky-linux $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ateverz/Documents/projects/kd_variable_x4_flair/simulator/src/main.cpp -o CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator && g++  --sysroot=/opt/robomap3/2.1.3/core2-64/sysroots/core2-64-poky-linux $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ateverz/Documents/projects/kd_variable_x4_flair/simulator/src/main.cpp -o CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.s
 
 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o.requires:
 
@@ -94,8 +94,8 @@ simulator/kd_variable_simulator_nrt: /home/ateverz/flair/flair-install/lib/core2
 simulator/kd_variable_simulator_nrt: /home/ateverz/flair/flair-install/lib/core2-64/libFlairCore_nrt.a
 simulator/kd_variable_simulator_nrt: /opt/robomap3/2.1.3/core2-64/sysroots/core2-64-poky-linux/usr/lib/libxml2.so
 simulator/kd_variable_simulator_nrt: simulator/CMakeFiles/kd_variable_simulator_nrt.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable kd_variable_simulator_nrt"
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kd_variable_simulator_nrt.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable kd_variable_simulator_nrt"
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kd_variable_simulator_nrt.dir/link.txt --verbose=$(VERBOSE)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "kd_variable_simulator_nrt built for core2-64 architecture"
 
 # Rule to build all files generated by this target.
@@ -108,10 +108,10 @@ simulator/CMakeFiles/kd_variable_simulator_nrt.dir/requires: simulator/CMakeFile
 .PHONY : simulator/CMakeFiles/kd_variable_simulator_nrt.dir/requires
 
 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/clean:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator && $(CMAKE_COMMAND) -P CMakeFiles/kd_variable_simulator_nrt.dir/cmake_clean.cmake
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator && $(CMAKE_COMMAND) -P CMakeFiles/kd_variable_simulator_nrt.dir/cmake_clean.cmake
 .PHONY : simulator/CMakeFiles/kd_variable_simulator_nrt.dir/clean
 
 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/depend:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ateverz/Documents/projects/kd_variable_x4_flair /home/ateverz/Documents/projects/kd_variable_x4_flair/simulator /home/ateverz/Documents/projects/kd_variable_x4_flair/build /home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator /home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator/CMakeFiles/kd_variable_simulator_nrt.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ateverz/Documents/projects/kd_variable_x4_flair /home/ateverz/Documents/projects/kd_variable_x4_flair/simulator /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator/CMakeFiles/kd_variable_simulator_nrt.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : simulator/CMakeFiles/kd_variable_simulator_nrt.dir/depend
 

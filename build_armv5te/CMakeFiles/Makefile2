@@ -104,7 +104,7 @@ uav/preinstall:
 uav/CMakeFiles/kd_variable_nrt.dir/all:
 	$(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/depend
 	$(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target kd_variable_nrt"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12 "Built target kd_variable_nrt"
 .PHONY : uav/CMakeFiles/kd_variable_nrt.dir/all
 
 # Include target in all.
@@ -114,7 +114,7 @@ all: uav/CMakeFiles/kd_variable_nrt.dir/all
 
 # Build rule for subdir invocation for target.
 uav/CMakeFiles/kd_variable_nrt.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles 12
 	$(MAKE) -f CMakeFiles/Makefile2 uav/CMakeFiles/kd_variable_nrt.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles 0
 .PHONY : uav/CMakeFiles/kd_variable_nrt.dir/rule
@@ -141,7 +141,7 @@ clean: uav/CMakeFiles/kd_variable_nrt.dir/clean
 uav/CMakeFiles/kd_variable_rt.dir/all:
 	$(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/depend
 	$(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles --progress-num=11,12,13,14,15,16,17,18,19,20 "Built target kd_variable_rt"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles --progress-num=13,14,15,16,17,18,19,20,21,22,23,24 "Built target kd_variable_rt"
 .PHONY : uav/CMakeFiles/kd_variable_rt.dir/all
 
 # Include target in all.
@@ -151,7 +151,7 @@ all: uav/CMakeFiles/kd_variable_rt.dir/all
 
 # Build rule for subdir invocation for target.
 uav/CMakeFiles/kd_variable_rt.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles 12
 	$(MAKE) -f CMakeFiles/Makefile2 uav/CMakeFiles/kd_variable_rt.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles 0
 .PHONY : uav/CMakeFiles/kd_variable_rt.dir/rule

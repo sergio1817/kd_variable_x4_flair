@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Project Name="kd_variable_nrt" InternalType="">
 	<VirtualDirectory Name="src">
+		<File Name="../../uav/src/ANN.cpp"/>
+		<File Name="../../uav/src/CNN.cpp"/>
 		<File Name="../../uav/src/DILWAC.cpp"/>
 		<File Name="../../uav/src/NMethods.cpp"/>
 		<File Name="../../uav/src/Sliding.cpp"/>
@@ -12,6 +14,8 @@
 		<File Name="../../uav/src/main.cpp"/>
 	</VirtualDirectory>
 	<VirtualDirectory Name="include">
+		<File Name="../../uav/src/ANN.h"/>
+		<File Name="../../uav/src/CNN.h"/>
 		<File Name="../../uav/src/DILWAC.h"/>
 		<File Name="../../uav/src/NMethods.h"/>
 		<File Name="../../uav/src/Sliding.h"/>

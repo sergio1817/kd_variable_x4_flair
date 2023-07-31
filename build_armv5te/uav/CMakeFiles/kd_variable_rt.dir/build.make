@@ -273,6 +273,54 @@ uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o.provides: uav/CMakeFiles/kd_v
 uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o.provides.build: uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o
 
 
+uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o: uav/CMakeFiles/kd_variable_rt.dir/flags.make
+uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o: ../uav/src/ANN.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o"
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav && /opt/robomap3/2.1.3/armv5te/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++  --sysroot=/opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnueabi  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o -c /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/ANN.cpp
+
+uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.i"
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav && /opt/robomap3/2.1.3/armv5te/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++  --sysroot=/opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnueabi $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/ANN.cpp > CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.i
+
+uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.s"
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav && /opt/robomap3/2.1.3/armv5te/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++  --sysroot=/opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnueabi $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/ANN.cpp -o CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.s
+
+uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o.requires:
+
+.PHONY : uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o.requires
+
+uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o.provides: uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o.requires
+	$(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o.provides.build
+.PHONY : uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o.provides
+
+uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o.provides.build: uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o
+
+
+uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o: uav/CMakeFiles/kd_variable_rt.dir/flags.make
+uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o: ../uav/src/CNN.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o"
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav && /opt/robomap3/2.1.3/armv5te/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++  --sysroot=/opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnueabi  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o -c /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/CNN.cpp
+
+uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.i"
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav && /opt/robomap3/2.1.3/armv5te/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++  --sysroot=/opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnueabi $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/CNN.cpp > CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.i
+
+uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.s"
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav && /opt/robomap3/2.1.3/armv5te/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++  --sysroot=/opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnueabi $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/CNN.cpp -o CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.s
+
+uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o.requires:
+
+.PHONY : uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o.requires
+
+uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o.provides: uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o.requires
+	$(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o.provides.build
+.PHONY : uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o.provides
+
+uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o.provides.build: uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o
+
+
 # Object files for target kd_variable_rt
 kd_variable_rt_OBJECTS = \
 "CMakeFiles/kd_variable_rt.dir/src/main.cpp.o" \
@@ -283,7 +331,9 @@ kd_variable_rt_OBJECTS = \
 "CMakeFiles/kd_variable_rt.dir/src/NMethods.cpp.o" \
 "CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.o" \
 "CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.o" \
-"CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o"
+"CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o" \
+"CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o" \
+"CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o"
 
 # External object files for target kd_variable_rt
 kd_variable_rt_EXTERNAL_OBJECTS =
@@ -297,6 +347,8 @@ uav/kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/src/NMethods.cpp.o
 uav/kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.o
 uav/kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.o
 uav/kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o
+uav/kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o
+uav/kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o
 uav/kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/build.make
 uav/kd_variable_rt: /home/ateverz/flair/flair-install/lib/armv5te/libFlairMinidrones.a
 uav/kd_variable_rt: /home/ateverz/flair/flair-install/lib/armv5te/libFlairMamboEdu.a
@@ -315,7 +367,7 @@ uav/kd_variable_rt: /opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnuea
 uav/kd_variable_rt: /opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnueabi/usr/lib/libnative.so
 uav/kd_variable_rt: /opt/robomap3/2.1.3/armv5te/sysroots/armv5e-poky-linux-gnueabi/usr/lib/libxenomai.so
 uav/kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable kd_variable_rt"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable kd_variable_rt"
 	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kd_variable_rt.dir/link.txt --verbose=$(VERBOSE)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "kd_variable_rt built for armv5te architecture"
 
@@ -333,6 +385,8 @@ uav/CMakeFiles/kd_variable_rt.dir/requires: uav/CMakeFiles/kd_variable_rt.dir/sr
 uav/CMakeFiles/kd_variable_rt.dir/requires: uav/CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.o.requires
 uav/CMakeFiles/kd_variable_rt.dir/requires: uav/CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.o.requires
 uav/CMakeFiles/kd_variable_rt.dir/requires: uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o.requires
+uav/CMakeFiles/kd_variable_rt.dir/requires: uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o.requires
+uav/CMakeFiles/kd_variable_rt.dir/requires: uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o.requires
 
 .PHONY : uav/CMakeFiles/kd_variable_rt.dir/requires
 

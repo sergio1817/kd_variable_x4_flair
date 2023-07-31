@@ -173,6 +173,66 @@ kd_variable_rt/fast:
 	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/build
 .PHONY : kd_variable_rt/fast
 
+src/ANN.o: src/ANN.cpp.o
+
+.PHONY : src/ANN.o
+
+# target to build an object file
+src/ANN.cpp.o:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o
+.PHONY : src/ANN.cpp.o
+
+src/ANN.i: src/ANN.cpp.i
+
+.PHONY : src/ANN.i
+
+# target to preprocess a source file
+src/ANN.cpp.i:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.i
+.PHONY : src/ANN.cpp.i
+
+src/ANN.s: src/ANN.cpp.s
+
+.PHONY : src/ANN.s
+
+# target to generate assembly for a file
+src/ANN.cpp.s:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.s
+.PHONY : src/ANN.cpp.s
+
+src/CNN.o: src/CNN.cpp.o
+
+.PHONY : src/CNN.o
+
+# target to build an object file
+src/CNN.cpp.o:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o
+.PHONY : src/CNN.cpp.o
+
+src/CNN.i: src/CNN.cpp.i
+
+.PHONY : src/CNN.i
+
+# target to preprocess a source file
+src/CNN.cpp.i:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.i
+.PHONY : src/CNN.cpp.i
+
+src/CNN.s: src/CNN.cpp.s
+
+.PHONY : src/CNN.s
+
+# target to generate assembly for a file
+src/CNN.cpp.s:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.s
+.PHONY : src/CNN.cpp.s
+
 src/DILWAC.o: src/DILWAC.cpp.o
 
 .PHONY : src/DILWAC.o
@@ -456,6 +516,12 @@ help:
 	@echo "... list_install_components"
 	@echo "... kd_variable_nrt"
 	@echo "... kd_variable_rt"
+	@echo "... src/ANN.o"
+	@echo "... src/ANN.i"
+	@echo "... src/ANN.s"
+	@echo "... src/CNN.o"
+	@echo "... src/CNN.i"
+	@echo "... src/CNN.s"
 	@echo "... src/DILWAC.o"
 	@echo "... src/DILWAC.i"
 	@echo "... src/DILWAC.s"

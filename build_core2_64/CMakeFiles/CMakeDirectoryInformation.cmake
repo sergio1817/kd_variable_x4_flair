@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/home/ateverz/Documents/projects/kd_variable_x4_flair")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/ateverz/Documents/projects/kd_variable_x4_flair/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

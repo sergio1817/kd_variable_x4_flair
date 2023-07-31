@@ -8,6 +8,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.o"
   "CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.o"
   "CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o"
+  "CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o"
+  "CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o"
   "kd_variable_rt.pdb"
   "kd_variable_rt"
 )

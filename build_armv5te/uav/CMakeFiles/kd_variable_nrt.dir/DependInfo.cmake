@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/ANN.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.o"
+  "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/CNN.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.o"
   "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/DILWAC.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.o"
   "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/NMethods.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.o"
   "/home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/Sliding.cpp" "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_armv5te/uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.o"

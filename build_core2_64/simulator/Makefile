@@ -51,7 +51,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair/build
+CMAKE_BINARY_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -113,14 +113,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build/CMakeFiles /home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator/CMakeFiles/progress.marks
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 simulator/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build/CMakeFiles 0
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/CMakeFiles /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator/CMakeFiles/progress.marks
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 simulator/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 simulator/clean
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 simulator/clean
 .PHONY : clean
 
 # The main clean target
@@ -130,22 +130,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 simulator/preinstall
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 simulator/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 simulator/preinstall
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 simulator/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/rule:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/rule
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 simulator/CMakeFiles/kd_variable_simulator_nrt.dir/rule
 .PHONY : simulator/CMakeFiles/kd_variable_simulator_nrt.dir/rule
 
 # Convenience name for target.
@@ -155,12 +155,12 @@ kd_variable_simulator_nrt: simulator/CMakeFiles/kd_variable_simulator_nrt.dir/ru
 
 # fast build rule for target.
 kd_variable_simulator_nrt/fast:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build
 .PHONY : kd_variable_simulator_nrt/fast
 
 # Convenience name for target.
 simulator/CMakeFiles/kd_variable_simulator_rt.dir/rule:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 simulator/CMakeFiles/kd_variable_simulator_rt.dir/rule
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 simulator/CMakeFiles/kd_variable_simulator_rt.dir/rule
 .PHONY : simulator/CMakeFiles/kd_variable_simulator_rt.dir/rule
 
 # Convenience name for target.
@@ -170,7 +170,7 @@ kd_variable_simulator_rt: simulator/CMakeFiles/kd_variable_simulator_rt.dir/rule
 
 # fast build rule for target.
 kd_variable_simulator_rt/fast:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_rt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_rt.dir/build
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_rt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_rt.dir/build
 .PHONY : kd_variable_simulator_rt/fast
 
 src/main.o: src/main.cpp.o
@@ -179,8 +179,8 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_rt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_rt.dir/src/main.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_rt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_rt.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -189,8 +189,8 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_rt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_rt.dir/src/main.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_rt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_rt.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -199,8 +199,8 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_rt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_rt.dir/src/main.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_nrt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_nrt.dir/src/main.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f simulator/CMakeFiles/kd_variable_simulator_rt.dir/build.make simulator/CMakeFiles/kd_variable_simulator_rt.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -230,6 +230,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
