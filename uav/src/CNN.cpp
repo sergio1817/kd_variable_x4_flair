@@ -3,22 +3,19 @@
 
 CNN::CNN(const uint16_t DoF, const uint16_t criticDoF)
 {
-    wc    = Eigen::VectorXf(criticDoF);
-    xc    = Eigen::MatrixXf(DoF, DoF);
-    xcp   = Eigen::MatrixXf(DoF, DoF);
-    J     = Eigen::VectorXf(DoF);
-    ec    = Eigen::VectorXf(DoF);
-    int_r = Eigen::VectorXf(DoF);
+    wc    = Eigen::Vector4f::Zero();
+    xc    = Eigen::Matrix<float, 4, 3>::Zero();
+    xcp   = Eigen::Matrix<float, 4, 3>::Zero();
+    J     = Eigen::Vector3f::Zero();
+    ec    = Eigen::Vector3f::Zero();
+    int_r = Eigen::Vector3f::Zero();
 
     levant = Levant_diff("tanh", 8, 6, 3000);
 }
 
-CNN::~CNN()
-{
+CNN::~CNN() { }
 
-}
-
-void CNN::setLearningParameters(const int gamma_, const int penality_, const Eigen::MatrixXf& GammaC_)
+void CNN::setLearningParameters(const int gamma_, const int penality_, const Eigen::Matrix4f& GammaC_)
 {
     gamma = gamma_;
     penality = penality_;
@@ -41,11 +38,11 @@ void CNN::approximateValueFunction()
     J = xc.transpose() * (wc);
 }
 
-Eigen::VectorXf CNN::updateWeights(const Eigen::VectorXf& r) 
+Eigen::Vector4f CNN::updateWeights(const Eigen::Vector3f& r) 
 {
-    Eigen::VectorXf wcp = 0*(wc);
+    Eigen::Vector4f wcp = 0*(wc);
 
-    Eigen::VectorXf omega = (xc) * (ec) + (GammaC) * (wc);
+    Eigen::Vector4f omega = (xc) * (ec) + (GammaC) * (wc);
     float norm_omega = omega.transpose() * omega;
 
     if (norm_omega != 0) 
@@ -55,31 +52,31 @@ Eigen::VectorXf CNN::updateWeights(const Eigen::VectorXf& r)
     return wcp;
 }
 
-Eigen::VectorXf CNN::computeBellmanError(const Eigen::VectorXf& r, const Eigen::VectorXf& uc, const Eigen::VectorXf Jp)
+Eigen::Vector3f CNN::computeBellmanError(const Eigen::Vector3f& r, const Eigen::Vector3f& uc, const Eigen::Vector3f& Jp)
 {
     return Jp - J / (gamma) + r + uc;
 }
 
-Eigen::VectorXf CNN::computeBellmanControl(const Eigen::VectorXf& int_ec) 
+Eigen::Vector3f CNN::computeBellmanControl(const Eigen::Vector3f& int_ec) 
 {
     return - (kc) * (ec) - (miuc) * int_ec;
 }
 
 
-void CNN::getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::VectorXf& r)
+void CNN::getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::Vector3f& r)
 {
-    (xc).col(0) = qe.vec();
-    (xc).col(1) = q.vec();
-    (xc).col(2) = qd.vec();
-    (xc).col(3) = int_r;
+    (xc).row(0) = qe.vec().transpose();
+    (xc).row(1) = q.vec().transpose();
+    (xc).row(2) = qd.vec().transpose();
+    (xc).row(3) = int_r.transpose();
 
-    (xcp).col(0) = qep.vec();
-    (xcp).col(1) = qp.vec();
-    (xcp).col(2) = qdp.vec();
-    (xcp).col(3) = r;
+    (xcp).row(0) = qep.vec().transpose();
+    (xcp).row(1) = qp.vec().transpose();
+    (xcp).row(2) = qdp.vec().transpose();
+    (xcp).row(3) = r.transpose();
 }
 
-Eigen::VectorXf CNN::learnFromInteraction(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::VectorXf& r, float delta_t)
+Eigen::Vector3f CNN::learnFromInteraction(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::Vector3f& r, float delta_t)
 {
     getInputs(qe, qd, q, qep, qp, qdp, r);
 
@@ -87,15 +84,17 @@ Eigen::VectorXf CNN::learnFromInteraction(const Eigen::Quaternionf qe, const Eig
 
     int_r = rk4_vec(int_r, r, delta_t);
 
-    Eigen::VectorXf uc  = computeBellmanControl(int_ec);
+    Eigen::Vector3f uc  = computeBellmanControl(int_ec);
 
-    Eigen::VectorXf Jp  = levant.Compute(J,delta_t);
+    Eigen::Vector3f Jp  = levant.Compute(J,delta_t);
 
-    Eigen::VectorXf ecp = computeBellmanError(r, uc, Jp);
+    Eigen::Vector3f ecp = computeBellmanError(r, uc, Jp);
 
     ec = rk4_vec(ec, ecp, delta_t);
 
-    Eigen::VectorXf wcp  = updateWeights(r);
+    Eigen::Vector4f wcp  = updateWeights(r);
+
+    wc = rk4_mat(wc, wcp, delta_t);
 
     approximateValueFunction();
 

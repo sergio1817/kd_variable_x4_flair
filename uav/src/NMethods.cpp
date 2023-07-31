@@ -33,7 +33,7 @@ Eigen::VectorXf rk4_vec(const Eigen::VectorXf iC, const Eigen::VectorXf iCdt, co
     return integral;
 }
 
-Eigen::MatrixXf rk4_vec(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float dt)
+Eigen::MatrixXf rk4_mat(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float dt)
 {
     int rows = iC.rows();
     int cols = iC.cols();

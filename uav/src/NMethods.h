@@ -56,7 +56,7 @@ Eigen::Vector3f signth(const Eigen::Vector3f a, const float p);
 
 Eigen::VectorXf rk4_vec(const Eigen::VectorXf iC, const Eigen::VectorXf iCdt, const float dt);
 
-Eigen::MatrixXf rk4_vec(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float dt);
+Eigen::MatrixXf rk4_mat(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float dt);
 
 
 

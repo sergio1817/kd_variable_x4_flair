@@ -39,6 +39,8 @@ NMethods.h
 /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/NMethods.h
 Eigen/Dense
 -
+type_traits
+-
 
 /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/DILWAC.h
 Eigen/Dense
@@ -47,6 +49,8 @@ ANN.h
 /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/ANN.h
 CNN.h
 /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/CNN.h
+type_traits
+-
 
 /home/ateverz/Documents/projects/kd_variable_x4_flair/uav/src/NMethods.cpp
 NMethods.h

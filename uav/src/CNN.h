@@ -10,17 +10,17 @@ class CNN
         CNN(const uint16_t DoF, const uint16_t criticDoF);
         ~CNN();
 
-        void setLearningParameters(const int gamma_, const int penality_, const Eigen::MatrixXf& GammaC_);
+        void setLearningParameters(const int gamma_, const int penality_, const Eigen::Matrix4f& GammaC_);
 
         void setVirtualControlParameters(float kc_, float miuc_);
         void setLevant(float alpha_l, float lamb_l);
 
-        Eigen::VectorXf learnFromInteraction(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::VectorXf& r, float delta_t);
+        Eigen::Vector3f learnFromInteraction(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::Vector3f& r, float delta_t);
 
-        void getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::VectorXf& r);
+        void getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::Vector3f& r);
 
-        Eigen::VectorXf getEc() const { return ec; }
-        Eigen::VectorXf getJ() const { return J; }
+        Eigen::Vector3f getEc() const { return ec; }
+        Eigen::Vector3f getJ() const { return J; }
 
     private:
         float kc;
@@ -28,23 +28,23 @@ class CNN
         float miuc;
         float penality;
 
-        Eigen::MatrixXf xc;
-        Eigen::MatrixXf xcp;
-        Eigen::MatrixXf GammaC;
+        Eigen::Matrix<float, 4, 3> xc;
+        Eigen::Matrix<float, 4, 3> xcp;
+        Eigen::Matrix4f GammaC;
 
-        Eigen::VectorXf wc;
-        Eigen::VectorXf J;
-        Eigen::VectorXf ec;
-        Eigen::VectorXf int_r;
-        Eigen::VectorXf int_ec;
+        Eigen::Vector4f wc;
+        Eigen::Vector3f J;
+        Eigen::Vector3f ec;
+        Eigen::Vector3f int_r;
+        Eigen::Vector3f int_ec;
 
         Levant_diff levant;
 
         
         void approximateValueFunction();
-        Eigen::VectorXf updateWeights(const Eigen::VectorXf& r);
-        Eigen::VectorXf computeBellmanError(const Eigen::VectorXf& r, const Eigen::VectorXf& uc, const Eigen::VectorXf Jp);
-        Eigen::VectorXf computeBellmanControl(const Eigen::VectorXf& int_ec);
+        Eigen::Vector4f updateWeights(const Eigen::Vector3f& r);
+        Eigen::Vector3f computeBellmanError(const Eigen::Vector3f& r, const Eigen::Vector3f& uc, const Eigen::Vector3f& Jp);
+        Eigen::Vector3f computeBellmanControl(const Eigen::Vector3f& int_ec);
 
 };
 
