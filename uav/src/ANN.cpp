@@ -41,7 +41,7 @@ void ANN::learningMonitor(const Eigen::Vector3f& sq, const Eigen::Vector3f& r, c
 {
     for (int i = 0; i < sq.size(); i++)
     {
-        (Psi)(i, i) = -signth(100 * sq(i), Jp(i));
+        (Psi)(i, i) = -signth(r(i) * sq(i), Jp(i));
     }
 }
 
