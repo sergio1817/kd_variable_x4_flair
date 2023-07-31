@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/kd_variable_nrt.dir/src/main.cpp.o"
   "CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.o"
   "CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.o"
+  "CMakeFiles/kd_variable_nrt.dir/src/Sliding_kdvar.cpp.o"
   "CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.o"
   "CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.o"
   "CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.o"

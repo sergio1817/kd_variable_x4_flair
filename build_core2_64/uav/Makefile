@@ -51,7 +51,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64
+CMAKE_BINARY_DIR = /home/ateverz/Documents/projects/kd_variable_x4_flair/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -113,14 +113,14 @@ list_install_components/fast: list_install_components
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/CMakeFiles /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/CMakeFiles/progress.marks
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 uav/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/CMakeFiles 0
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build/CMakeFiles /home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/CMakeFiles/progress.marks
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 uav/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ateverz/Documents/projects/kd_variable_x4_flair/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 uav/clean
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 uav/clean
 .PHONY : clean
 
 # The main clean target
@@ -130,22 +130,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 uav/preinstall
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 uav/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 uav/preinstall
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 uav/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 uav/CMakeFiles/kd_variable_nrt.dir/rule:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 uav/CMakeFiles/kd_variable_nrt.dir/rule
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 uav/CMakeFiles/kd_variable_nrt.dir/rule
 .PHONY : uav/CMakeFiles/kd_variable_nrt.dir/rule
 
 # Convenience name for target.
@@ -155,12 +155,12 @@ kd_variable_nrt: uav/CMakeFiles/kd_variable_nrt.dir/rule
 
 # fast build rule for target.
 kd_variable_nrt/fast:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/build
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/build
 .PHONY : kd_variable_nrt/fast
 
 # Convenience name for target.
 uav/CMakeFiles/kd_variable_rt.dir/rule:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f CMakeFiles/Makefile2 uav/CMakeFiles/kd_variable_rt.dir/rule
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f CMakeFiles/Makefile2 uav/CMakeFiles/kd_variable_rt.dir/rule
 .PHONY : uav/CMakeFiles/kd_variable_rt.dir/rule
 
 # Convenience name for target.
@@ -170,7 +170,7 @@ kd_variable_rt: uav/CMakeFiles/kd_variable_rt.dir/rule
 
 # fast build rule for target.
 kd_variable_rt/fast:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/build
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/build
 .PHONY : kd_variable_rt/fast
 
 src/ANN.o: src/ANN.cpp.o
@@ -179,8 +179,8 @@ src/ANN.o: src/ANN.cpp.o
 
 # target to build an object file
 src/ANN.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.o
 .PHONY : src/ANN.cpp.o
 
 src/ANN.i: src/ANN.cpp.i
@@ -189,8 +189,8 @@ src/ANN.i: src/ANN.cpp.i
 
 # target to preprocess a source file
 src/ANN.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.i
 .PHONY : src/ANN.cpp.i
 
 src/ANN.s: src/ANN.cpp.s
@@ -199,8 +199,8 @@ src/ANN.s: src/ANN.cpp.s
 
 # target to generate assembly for a file
 src/ANN.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/ANN.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/ANN.cpp.s
 .PHONY : src/ANN.cpp.s
 
 src/CNN.o: src/CNN.cpp.o
@@ -209,8 +209,8 @@ src/CNN.o: src/CNN.cpp.o
 
 # target to build an object file
 src/CNN.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.o
 .PHONY : src/CNN.cpp.o
 
 src/CNN.i: src/CNN.cpp.i
@@ -219,8 +219,8 @@ src/CNN.i: src/CNN.cpp.i
 
 # target to preprocess a source file
 src/CNN.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.i
 .PHONY : src/CNN.cpp.i
 
 src/CNN.s: src/CNN.cpp.s
@@ -229,8 +229,8 @@ src/CNN.s: src/CNN.cpp.s
 
 # target to generate assembly for a file
 src/CNN.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/CNN.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/CNN.cpp.s
 .PHONY : src/CNN.cpp.s
 
 src/DILWAC.o: src/DILWAC.cpp.o
@@ -239,8 +239,8 @@ src/DILWAC.o: src/DILWAC.cpp.o
 
 # target to build an object file
 src/DILWAC.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.o
 .PHONY : src/DILWAC.cpp.o
 
 src/DILWAC.i: src/DILWAC.cpp.i
@@ -249,8 +249,8 @@ src/DILWAC.i: src/DILWAC.cpp.i
 
 # target to preprocess a source file
 src/DILWAC.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.i
 .PHONY : src/DILWAC.cpp.i
 
 src/DILWAC.s: src/DILWAC.cpp.s
@@ -259,8 +259,8 @@ src/DILWAC.s: src/DILWAC.cpp.s
 
 # target to generate assembly for a file
 src/DILWAC.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/DILWAC.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/DILWAC.cpp.s
 .PHONY : src/DILWAC.cpp.s
 
 src/NMethods.o: src/NMethods.cpp.o
@@ -269,8 +269,8 @@ src/NMethods.o: src/NMethods.cpp.o
 
 # target to build an object file
 src/NMethods.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/NMethods.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/NMethods.cpp.o
 .PHONY : src/NMethods.cpp.o
 
 src/NMethods.i: src/NMethods.cpp.i
@@ -279,8 +279,8 @@ src/NMethods.i: src/NMethods.cpp.i
 
 # target to preprocess a source file
 src/NMethods.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/NMethods.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/NMethods.cpp.i
 .PHONY : src/NMethods.cpp.i
 
 src/NMethods.s: src/NMethods.cpp.s
@@ -289,8 +289,8 @@ src/NMethods.s: src/NMethods.cpp.s
 
 # target to generate assembly for a file
 src/NMethods.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/NMethods.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/NMethods.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/NMethods.cpp.s
 .PHONY : src/NMethods.cpp.s
 
 src/Sliding.o: src/Sliding.cpp.o
@@ -299,8 +299,8 @@ src/Sliding.o: src/Sliding.cpp.o
 
 # target to build an object file
 src/Sliding.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding.cpp.o
 .PHONY : src/Sliding.cpp.o
 
 src/Sliding.i: src/Sliding.cpp.i
@@ -309,8 +309,8 @@ src/Sliding.i: src/Sliding.cpp.i
 
 # target to preprocess a source file
 src/Sliding.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding.cpp.i
 .PHONY : src/Sliding.cpp.i
 
 src/Sliding.s: src/Sliding.cpp.s
@@ -319,8 +319,8 @@ src/Sliding.s: src/Sliding.cpp.s
 
 # target to generate assembly for a file
 src/Sliding.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding.cpp.s
 .PHONY : src/Sliding.cpp.s
 
 src/Sliding_force.o: src/Sliding_force.cpp.o
@@ -329,8 +329,8 @@ src/Sliding_force.o: src/Sliding_force.cpp.o
 
 # target to build an object file
 src/Sliding_force.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_force.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_force.cpp.o
 .PHONY : src/Sliding_force.cpp.o
 
 src/Sliding_force.i: src/Sliding_force.cpp.i
@@ -339,8 +339,8 @@ src/Sliding_force.i: src/Sliding_force.cpp.i
 
 # target to preprocess a source file
 src/Sliding_force.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_force.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_force.cpp.i
 .PHONY : src/Sliding_force.cpp.i
 
 src/Sliding_force.s: src/Sliding_force.cpp.s
@@ -349,9 +349,39 @@ src/Sliding_force.s: src/Sliding_force.cpp.s
 
 # target to generate assembly for a file
 src/Sliding_force.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_force.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_force.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_force.cpp.s
 .PHONY : src/Sliding_force.cpp.s
+
+src/Sliding_kdvar.o: src/Sliding_kdvar.cpp.o
+
+.PHONY : src/Sliding_kdvar.o
+
+# target to build an object file
+src/Sliding_kdvar.cpp.o:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_kdvar.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_kdvar.cpp.o
+.PHONY : src/Sliding_kdvar.cpp.o
+
+src/Sliding_kdvar.i: src/Sliding_kdvar.cpp.i
+
+.PHONY : src/Sliding_kdvar.i
+
+# target to preprocess a source file
+src/Sliding_kdvar.cpp.i:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_kdvar.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_kdvar.cpp.i
+.PHONY : src/Sliding_kdvar.cpp.i
+
+src/Sliding_kdvar.s: src/Sliding_kdvar.cpp.s
+
+.PHONY : src/Sliding_kdvar.s
+
+# target to generate assembly for a file
+src/Sliding_kdvar.cpp.s:
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_kdvar.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_kdvar.cpp.s
+.PHONY : src/Sliding_kdvar.cpp.s
 
 src/Sliding_pos.o: src/Sliding_pos.cpp.o
 
@@ -359,8 +389,8 @@ src/Sliding_pos.o: src/Sliding_pos.cpp.o
 
 # target to build an object file
 src/Sliding_pos.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_pos.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_pos.cpp.o
 .PHONY : src/Sliding_pos.cpp.o
 
 src/Sliding_pos.i: src/Sliding_pos.cpp.i
@@ -369,8 +399,8 @@ src/Sliding_pos.i: src/Sliding_pos.cpp.i
 
 # target to preprocess a source file
 src/Sliding_pos.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_pos.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_pos.cpp.i
 .PHONY : src/Sliding_pos.cpp.i
 
 src/Sliding_pos.s: src/Sliding_pos.cpp.s
@@ -379,8 +409,8 @@ src/Sliding_pos.s: src/Sliding_pos.cpp.s
 
 # target to generate assembly for a file
 src/Sliding_pos.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_pos.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/Sliding_pos.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/Sliding_pos.cpp.s
 .PHONY : src/Sliding_pos.cpp.s
 
 src/TargetEthJR3.o: src/TargetEthJR3.cpp.o
@@ -389,8 +419,8 @@ src/TargetEthJR3.o: src/TargetEthJR3.cpp.o
 
 # target to build an object file
 src/TargetEthJR3.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetEthJR3.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetEthJR3.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.o
 .PHONY : src/TargetEthJR3.cpp.o
 
 src/TargetEthJR3.i: src/TargetEthJR3.cpp.i
@@ -399,8 +429,8 @@ src/TargetEthJR3.i: src/TargetEthJR3.cpp.i
 
 # target to preprocess a source file
 src/TargetEthJR3.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetEthJR3.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetEthJR3.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.i
 .PHONY : src/TargetEthJR3.cpp.i
 
 src/TargetEthJR3.s: src/TargetEthJR3.cpp.s
@@ -409,8 +439,8 @@ src/TargetEthJR3.s: src/TargetEthJR3.cpp.s
 
 # target to generate assembly for a file
 src/TargetEthJR3.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetEthJR3.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetEthJR3.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetEthJR3.cpp.s
 .PHONY : src/TargetEthJR3.cpp.s
 
 src/TargetJR3.o: src/TargetJR3.cpp.o
@@ -419,8 +449,8 @@ src/TargetJR3.o: src/TargetJR3.cpp.o
 
 # target to build an object file
 src/TargetJR3.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetJR3.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetJR3.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.o
 .PHONY : src/TargetJR3.cpp.o
 
 src/TargetJR3.i: src/TargetJR3.cpp.i
@@ -429,8 +459,8 @@ src/TargetJR3.i: src/TargetJR3.cpp.i
 
 # target to preprocess a source file
 src/TargetJR3.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetJR3.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetJR3.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.i
 .PHONY : src/TargetJR3.cpp.i
 
 src/TargetJR3.s: src/TargetJR3.cpp.s
@@ -439,8 +469,8 @@ src/TargetJR3.s: src/TargetJR3.cpp.s
 
 # target to generate assembly for a file
 src/TargetJR3.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetJR3.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/TargetJR3.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/TargetJR3.cpp.s
 .PHONY : src/TargetJR3.cpp.s
 
 src/kd_variable.o: src/kd_variable.cpp.o
@@ -449,8 +479,8 @@ src/kd_variable.o: src/kd_variable.cpp.o
 
 # target to build an object file
 src/kd_variable.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/kd_variable.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/kd_variable.cpp.o
 .PHONY : src/kd_variable.cpp.o
 
 src/kd_variable.i: src/kd_variable.cpp.i
@@ -459,8 +489,8 @@ src/kd_variable.i: src/kd_variable.cpp.i
 
 # target to preprocess a source file
 src/kd_variable.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/kd_variable.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/kd_variable.cpp.i
 .PHONY : src/kd_variable.cpp.i
 
 src/kd_variable.s: src/kd_variable.cpp.s
@@ -469,8 +499,8 @@ src/kd_variable.s: src/kd_variable.cpp.s
 
 # target to generate assembly for a file
 src/kd_variable.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/kd_variable.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/kd_variable.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/kd_variable.cpp.s
 .PHONY : src/kd_variable.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -479,8 +509,8 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/main.cpp.o
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/main.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/main.cpp.o
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -489,8 +519,8 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/main.cpp.i
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/main.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/main.cpp.i
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -499,8 +529,8 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/main.cpp.s
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/main.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_nrt.dir/build.make uav/CMakeFiles/kd_variable_nrt.dir/src/main.cpp.s
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(MAKE) -f uav/CMakeFiles/kd_variable_rt.dir/build.make uav/CMakeFiles/kd_variable_rt.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -534,6 +564,9 @@ help:
 	@echo "... src/Sliding_force.o"
 	@echo "... src/Sliding_force.i"
 	@echo "... src/Sliding_force.s"
+	@echo "... src/Sliding_kdvar.o"
+	@echo "... src/Sliding_kdvar.i"
+	@echo "... src/Sliding_kdvar.s"
 	@echo "... src/Sliding_pos.o"
 	@echo "... src/Sliding_pos.i"
 	@echo "... src/Sliding_pos.s"
@@ -560,6 +593,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64 && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/ateverz/Documents/projects/kd_variable_x4_flair/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

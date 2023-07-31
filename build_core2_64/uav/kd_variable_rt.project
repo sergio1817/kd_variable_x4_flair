@@ -7,6 +7,7 @@
 		<File Name="../../uav/src/NMethods.cpp"/>
 		<File Name="../../uav/src/Sliding.cpp"/>
 		<File Name="../../uav/src/Sliding_force.cpp"/>
+		<File Name="../../uav/src/Sliding_kdvar.cpp"/>
 		<File Name="../../uav/src/Sliding_pos.cpp"/>
 		<File Name="../../uav/src/TargetEthJR3.cpp"/>
 		<File Name="../../uav/src/TargetJR3.cpp"/>
@@ -20,6 +21,7 @@
 		<File Name="../../uav/src/NMethods.h"/>
 		<File Name="../../uav/src/Sliding.h"/>
 		<File Name="../../uav/src/Sliding_force.h"/>
+		<File Name="../../uav/src/Sliding_kdvar.h"/>
 		<File Name="../../uav/src/Sliding_pos.h"/>
 		<File Name="../../uav/src/TargetEthJR3.h"/>
 		<File Name="../../uav/src/TargetJR3.h"/>
