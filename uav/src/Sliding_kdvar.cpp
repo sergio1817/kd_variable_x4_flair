@@ -42,7 +42,7 @@ Sliding_kdvar::Sliding_kdvar(const LayoutPosition *position, string name): Contr
     // init matrix
     input = new Matrix(this, 5, 7, floatType, name);
   
-    MatrixDescriptor *desc = new MatrixDescriptor(7, 1);
+    MatrixDescriptor *desc = new MatrixDescriptor(13, 1);
     desc->SetElementName(0, 0, "u_roll");
     desc->SetElementName(1, 0, "u_pitch");
     desc->SetElementName(2, 0, "u_yaw");
@@ -50,6 +50,12 @@ Sliding_kdvar::Sliding_kdvar(const LayoutPosition *position, string name): Contr
     desc->SetElementName(4, 0, "nur_roll");
     desc->SetElementName(5, 0, "nur_pitch");
     desc->SetElementName(6, 0, "nur_yaw");
+    desc->SetElementName(7, 0, "kd_phi");
+    desc->SetElementName(8, 0, "kd_theta");
+    desc->SetElementName(9, 0, "kd_psi");
+    desc->SetElementName(10, 0, "r_phi");
+    desc->SetElementName(11, 0, "r_theta");
+    desc->SetElementName(12, 0, "r_psi");
     state = new Matrix(this, desc, floatType, name);
     delete desc;
 
@@ -177,6 +183,22 @@ void Sliding_kdvar::UseDefaultPlot5(const LayoutPosition *position) {
     
 }
 
+void Sliding_kdvar::UseDefaultPlot6(const LayoutPosition *position) {    
+    DataPlot1D *Kd = new DataPlot1D(position, "Kd", -1, 100);
+    Kd->AddCurve(state->Element(7), DataPlot::Green);
+    Kd->AddCurve(state->Element(8), DataPlot::Red);
+    Kd->AddCurve(state->Element(9), DataPlot::Black);
+    
+}
+
+void Sliding_kdvar::UseDefaultPlot7(const LayoutPosition *position) {    
+    DataPlot1D *rew = new DataPlot1D(position, "reward", -110, 10);
+    rew->AddCurve(state->Element(10), DataPlot::Green);
+    rew->AddCurve(state->Element(11), DataPlot::Red);
+    rew->AddCurve(state->Element(12), DataPlot::Black);
+    
+}
+
 
 void Sliding_kdvar::UpdateFrom(const io_data *data) {
     float tactual=double(GetTime())/1000000000-t0;
@@ -239,7 +261,7 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     Eigen::Matrix3f gammao = Eigen::Vector3f(gamma_roll->Value(), gamma_pitch->Value(), gamma_yaw->Value()).asDiagonal();
 
     //Eigen::Vector3f Kdv(Kd_roll->Value(), Kd_pitch->Value(), Kd_yaw->Value());
-    Eigen::MatrixXf Kdm = Eigen::Vector3f(Kd_roll->Value(), Kd_pitch->Value(), Kd_yaw->Value()).asDiagonal();
+    //Eigen::MatrixXf Kdm = Eigen::Vector3f(Kd_roll->Value(), Kd_pitch->Value(), Kd_yaw->Value()).asDiagonal();
 
     Eigen::Quaternionf qe = q*qd.conjugate();
 
@@ -272,7 +294,9 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     
     Eigen::Vector3f nuq = nu-nud;
 
-    Eigen::Matrix3f Kdm2 = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
+    Eigen::Matrix3f Kdm = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
+
+    Eigen::Vector3f reward = kd_var->getR();
 
     sgnori_p = signth(nuq,p->Value());
     sgnori = rk4_vec(sgnori, sgnori_p, delta_t);
@@ -308,6 +332,12 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(4, 0, nur(0));
     state->SetValueNoMutex(5, 0, nur(1));
     state->SetValueNoMutex(6, 0, nur(2));
+    state->SetValueNoMutex(7, 0, Kdm(0,0));
+    state->SetValueNoMutex(8, 0, Kdm(1,1));
+    state->SetValueNoMutex(9, 0, Kdm(2,2));
+    state->SetValueNoMutex(10, 0, reward(0));
+    state->SetValueNoMutex(11, 0, reward(1));
+    state->SetValueNoMutex(12, 0, reward(2));
     state->ReleaseMutex();
 
 

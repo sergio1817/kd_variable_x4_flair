@@ -201,6 +201,9 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     u_sliding_kdvar->UseDefaultPlot4(graphLawKDvar->At(1, 2));
     u_sliding_kdvar->UseDefaultPlot5(graphLawKDvar->At(1, 0));
 
+    u_sliding_kdvar->UseDefaultPlot6(setupLawTabACp->At(1, 0));
+    u_sliding_kdvar->UseDefaultPlot7(setupLawTabACp->At(1, 1));
+
     u_sliding_pos = new Sliding_pos(setupLawTab3->At(0, 0), "u_smc_pos");
     u_sliding_pos->UseDefaultPlot(graphLawTab3->At(0, 0));
     u_sliding_pos->UseDefaultPlot2(graphLawTab3->At(0, 1));

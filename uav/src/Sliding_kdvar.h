@@ -70,6 +70,8 @@ public:
     void UseDefaultPlot3(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot4(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot5(const flair::gui::LayoutPosition *position);
+    void UseDefaultPlot6(const flair::gui::LayoutPosition *position);
+    void UseDefaultPlot7(const flair::gui::LayoutPosition *position);
     
     flair::core::Time t0;
 
