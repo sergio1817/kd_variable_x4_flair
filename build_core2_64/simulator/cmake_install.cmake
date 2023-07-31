@@ -187,7 +187,7 @@ if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMP
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/ateverz/flair/flair-install/bin/demos/core2-64/kd_variable" TYPE EXECUTABLE FILES "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator/kd_variable_simulator_rt")
+file(INSTALL DESTINATION "/home/ateverz/flair/flair-install/bin/demos/core2-64/kd_variable" TYPE EXECUTABLE FILES "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator/kd_variable_simulator_rt")
 endif()
 
 if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -205,7 +205,7 @@ if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMP
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/ateverz/flair/flair-install/bin/demos/core2-64/kd_variable" TYPE EXECUTABLE FILES "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator/kd_variable_simulator_nrt")
+file(INSTALL DESTINATION "/home/ateverz/flair/flair-install/bin/demos/core2-64/kd_variable" TYPE EXECUTABLE FILES "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator/kd_variable_simulator_nrt")
 endif()
 
 if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)

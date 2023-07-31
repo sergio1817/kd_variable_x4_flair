@@ -12,7 +12,7 @@ DILWAC::DILWAC(const uint16_t DoF, const uint16_t criticDoF): actor(DoF), critic
 DILWAC::~DILWAC()
 {
     delete goal;
-    delete penality;
+    delete penalty;
 }
 
 void DILWAC::setANN(const Eigen::MatrixXf& Lambda_)
@@ -20,12 +20,13 @@ void DILWAC::setANN(const Eigen::MatrixXf& Lambda_)
     actor.setLearningParameters(Lambda_);
 }
 
-void DILWAC::setCNN(const int gamma_, const int penality_, const Eigen::MatrixXf& GammaC_, float goal_, float alpha_l, float lamb_l)
+void DILWAC::setCNN(const int gamma_, const int penalty_, const Eigen::MatrixXf& GammaC_, float goal_, float alpha_l, float lamb_l)
 {
     *goal = goal_;
-    *penality = penality_;
-    critic.setLearningParameters(gamma_, penality_, GammaC_);
+    *penalty = penalty_;
+    critic.setLearningParameters(gamma_, penalty_, GammaC_);
     critic.setLevant(alpha_l, lamb_l);
+    critic.setVirtualControlParameters(10, 0.01);
 }
 
 Eigen::MatrixXf DILWAC::learnDampingInjection(const Eigen::VectorXf& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep,const Eigen::VectorXf& sq,const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, float delta_t)
@@ -47,7 +48,7 @@ Eigen::VectorXf DILWAC::rewardPolicy(const Eigen::VectorXf& sq)
     {
         if (sqrt(sq(i)*sq(i)) > *goal) 
         {
-            r_current(i) = -(*penality);
+            r_current(i) = -(*penalty);
         } 
         else 
         {

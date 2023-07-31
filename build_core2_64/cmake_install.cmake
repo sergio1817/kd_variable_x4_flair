@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/simulator/cmake_install.cmake")
-  include("/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/uav/cmake_install.cmake")
+  include("/home/ateverz/Documents/projects/kd_variable_x4_flair/build/simulator/cmake_install.cmake")
+  include("/home/ateverz/Documents/projects/kd_variable_x4_flair/build/uav/cmake_install.cmake")
 
 endif()
 
@@ -47,5 +47,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ateverz/Documents/projects/kd_variable_x4_flair/build_core2_64/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ateverz/Documents/projects/kd_variable_x4_flair/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
