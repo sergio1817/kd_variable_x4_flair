@@ -64,5 +64,6 @@ Eigen::MatrixXf ANN::learnDamping(const Eigen::VectorXf& we, const Eigen::Quater
 
     computeFeedbackGain();
 
-    return ((*K).transpose())*(*K);
+    *K = ((*K).transpose())*(*K);
+    return *K;
 }

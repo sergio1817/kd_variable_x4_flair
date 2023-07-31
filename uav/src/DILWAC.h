@@ -17,9 +17,16 @@ class DILWAC
 
         Eigen::MatrixXf learnDampingInjection(const Eigen::VectorXf& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep,const Eigen::VectorXf& sq,const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, float delta_t);
 
+        Eigen::VectorXf getR() const { return *r; }
+        Eigen::VectorXf getEc() const { return critic.getEc(); }
+        Eigen::VectorXf getJ() const { return critic.getJ(); }
+        Eigen::MatrixXf getK() const { return actor.getK(); }       
+        Eigen::MatrixXf getPsi() const { return actor.getPsi(); }
+
     private:
         float* goal;
         uint16_t* penality;
+        Eigen::VectorXf* r;
         
 
         ANN actor;

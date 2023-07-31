@@ -15,6 +15,8 @@ class ANN
 
         void getInputs(const Eigen::VectorXf& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep);
 
+        Eigen::MatrixXf getK() const { return *K; }       
+        Eigen::MatrixXf getPsi() const { return *Psi; }
 
     private:
         Eigen::MatrixXf* Lambda;

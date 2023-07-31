@@ -19,6 +19,8 @@ class CNN
 
         void getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::VectorXf& r);
 
+        Eigen::VectorXf getEc() const { return *ec; }
+        Eigen::VectorXf getJ() const { return *J; }
 
     private:
         float* kc;

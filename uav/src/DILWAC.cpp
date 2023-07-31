@@ -6,7 +6,7 @@
 
 DILWAC::DILWAC(const uint16_t DoF, const uint16_t criticDoF): actor(DoF), critic(DoF, criticDoF)
 {
-    
+    r = new Eigen::VectorXf(DoF);
 }
 
 DILWAC::~DILWAC()
@@ -45,18 +45,19 @@ Eigen::MatrixXf DILWAC::learnDampingInjection(const Eigen::VectorXf& we, const E
 
 Eigen::VectorXf DILWAC::rewardPolicy(const Eigen::VectorXf& sq)
 {
-    Eigen::VectorXf r = 0*sq;
+    Eigen::VectorXf r_current = 0*sq;
 
     for (int i = 0; i < sq.size(); ++i) 
     {
         if (sqrt(sq(i)*sq(i)) > *goal) 
         {
-            r(i) = -(*penality);
+            r_current(i) = -(*penality);
         } 
         else 
         {
-            r(i) = 0;
+            r_current(i) = 0;
         }
     }
-    return r;
+    *r = r_current;
+    return r_current;
 }
