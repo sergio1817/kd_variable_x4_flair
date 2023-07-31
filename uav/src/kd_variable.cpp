@@ -100,10 +100,10 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     GroupBox *criticBox = new GroupBox(setupLawTabAC->NewRow(), "Critic");
 
 
-    Lambda = new DoubleSpinBox(actorBox->NewRow(), "Lambda", 0, 50, 0.1, 2);
+    Lambda = new DoubleSpinBox(actorBox->NewRow(), "Lambda", 0, 500, 0.1, 2); // vec
 
-    Gamma_c = new DoubleSpinBox(criticBox->NewRow(), "Gamma_c", 0, 50, 0.1, 2);
-    gamma = new DoubleSpinBox(criticBox->LastRowLastCol(), "gamma", 0, 1000, 1, 2);
+    Gamma_c = new DoubleSpinBox(criticBox->NewRow(), "Gamma_c", 0, 50, 0.1, 2); 
+    gamma = new DoubleSpinBox(criticBox->LastRowLastCol(), "gamma", 0, 1000, 1, 2); // vec
     p = new DoubleSpinBox(criticBox->LastRowLastCol(), "p", 0, 300, 0.1, 2);
     goal = new DoubleSpinBox(criticBox->LastRowLastCol(), "goal", 0, 1, 0.0001, 6);
     alph_l = new DoubleSpinBox(criticBox->LastRowLastCol(), "alpha l", 0, 10000, 0.1, 3);
@@ -295,12 +295,12 @@ void kd_variable::ExtraSecurityCheck(void) {
         //     EnterFailSafeMode();
         //     Land();
         // }
-        if (!uavVrpn->IsTracked(500)) {
-            Thread::Err("VRPN, uav lost\n");
-            vrpnLost=true;
-            EnterFailSafeMode();
-            Land();
-        }
+        // if (!uavVrpn->IsTracked(500)) {
+        //     Thread::Err("VRPN, uav lost\n");
+        //     vrpnLost=true;
+        //     EnterFailSafeMode();
+        //     Land();
+        // }
     }
 }
 
