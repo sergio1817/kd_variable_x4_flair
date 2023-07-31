@@ -15,19 +15,15 @@ DILWAC::~DILWAC()
     delete penality;
 }
 
-void DILWAC::setRewardPolicy(float goal_, uint16_t penality_)
-{
-    *goal = goal_;
-    *penality = penality_;
-}
-
 void DILWAC::setANN(const Eigen::MatrixXf& Lambda_)
 {
     actor.setLearningParameters(Lambda_);
 }
 
-void DILWAC::setCNN(const int gamma_, const int penality_, Eigen::MatrixXf& GammaC_, float alpha_l, float lamb_l)
+void DILWAC::setCNN(const int gamma_, const int penality_, Eigen::MatrixXf& GammaC_, float goal_, float alpha_l, float lamb_l)
 {
+    *goal = goal_;
+    *penality = penality_;
     critic.setLearningParameters(gamma_, penality_, GammaC_);
     critic.setLevant(alpha_l, lamb_l);
 }
