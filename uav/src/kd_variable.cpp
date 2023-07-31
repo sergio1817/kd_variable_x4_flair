@@ -247,6 +247,7 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
 
     //getFrameworkManager()->AddDeviceToLog(u_sliding);
     AddDeviceToControlLawLog(u_sliding);
+    AddDeviceToControlLawLog(u_sliding_kdvar);
     AddDeviceToControlLawLog(u_sliding_pos);
     //AddDeviceToControlLawLog(u_sliding_force);
 
@@ -374,8 +375,9 @@ void kd_variable::Startkd_variable(void) {
     if (SetTorqueMode(TorqueMode_t::Custom) && SetThrustMode(ThrustMode_t::Custom)) {
         Thread::Info("kd_variable: start\n");
         u_sliding->Reset();
+        u_sliding_kdvar->Reset();
         u_sliding_pos->Reset();
-        u_sliding_force->Reset();
+        //u_sliding_force->Reset();
     } else {
         Thread::Warn("kd_variable: could not start\n");
         l2->SetText("Control: err");
@@ -554,8 +556,8 @@ void kd_variable::sliding_ctrl(Euler &torques){
     torques.roll = u_sliding->Output(0);
     torques.pitch = u_sliding->Output(1);
     torques.yaw = u_sliding->Output(2);
-    thrust = u_sliding->Output(3);
-    //thrust = ComputeDefaultThrust();
+    //thrust = u_sliding->Output(3);
+    thrust = ComputeDefaultThrust();
     
 
 }
@@ -607,8 +609,8 @@ void kd_variable::sliding_kdvar_ctrl(Euler &torques){
     torques.roll = u_sliding_kdvar->Output(0);
     torques.pitch = u_sliding_kdvar->Output(1);
     torques.yaw = u_sliding_kdvar->Output(2);
-    thrust = u_sliding_kdvar->Output(3);
-    //thrust = ComputeDefaultThrust();
+    //thrust = u_sliding_kdvar->Output(3);
+    thrust = ComputeDefaultThrust();
     
 
 }
