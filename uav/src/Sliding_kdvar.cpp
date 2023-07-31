@@ -182,7 +182,7 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     float tactual=double(GetTime())/1000000000-t0;
     float Trs=0, tau_roll=0, tau_pitch=0, tau_yaw=0, Tr=0;
 
-    printf("tactual: %f\n",tactual);
+    //printf("tactual: %f\n",tactual);
     
     if (T->Value() == 0) {
         delta_t = (float)(data->DataDeltaTime()) / 1000000000.;
@@ -239,7 +239,7 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     Eigen::Matrix3f gammao = Eigen::Vector3f(gamma_roll->Value(), gamma_pitch->Value(), gamma_yaw->Value()).asDiagonal();
 
     //Eigen::Vector3f Kdv(Kd_roll->Value(), Kd_pitch->Value(), Kd_yaw->Value());
-    Eigen::Matrix3f Kdm = Eigen::Vector3f(Kd_roll->Value(), Kd_pitch->Value(), Kd_yaw->Value()).asDiagonal();
+    Eigen::MatrixXf Kdm = Eigen::Vector3f(Kd_roll->Value(), Kd_pitch->Value(), Kd_yaw->Value()).asDiagonal();
 
     Eigen::Quaternionf qe = q*qd.conjugate();
 
@@ -272,7 +272,7 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     
     Eigen::Vector3f nuq = nu-nud;
 
-    //Eigen::Matrix3f Kdm = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
+    Eigen::Matrix3f Kdm2 = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
 
     sgnori_p = signth(nuq,p->Value());
     sgnori = rk4_vec(sgnori, sgnori_p, delta_t);

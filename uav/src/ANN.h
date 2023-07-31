@@ -15,15 +15,15 @@ class ANN
 
         void getInputs(const Eigen::VectorXf& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep);
 
-        Eigen::MatrixXf getK() const { return *K; }       
-        Eigen::MatrixXf getPsi() const { return *Psi; }
+        Eigen::MatrixXf getK() const { return K; }       
+        Eigen::MatrixXf getPsi() const { return Psi; }
 
     private:
-        Eigen::MatrixXf* Lambda;
-        Eigen::MatrixXf* xa;
-        Eigen::MatrixXf* K;
-        Eigen::MatrixXf* wa;
-        Eigen::MatrixXf* Psi;
+        Eigen::MatrixXf Lambda;
+        Eigen::MatrixXf xa;
+        Eigen::MatrixXf K;
+        Eigen::MatrixXf wa;
+        Eigen::MatrixXf Psi;
 
         void computeFeedbackGain();
         Eigen::MatrixXf updateWeights(const Eigen::MatrixXf& Psi, const Eigen::MatrixXf& Lambda);

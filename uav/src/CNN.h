@@ -19,24 +19,24 @@ class CNN
 
         void getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::VectorXf& r);
 
-        Eigen::VectorXf getEc() const { return *ec; }
-        Eigen::VectorXf getJ() const { return *J; }
+        Eigen::VectorXf getEc() const { return ec; }
+        Eigen::VectorXf getJ() const { return J; }
 
     private:
-        float* kc;
-        float* gamma;
-        float* miuc;
-        float* penality;
+        float kc;
+        float gamma;
+        float miuc;
+        float penality;
 
-        Eigen::MatrixXf* xc;
-        Eigen::MatrixXf* xcp;
-        Eigen::MatrixXf* GammaC;
+        Eigen::MatrixXf xc;
+        Eigen::MatrixXf xcp;
+        Eigen::MatrixXf GammaC;
 
-        Eigen::VectorXf* wc;
-        Eigen::VectorXf* J;
-        Eigen::VectorXf* ec;
-        Eigen::VectorXf* int_r;
-        Eigen::VectorXf* int_ec;
+        Eigen::VectorXf wc;
+        Eigen::VectorXf J;
+        Eigen::VectorXf ec;
+        Eigen::VectorXf int_r;
+        Eigen::VectorXf int_ec;
 
         Levant_diff levant;
 
