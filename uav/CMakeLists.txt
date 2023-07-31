@@ -25,6 +25,7 @@ SET(SRC_FILES
 	src/main.cpp
 	src/kd_variable.cpp
 	src/Sliding.cpp
+	src/Sliding_kdvar.cpp
 	src/Sliding_pos.cpp
 	src/Sliding_force.cpp
 	src/NMethods.cpp

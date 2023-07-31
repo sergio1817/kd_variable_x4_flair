@@ -20,7 +20,7 @@ void DILWAC::setANN(const Eigen::MatrixXf& Lambda_)
     actor.setLearningParameters(Lambda_);
 }
 
-void DILWAC::setCNN(const int gamma_, const int penality_, Eigen::MatrixXf& GammaC_, float goal_, float alpha_l, float lamb_l)
+void DILWAC::setCNN(const int gamma_, const int penality_, const Eigen::MatrixXf& GammaC_, float goal_, float alpha_l, float lamb_l)
 {
     *goal = goal_;
     *penality = penality_;

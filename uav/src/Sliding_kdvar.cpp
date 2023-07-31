@@ -91,7 +91,7 @@ Sliding_kdvar::Sliding_kdvar(const LayoutPosition *position, string name): Contr
     sgnori_p << 0,0,0;
     sgnori << 0,0,0;
 
-    kd_var = new DILWAC(3,3);
+    kd_var = new DILWAC(3,4);
     
     
 }
@@ -108,7 +108,7 @@ void Sliding_kdvar::Reset(void) {
 //    pimpl_->first_update = true;
 }
 
-void Sliding_kdvar::SetValues(float ze, float zp, Vector3Df w, Vector3Df wd, Quaternion q, Quaternion qd, Vector3Df Lambda, Vector3Df GammaC, int gamma, int p, float alph_l, float lamb_l){
+void Sliding_kdvar::SetValues(float ze, float zp, Vector3Df w, Vector3Df wd, Quaternion q, Quaternion qd, Vector3Df Lambda, Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l){
   input->SetValue(0, 0, ze);
   input->SetValue(1, 0, w.x);
   input->SetValue(2, 0, w.y);
@@ -137,10 +137,12 @@ void Sliding_kdvar::SetValues(float ze, float zp, Vector3Df w, Vector3Df wd, Qua
   input->SetValue(1, 5, GammaC.y);
   input->SetValue(2, 5, GammaC.z);
 
-  input->SetValue(0, 6, gamma);
-  input->SetValue(1, 6, p);
+    input->SetValue(0, 6, gamma);
+    input->SetValue(1, 6, p);
     input->SetValue(2, 6, alph_l);
     input->SetValue(3, 6, lamb_l);
+    input->SetValue(4, 6, goal);
+
 }
 
 void Sliding_kdvar::UseDefaultPlot(const LayoutPosition *position) {
@@ -215,6 +217,12 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     Eigen::Matrix3f Lambda = Eigen::Vector3f(input->ValueNoMutex(0, 4),input->ValueNoMutex(1, 4),input->ValueNoMutex(2, 4)).asDiagonal();
     Eigen::Matrix3f GammaC = Eigen::Vector3f(input->ValueNoMutex(0, 5),input->ValueNoMutex(1, 5),input->ValueNoMutex(2, 5)).asDiagonal();
 
+    float gamma = input->ValueNoMutex(0, 6);
+    float penalty = input->ValueNoMutex(1, 6);
+    float alph_l = input->ValueNoMutex(2, 6);
+    float lamb_l = input->ValueNoMutex(3, 6);
+    float goal = input->ValueNoMutex(4, 6);
+
     Quaternion q2 = Quaternion(input->ValueNoMutex(0, 1),input->ValueNoMutex(1, 1),input->ValueNoMutex(2, 1),input->ValueNoMutex(3, 1));
 
     input->ReleaseMutex();
@@ -222,6 +230,7 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     Euler currentAngles = q2.ToEuler();
 
     kd_var->setANN(Lambda);
+    kd_var->setCNN(gamma, penalty, GammaC, goal, alph_l, lamb_l);
 
     //Eigen::Vector3f alphao_v(alpha_roll->Value(), alpha_pitch->Value(), alpha_yaw->Value());
     Eigen::Matrix3f alphao = Eigen::Vector3f(alpha_roll->Value(), alpha_pitch->Value(), alpha_yaw->Value()).asDiagonal();
@@ -240,6 +249,10 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
 
     Eigen::Quaternionf wet(0, we(0), we(1), we(2));
     Eigen::Quaternionf wt(0, w(0), w(1), w(2));
+    Eigen::Quaternionf wdt(0, wd(0), wd(1), wd(2));
+
+    Eigen::Quaternionf qdp1 = qd*wet;
+    Eigen::Quaternionf qdp(qdp1.coeffs()*0.5);
 
     Eigen::Quaternionf qep1 = q*wet*qd.conjugate();
 
@@ -259,7 +272,7 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     
     Eigen::Vector3f nuq = nu-nud;
 
-    Eigen::Matrix3f Kdm = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp);
+    Eigen::Matrix3f Kdm = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
 
     sgnori_p = signth(nuq,p->Value());
     sgnori = rk4_vec(sgnori, sgnori_p, delta_t);

@@ -16,6 +16,7 @@
 
 #include <UavStateMachine.h>
 #include "Sliding.h"
+#include "Sliding_kdvar.h"
 #include "Sliding_pos.h"
 #include "Sliding_force.h"
 
@@ -34,6 +35,7 @@ namespace flair {
         class Sliding;
         class Sliding_pos;
         class Sliding_force;
+        class Sliding_kdvar;
     }
     namespace meta {
         class MetaVrpnObject;
@@ -70,11 +72,13 @@ class kd_variable : public flair::meta::UavStateMachine {
         float ComputeCustomThrust(void);
         void sliding_ctrl(flair::core::Euler &torques);
         void sliding_ctrl_pos(flair::core::Euler &torques);
+        void sliding_kdvar_ctrl(flair::core::Euler &torques);
         void sliding_ctrl_force(flair::core::Euler &torques);
         //const flair::core::AhrsData *GetOrientation(void) const;
         void pos_reference(flair::core::Vector3Df &xid, flair::core::Vector3Df &xidp, flair::core::Vector3Df &xidpp, flair::core::Vector3Df &xidppp, float tactual);
 
         flair::filter::Sliding *u_sliding;
+        flair::filter::Sliding_kdvar *u_sliding_kdvar;
         flair::filter::Sliding_pos *u_sliding_pos;
         flair::filter::Sliding_force *u_sliding_force;
 
@@ -85,11 +89,11 @@ class kd_variable : public flair::meta::UavStateMachine {
         float thrust;
 
         flair::gui::DoubleSpinBox *xd, *yd, *zd, *ax, *wx, *bx, *ay, *wy, *by, *az, *wz, *bz;
-        flair::gui::DoubleSpinBox *Lambda, *Gamma_c, *r, *p;
+        flair::gui::DoubleSpinBox *Lambda, *Gamma_c, *gamma, *p, *goal, *alph_l, *lamb_l;
 
         flair::gui::PushButton *start_prueba1,*stop_prueba1;
         flair::gui::ComboBox *control_select, *position_behavior, *xd_behavior, *yd_behavior, *zd_behavior;    
-        flair::gui::Tab *setupLawTab2, *graphLawTab2, *lawTab2, *setupLawTab3, *graphLawTab3, *positionTab, *positiongTab, *setupLawTabAC, *setupLawTabACp;
+        flair::gui::Tab *setupLawTab2, *graphLawTab2, *lawTab2, *setupLawTab3, *graphLawTab3, *positionTab, *positiongTab, *setupLawTabAC, *setupLawTabACp, *setupLawKDvar, *graphLawKDvar;
         flair::gui::TabWidget *tabWidget2, *Pos_tabWidget;
         flair::gui::GroupBox *seg;
         flair::gui::Label *l, *l2, *lx, *ly, *lz;

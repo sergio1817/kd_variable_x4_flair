@@ -10,7 +10,7 @@ class CNN
         CNN(const uint16_t DoF, const uint16_t criticDoF);
         ~CNN();
 
-        void setLearningParameters(const int gamma_, const int penality_, Eigen::MatrixXf& GammaC_);
+        void setLearningParameters(const int gamma_, const int penality_, const Eigen::MatrixXf& GammaC_);
 
         void setVirtualControlParameters(float kc_, float miuc_);
         void setLevant(float alpha_l, float lamb_l);

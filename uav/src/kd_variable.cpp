@@ -13,6 +13,7 @@
 
 #include "kd_variable.h"
 #include "Sliding.h"
+#include "Sliding_kdvar.h"
 #include "Sliding_pos.h"
 #include "TargetJR3.h"
 #include "Sliding_force.h"
@@ -99,15 +100,21 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     GroupBox *criticBox = new GroupBox(setupLawTabAC->NewRow(), "Critic");
 
 
-    Lambda = new DoubleSpinBox(actorBox->NewRow(), "Lambda", -2, 2, 0.1, 2);
+    Lambda = new DoubleSpinBox(actorBox->NewRow(), "Lambda", 0, 50, 0.1, 2);
 
-    Gamma_c = new DoubleSpinBox(criticBox->NewRow(), "Gamma_c", -2, 2, 0.1, 2);
-    r = new DoubleSpinBox(criticBox->LastRowLastCol(), "r", -2, 2, 0.1, 2);
-    p = new DoubleSpinBox(criticBox->LastRowLastCol(), "p", -2, 2, 0.1, 2);
+    Gamma_c = new DoubleSpinBox(criticBox->NewRow(), "Gamma_c", 0, 50, 0.1, 2);
+    gamma = new DoubleSpinBox(criticBox->LastRowLastCol(), "gamma", 0, 1000, 1, 2);
+    p = new DoubleSpinBox(criticBox->LastRowLastCol(), "p", 0, 300, 0.1, 2);
+    goal = new DoubleSpinBox(criticBox->LastRowLastCol(), "goal", 0, 1, 0.0001, 6);
+    alph_l = new DoubleSpinBox(criticBox->LastRowLastCol(), "alpha l", 0, 10000, 0.1, 3);
+    lamb_l = new DoubleSpinBox(criticBox->LastRowLastCol(), "lamb l", 0, 10000, 0.1, 3);
+    //gamma = new DoubleSpinBox(criticBox->LastRowLastCol(), "p", -2, 2, 0.1, 2);
     
     setupLawTab2 = new Tab(tabWidget2, "Setup Sliding");
+    setupLawKDvar = new Tab(tabWidget2, "Setup Sliding kd var");
     setupLawTab3 = new Tab(tabWidget2, "Setup Sliding Pos");
     graphLawTab2 = new Tab(tabWidget2, "Graficas Sliding");
+    graphLawKDvar = new Tab(tabWidget2, "Graficas Sliding kd var");
     graphLawTab3 = new Tab(tabWidget2, "Graficas Sliding Pos");
 
     Tab *posTab = new Tab(getFrameworkManager()->GetTabWidget(), "position");
@@ -184,6 +191,14 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     u_sliding->UseDefaultPlot2(graphLawTab2->At(0, 1));
     u_sliding->UseDefaultPlot3(graphLawTab2->At(0, 2));
     u_sliding->UseDefaultPlot4(graphLawTab2->At(1, 2));
+    u_sliding->UseDefaultPlot5(graphLawTab2->At(1, 0));
+
+    u_sliding_kdvar = new Sliding_kdvar(setupLawKDvar->At(0, 0), "u_smc_kdvar");
+    u_sliding_kdvar->UseDefaultPlot(graphLawKDvar->At(0, 0));
+    u_sliding_kdvar->UseDefaultPlot2(graphLawKDvar->At(0, 1));
+    u_sliding_kdvar->UseDefaultPlot3(graphLawKDvar->At(0, 2));
+    u_sliding_kdvar->UseDefaultPlot4(graphLawKDvar->At(1, 2));
+    u_sliding_kdvar->UseDefaultPlot5(graphLawKDvar->At(1, 0));
 
     u_sliding_pos = new Sliding_pos(setupLawTab3->At(0, 0), "u_smc_pos");
     u_sliding_pos->UseDefaultPlot(graphLawTab3->At(0, 0));
@@ -249,12 +264,14 @@ void kd_variable::ComputeCustomTorques(Euler &torques) {
             //Printf("Fx:%f Fy:%f Fz:%f\n",jr3->GetFx(),jr3->GetFy(),jr3->GetFz());
             sliding_ctrl(torques);
             break;
-        
         case 1:
+            sliding_kdvar_ctrl(torques);
+            break;
+        case 2:
             sliding_ctrl_pos(torques);
             break;
         
-        case 2:
+        case 3:
             //sliding_ctrl_force(torques);
             break;
     }
@@ -369,13 +386,16 @@ void kd_variable::Startkd_variable(void) {
             l2->SetText("Control: Sliding");
             Thread::Info("Sliding\n");
             break;
-        
         case 1:
+            l2->SetText("Control: Sliding kdvar");
+            Thread::Info("Sliding kfvar\n");
+            break;
+        case 2:
             l2->SetText("Control: Sliding pos");
             Thread::Info("Sliding pos\n");
             break;
         
-        case 2:
+        case 3:
             //l2->SetText("Control: Sliding force-position");
             //Thread::Info("Sliding force-position\n");
             break;
@@ -534,6 +554,59 @@ void kd_variable::sliding_ctrl(Euler &torques){
     torques.pitch = u_sliding->Output(1);
     torques.yaw = u_sliding->Output(2);
     thrust = u_sliding->Output(3);
+    //thrust = ComputeDefaultThrust();
+    
+
+}
+
+void kd_variable::sliding_kdvar_ctrl(Euler &torques){
+    flair::core::Time ti = GetTime();
+    const AhrsData *refOrientation = GetDefaultReferenceOrientation();
+    Quaternion refQuaternion;
+    Vector3Df refAngularRates;
+    refOrientation->GetQuaternionAndAngularRates(refQuaternion, refAngularRates);
+    flair::core::Time  tf = GetTime()-ti;
+
+    //Printf("ref: %f ms\n", (float)tf/1000000);
+
+    ti = GetTime();
+    const AhrsData *currentOrientation = GetDefaultOrientation();
+    Quaternion currentQuaternion;
+    Vector3Df currentAngularRates;
+    currentOrientation->GetQuaternionAndAngularRates(currentQuaternion, currentAngularRates);
+    tf = tf = GetTime()-ti;
+
+    //Printf("cur: %f ms\n",  (float)tf/1000000);
+    
+    //Vector3Df currentAngularSpeed = GetCurrentAngularSpeed();
+    
+    float refAltitude, refVerticalVelocity;
+    GetDefaultReferenceAltitude(refAltitude, refVerticalVelocity);
+    
+    float z, zp;
+    
+    AltitudeValues(z,zp);
+    
+    float ze = z - refAltitude;
+
+    Vector3Df Lambda_v(Lambda->Value(),Lambda->Value(),Lambda->Value()); 
+    Vector3Df GammaC_v(Gamma_c->Value(),Gamma_c->Value(),Gamma_c->Value());
+    int gamma_ = gamma->Value();
+    int p_ = p->Value();
+    float goal_ = goal->Value();
+    float alph_l_ = alph_l->Value();
+    float lamb_l_ = lamb_l->Value();
+    
+    u_sliding_kdvar->SetValues(ze,zp,currentAngularRates,refAngularRates,currentQuaternion,refQuaternion,Lambda_v,GammaC_v,gamma_,p_,goal_,alph_l_,lamb_l_);
+    
+    u_sliding_kdvar->Update(GetTime());
+    
+    //Thread::Info("%f\t %f\t %f\t %f\n",u_sliding->Output(0),u_sliding->Output(1), u_sliding->Output(2), u_sliding->Output(3));
+    
+    torques.roll = u_sliding_kdvar->Output(0);
+    torques.pitch = u_sliding_kdvar->Output(1);
+    torques.yaw = u_sliding_kdvar->Output(2);
+    thrust = u_sliding_kdvar->Output(3);
     //thrust = ComputeDefaultThrust();
     
 

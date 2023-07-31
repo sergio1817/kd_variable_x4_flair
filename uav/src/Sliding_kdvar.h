@@ -63,7 +63,7 @@ public:
   * \param q  Cuaternio actual
   * \param qd Cuaternio deseado
   */
-    void SetValues(float ze, float zp, flair::core::Vector3Df w, flair::core::Vector3Df wd, flair::core::Quaternion q, flair::core::Quaternion qd);
+    void SetValues(float ze, float zp, flair::core::Vector3Df w, flair::core::Vector3Df wd, flair::core::Quaternion q, flair::core::Quaternion qd, flair::core::Vector3Df Lambda, flair::core::Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l);
     
     void UseDefaultPlot(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot2(const flair::gui::LayoutPosition *position);

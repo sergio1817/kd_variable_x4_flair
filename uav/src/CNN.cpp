@@ -18,7 +18,7 @@ CNN::~CNN()
 
 }
 
-void CNN::setLearningParameters(const int gamma_, const int penality_, Eigen::MatrixXf& GammaC_)
+void CNN::setLearningParameters(const int gamma_, const int penality_, const Eigen::MatrixXf& GammaC_)
 {
     *gamma = gamma_;
     *penality = penality_;

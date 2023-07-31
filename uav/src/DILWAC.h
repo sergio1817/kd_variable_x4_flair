@@ -12,9 +12,24 @@ class DILWAC
         ~DILWAC();
 
         void setANN(const Eigen::MatrixXf& Lambda_);
-        void setCNN(const int gamma_, const int penality_, Eigen::MatrixXf& GammaC_, float goal, float alpha_l, float lamb_l);
+        void setCNN(const int gamma_, const int penality_, const Eigen::MatrixXf& GammaC_, float goal, float alpha_l, float lamb_l);
         //void setRewardPolicy(float goal_, uint16_t penality_);
 
+        /*!
+        * \brief Set parameters 
+        *
+        * \param we Angular velocity of quadrotor
+        * \param qe Quaternion error
+        * \param qep Derivatve of quaternion error
+        * \param sq Sliding surface
+        * \param qd Desired quaternion
+        * \param q Current quaternion
+        * \param qp Derivative of current quaternion
+        * \param qdp Derivative of desired quaternion
+        * \param delta_t Time step
+        * 
+        * \return Damping injection
+        */
         Eigen::MatrixXf learnDampingInjection(const Eigen::VectorXf& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep,const Eigen::VectorXf& sq,const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, float delta_t);
 
         Eigen::VectorXf getR() const { return *r; }
