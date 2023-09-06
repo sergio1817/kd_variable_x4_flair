@@ -35,6 +35,7 @@ class CNN
         Eigen::Vector4f wc;
         Eigen::Vector3f J;
         Eigen::Vector3f ec;
+        Eigen::Vector3f intS_ec;
         Eigen::Vector3f int_r;
         Eigen::Vector3f int_ec;
 
@@ -45,6 +46,8 @@ class CNN
         Eigen::Vector4f updateWeights(const Eigen::Vector3f& r);
         Eigen::Vector3f computeBellmanError(const Eigen::Vector3f& r, const Eigen::Vector3f& uc, const Eigen::Vector3f& Jp);
         Eigen::Vector3f computeBellmanControl(const Eigen::Vector3f& int_ec);
+        Eigen::Vector3f computeISMBellmanControl(const Eigen::Vector3f& ec,const Eigen::Vector3f& sb);
+        Eigen::Vector3f computeBellmanSurface(const Eigen::Vector3f& ec, const Eigen::Vector3f& intS_ec);
 
 };
 

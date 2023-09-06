@@ -9,7 +9,7 @@ class ANN
         ANN(const uint16_t DoF);
         ~ANN();
 
-        void setLearningParameters(const Eigen::Matrix3f& Lambda_);
+        void setLearningParameters(const Eigen::Vector3f& Lambda_);
         
         Eigen::Matrix3f learnDamping(const Eigen::Vector3f& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep, const Eigen::Vector3f& sq, const Eigen::Vector3f& r, const Eigen::Vector3f& Jp, float delta_t);
 
