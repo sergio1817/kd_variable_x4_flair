@@ -12,7 +12,7 @@ DILWAC::DILWAC(const uint16_t DoF, const uint16_t criticDoF): actor(DoF), critic
 
 DILWAC::~DILWAC() { }
 
-void DILWAC::setANN(const Eigen::Vector3f& Lambda_)
+void DILWAC::setANN(const Eigen::Matrix3f& Lambda_)
 {
     actor.setLearningParameters(Lambda_);
 }

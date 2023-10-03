@@ -236,7 +236,7 @@ void Sliding_kdvar::UpdateFrom(const io_data *data) {
     float ze = input->ValueNoMutex(0, 0);
     float zp = input->ValueNoMutex(4, 0);
 
-    Eigen::Vector3f Lambda = Eigen::Vector3f(input->ValueNoMutex(0, 4),input->ValueNoMutex(1, 4),input->ValueNoMutex(2, 4));
+    Eigen::Matrix3f Lambda = Eigen::Vector3f(input->ValueNoMutex(0, 4),input->ValueNoMutex(1, 4),input->ValueNoMutex(2, 4)).asDiagonal();
     Eigen::Matrix4f GammaC = Eigen::Vector4f(input->ValueNoMutex(0, 5),input->ValueNoMutex(1, 5),input->ValueNoMutex(2, 5),input->ValueNoMutex(2, 5)).asDiagonal();
 
     float gamma = input->ValueNoMutex(0, 6);
