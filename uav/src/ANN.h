@@ -6,7 +6,7 @@
 class ANN 
 {
     public:
-        ANN(const uint16_t DoF);
+        ANN(const int& DoF);
         ~ANN();
 
         void setLearningParameters(const Eigen::Matrix3f& Lambda_);

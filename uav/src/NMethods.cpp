@@ -13,7 +13,7 @@ float rk4(float(*fPtr)(float), const float iC, const float iCdt, const float dt)
 }
 
 
-Eigen::Vector3f rk4_vec(const Eigen::Vector3f iC, const Eigen::Vector3f iCdt, const float dt){
+Eigen::Vector3f rk4_vec(const Eigen::Vector3f& iC, const Eigen::Vector3f& iCdt, const float& dt){
     Eigen::Vector3f integral(0,0,0);
     integral(0) = rk4(function1d, iC(0), iCdt(0), dt);
     integral(1) = rk4(function1d, iC(1), iCdt(1), dt);
@@ -21,19 +21,19 @@ Eigen::Vector3f rk4_vec(const Eigen::Vector3f iC, const Eigen::Vector3f iCdt, co
     return integral;
 }
 
-Eigen::VectorXf rk4_vec(const Eigen::VectorXf iC, const Eigen::VectorXf iCdt, const float dt)
-{
-    int n = iC.size();
-    Eigen::VectorXf integral(n);
+// Eigen::VectorXf rk4_vec(const Eigen::VectorXf iC, const Eigen::VectorXf iCdt, const float dt)
+// {
+//     int n = iC.size();
+//     Eigen::VectorXf integral(n);
 
-    for(int i = 0; i < n; i++)
-    {
-        integral(i) = rk4(function1d, iC(i), iCdt(i), dt);
-    }
-    return integral;
-}
+//     for(int i = 0; i < n; i++)
+//     {
+//         integral(i) = rk4(function1d, iC(i), iCdt(i), dt);
+//     }
+//     return integral;
+// }
 
-Eigen::MatrixXf rk4_mat(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float dt)
+Eigen::MatrixXf rk4_mat(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float& dt)
 {
     int rows = iC.rows();
     int cols = iC.cols();
@@ -87,7 +87,7 @@ float signth(const float a, const float p){
     return tanhf(p*a);
 }
 
-Eigen::Vector3f signth(const Eigen::Vector3f a, const float p){
+Eigen::Vector3f signth(const Eigen::Vector3f& a, const float p){
     Eigen::Vector3f salida;
     salida(0) = tanhf(p*a(0));
     salida(1) = tanhf(p*a(1));
@@ -125,7 +125,7 @@ void Levant_diff::Reset(void){
     this->u1p_vec << 0, 0, 0;
 }
 
-float Levant_diff::Compute(const float f, const float dt){
+float Levant_diff::Compute(const float& f, const float& dt){
     u = u1 - lamb*(sqrtf(fabs(x-f)))*sign_(x-f);
 
     u1p = -alpha*sign_(x-f);
@@ -134,7 +134,7 @@ float Levant_diff::Compute(const float f, const float dt){
     return u;
 }
 
-void Levant_diff::Compute(float &_u, const float f, const float dt){
+void Levant_diff::Compute(float& _u, const float& f, const float& dt){
     _u = u1 - lamb*(sqrtf(fabs(x-f)))*sign_(x-f);
 
     u1p = -alpha*sign_(x-f);
@@ -142,7 +142,7 @@ void Levant_diff::Compute(float &_u, const float f, const float dt){
     u1 = rk4(function1d, u1, u1p, dt);
 }
 
-Eigen::Vector3f Levant_diff::Compute(const Eigen::Vector3f f, const float dt){
+Eigen::Vector3f Levant_diff::Compute(const Eigen::Vector3f& f, const float& dt){
     u_vec(0) = u1_vec(0) - lamb*(sqrtf(fabs(x_vec(0)-f(0))))*sign_(x_vec(0)-f(0));
     u_vec(1) = u1_vec(1) - lamb*(sqrtf(fabs(x_vec(1)-f(1))))*sign_(x_vec(1)-f(1));
     u_vec(2) = u1_vec(2) - lamb*(sqrtf(fabs(x_vec(2)-f(2))))*sign_(x_vec(2)-f(2));

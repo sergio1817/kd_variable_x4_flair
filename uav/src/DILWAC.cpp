@@ -5,25 +5,28 @@
 #include <Eigen/Dense>
 #include <type_traits>
 
-DILWAC::DILWAC(const uint16_t DoF, const uint16_t criticDoF): actor(DoF), critic(DoF, criticDoF)
-{
+DILWAC::DILWAC(const int& DoF, const int& criticDoF)
+{   
+    actor = new ANN(DoF);
+    critic = new CNN(DoF, criticDoF);
     r = Eigen::Vector3f::Zero();
+    printf("DILWAC constructor\n");
 }
 
 DILWAC::~DILWAC() { }
 
 void DILWAC::setANN(const Eigen::Matrix3f& Lambda_)
 {
-    actor.setLearningParameters(Lambda_);
+    actor->setLearningParameters(Lambda_);
 }
 
 void DILWAC::setCNN(const int gamma_, const int penalty_, const Eigen::Matrix4f& GammaC_, float goal_, float alpha_l, float lamb_l)
 {
     goal = goal_;
     penalty = penalty_;
-    critic.setLearningParameters(gamma_, penalty_, GammaC_);
-    critic.setLevant(alpha_l, lamb_l);
-    critic.setVirtualControlParameters(10, 0.01);
+    critic->setLearningParameters(gamma_, penalty_, GammaC_);
+    critic->setLevant(alpha_l, lamb_l);
+    critic->setVirtualControlParameters(10, 0.01);
 }
 
 //template<typename Derived>
@@ -31,11 +34,11 @@ Eigen::Matrix3f DILWAC::learnDampingInjection(const Eigen::Vector3f& we, const E
 {
     Eigen::Vector3f r = rewardPolicy(sq);
 
-    critic.getInputs(qe, qd, q, qep, qp, qdp, r);
-    Eigen::Vector3f Jp = critic.learnFromInteraction(qe, qd, q, qep, qp, qdp, r, delta_t);
+    critic->getInputs(qe, qd, q, qep, qp, qdp, r);
+    Eigen::Vector3f Jp = critic->learnFromInteraction(qe, qd, q, qep, qp, qdp, r, delta_t);
     
-    actor.getInputs(we, qe, qep);
-    return actor.learnDamping(we, qe, qep, sq, r, Jp, delta_t);
+    actor->getInputs(we, qe, qep);
+    return actor->learnDamping(we, qe, qep, sq, r, Jp, delta_t);
 }
 
 Eigen::Vector3f DILWAC::rewardPolicy(const Eigen::Vector3f& sq)

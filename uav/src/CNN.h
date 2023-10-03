@@ -7,7 +7,7 @@
 class CNN
 {
     public:
-        CNN(const uint16_t DoF, const uint16_t criticDoF);
+        CNN(const int& DoF, const int& criticDoF);
         ~CNN();
 
         void setLearningParameters(const int gamma_, const int penality_, const Eigen::Matrix4f& GammaC_);
