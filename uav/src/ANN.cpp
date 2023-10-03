@@ -12,9 +12,9 @@ ANN::ANN(const uint16_t DoF)
 
 ANN::~ANN() { }
 
-void ANN::setLearningParameters(const Eigen::Vector3f& Lambda_)
+void ANN::setLearningParameters(const Eigen::Matrix3f& Lambda_)
 {
-    Lambda = Lambda_.asDiagonal();
+    Lambda = Lambda_;
 }
 
 void ANN::getInputs(const Eigen::Vector3f& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep)

@@ -14,7 +14,7 @@ class DILWAC
         DILWAC(const uint16_t DoF, const uint16_t criticDoF);
         ~DILWAC();
 
-        void setANN(const Eigen::Vector3f& Lambda_);
+        void setANN(const Eigen::Matrix3f& Lambda_);
         void setCNN(const int gamma_, const int penalty_, const Eigen::Matrix4f& GammaC_, float goal, float alpha_l, float lamb_l);
 
         //template<typename Derived>
