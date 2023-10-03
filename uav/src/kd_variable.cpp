@@ -100,7 +100,9 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     GroupBox *criticBox = new GroupBox(setupLawTabAC->NewRow(), "Critic");
 
 
-    Lambda = new DoubleSpinBox(actorBox->NewRow(), "Lambda", 0, 500, 0.1, 2); // vec
+    Lambda_phi = new DoubleSpinBox(actorBox->NewRow(), "Lambda_phi", 0, 500000, 0.1, 2); // vec
+    Lambda_th = new DoubleSpinBox(actorBox->LastRowLastCol(), "Lambda_th", 0, 500000, 0.1, 2); // vec
+    Lambda_psi = new DoubleSpinBox(actorBox->LastRowLastCol(), "Lambda_psi", 0, 500000, 0.1, 2); // vec
 
     Gamma_c = new DoubleSpinBox(criticBox->NewRow(), "Gamma_c", 0, 50, 0.1, 2); 
     gamma = new DoubleSpinBox(criticBox->LastRowLastCol(), "gamma", 0, 1000, 1, 2); // vec
@@ -595,7 +597,7 @@ void kd_variable::sliding_kdvar_ctrl(Euler &torques){
     
     float ze = z - refAltitude;
 
-    Vector3Df Lambda_v(Lambda->Value(),Lambda->Value(),Lambda->Value()); 
+    Vector3Df Lambda_v(Lambda_phi->Value(),Lambda_th->Value(),Lambda_psi->Value()); 
     Vector3Df GammaC_v(Gamma_c->Value(),Gamma_c->Value(),Gamma_c->Value());
     int gamma_ = gamma->Value();
     int p_ = p->Value();

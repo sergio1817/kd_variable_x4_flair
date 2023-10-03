@@ -89,7 +89,7 @@ class kd_variable : public flair::meta::UavStateMachine {
         float thrust;
 
         flair::gui::DoubleSpinBox *xd, *yd, *zd, *ax, *wx, *bx, *ay, *wy, *by, *az, *wz, *bz;
-        flair::gui::DoubleSpinBox *Lambda, *Gamma_c, *gamma, *p, *goal, *alph_l, *lamb_l;
+        flair::gui::DoubleSpinBox *Lambda_phi, *Lambda_th, *Lambda_psi, *Gamma_c, *gamma, *p, *goal, *alph_l, *lamb_l;
 
         flair::gui::PushButton *start_prueba1,*stop_prueba1;
         flair::gui::ComboBox *control_select, *position_behavior, *xd_behavior, *yd_behavior, *zd_behavior;    
