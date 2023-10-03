@@ -15,9 +15,9 @@ class CNN
         void setVirtualControlParameters(float kc_, float miuc_);
         void setLevant(float alpha_l, float lamb_l);
 
-        Eigen::Vector3f learnFromInteraction(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::Vector3f& r, float delta_t);
+        Eigen::Vector3f learnFromInteraction(const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qd, const Eigen::Quaternionf& q, const Eigen::Quaternionf& qep, const Eigen::Quaternionf& qp, const Eigen::Quaternionf& qdp, const Eigen::Vector3f& r, float delta_t);
 
-        void getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::Vector3f& r);
+        void getInputs(const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qd, const Eigen::Quaternionf& q, const Eigen::Quaternionf& qep, const Eigen::Quaternionf& qp, const Eigen::Quaternionf& qdp, const Eigen::Vector3f& r);
 
         Eigen::Vector3f getEc() const { return ec; }
         Eigen::Vector3f getJ() const { return J; }

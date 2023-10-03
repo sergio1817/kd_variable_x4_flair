@@ -27,7 +27,7 @@ void DILWAC::setCNN(const int gamma_, const int penalty_, const Eigen::Matrix4f&
 }
 
 //template<typename Derived>
-Eigen::Matrix3f DILWAC::learnDampingInjection(const Eigen::Vector3f& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep,const Eigen::Vector3f& sq,const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, float delta_t)
+Eigen::Matrix3f DILWAC::learnDampingInjection(const Eigen::Vector3f& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep,const Eigen::Vector3f& sq,const Eigen::Quaternionf& qd, const Eigen::Quaternionf& q, const Eigen::Quaternionf& qp, const Eigen::Quaternionf& qdp, float delta_t)
 {
     Eigen::Vector3f r = rewardPolicy(sq);
 

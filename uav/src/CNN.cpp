@@ -73,7 +73,7 @@ Eigen::Vector3f CNN::computeBellmanSurface(const Eigen::Vector3f& ec, const Eige
     return ec + (miuc) * intS_ec;
 }
 
-void CNN::getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::Vector3f& r)
+void CNN::getInputs(const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qd, const Eigen::Quaternionf& q, const Eigen::Quaternionf& qep, const Eigen::Quaternionf& qp, const Eigen::Quaternionf& qdp, const Eigen::Vector3f& r)
 {
     (xc).row(0) = qe.vec().transpose();
     (xc).row(1) = q.vec().transpose();
@@ -86,7 +86,7 @@ void CNN::getInputs(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, co
     (xcp).row(3) = r.transpose();
 }
 
-Eigen::Vector3f CNN::learnFromInteraction(const Eigen::Quaternionf qe, const Eigen::Quaternionf qd, const Eigen::Quaternionf q, const Eigen::Quaternionf qep, const Eigen::Quaternionf qp, const Eigen::Quaternionf qdp, const Eigen::Vector3f& r, float delta_t)
+Eigen::Vector3f CNN::learnFromInteraction(const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qd, const Eigen::Quaternionf& q, const Eigen::Quaternionf& qep, const Eigen::Quaternionf& qp, const Eigen::Quaternionf& qdp, const Eigen::Vector3f& r, float delta_t)
 {
     getInputs(qe, qd, q, qep, qp, qdp, r);
 
