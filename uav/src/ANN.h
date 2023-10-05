@@ -6,6 +6,7 @@
 class ANN 
 {
     public:
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         ANN(const int& DoF);
         ~ANN();
 

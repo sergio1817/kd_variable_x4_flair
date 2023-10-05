@@ -11,6 +11,7 @@
 class DILWAC
 {
     public:
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         DILWAC(const int& DoF, const int& criticDoF);
         ~DILWAC();
 

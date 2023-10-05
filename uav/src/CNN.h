@@ -7,6 +7,7 @@
 class CNN
 {
     public:
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         CNN(const int& DoF, const int& criticDoF);
         ~CNN();
 

@@ -4,13 +4,13 @@
 CNN::CNN(const int& DoF, const int& criticDoF)
 {   
     printf("CNN constructor in\n");
-    // wc    = Eigen::Vector4f::Zero();
-    // xc    = Eigen::Matrix<float, 4, 3>::Zero();
-    // xcp   = Eigen::Matrix<float, 4, 3>::Zero();
-    // J     = Eigen::Vector3f::Zero();
-    // ec    = Eigen::Vector3f::Zero();
-    // int_r = Eigen::Vector3f::Zero();
-    // intS_ec = Eigen::Vector3f::Zero();
+    wc    = Eigen::Vector4f::Zero();
+    xc    = Eigen::Matrix<float, 4, 3>::Zero();
+    xcp   = Eigen::Matrix<float, 4, 3>::Zero();
+    J     = Eigen::Vector3f::Zero();
+    ec    = Eigen::Vector3f::Zero();
+    int_r = Eigen::Vector3f::Zero();
+    intS_ec = Eigen::Vector3f::Zero();
 
     levant = Levant_diff("tanh", 8, 6, 3000);
 

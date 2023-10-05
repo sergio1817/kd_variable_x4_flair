@@ -26,6 +26,7 @@
 #include <DataPlot1D.h>
 #include <cmath>
 #include <Euler.h>
+#include <iostream>
 #include <Label.h>
 
 using std::string;
@@ -152,7 +153,7 @@ void Sliding::UseDefaultPlot4(const LayoutPosition *position) {
 }
 
 void Sliding::UseDefaultPlot5(const LayoutPosition *position) {    
-    DataPlot1D *Sq = new DataPlot1D(position, "nu_r", -5, 5);
+    DataPlot1D *Sq = new DataPlot1D(position, "nu_q", -5, 5);
     Sq->AddCurve(state->Element(4), DataPlot::Green);
     Sq->AddCurve(state->Element(5), DataPlot::Red);
     Sq->AddCurve(state->Element(6), DataPlot::Black);
@@ -164,7 +165,7 @@ void Sliding::UpdateFrom(const io_data *data) {
     float tactual=double(GetTime())/1000000000-t0;
     float Trs=0, tau_roll=0, tau_pitch=0, tau_yaw=0, Tr=0;
 
-    printf("tactual: %f\n",tactual);
+    //printf("tactual: %f\n",tactual);
     
     if (T->Value() == 0) {
         delta_t = (float)(data->DataDeltaTime()) / 1000000000.;
@@ -229,6 +230,8 @@ void Sliding::UpdateFrom(const io_data *data) {
     
     Eigen::Vector3f nuq = nu-nud;
 
+    std::cout << "nuq_n: " << nuq.norm() << std::endl;
+
     sgnori_p = signth(nuq,p->Value());
     sgnori = rk4_vec(sgnori, sgnori_p, delta_t);
 
@@ -260,9 +263,9 @@ void Sliding::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(1, 0, tau_pitch);
     state->SetValueNoMutex(2, 0, tau_yaw);
     state->SetValueNoMutex(3, 0, Tr);
-    state->SetValueNoMutex(4, 0, nur(0));
-    state->SetValueNoMutex(5, 0, nur(1));
-    state->SetValueNoMutex(6, 0, nur(2));
+    state->SetValueNoMutex(4, 0, nuq(0));
+    state->SetValueNoMutex(5, 0, nuq(1));
+    state->SetValueNoMutex(6, 0, nuq(2));
     state->ReleaseMutex();
 
 
