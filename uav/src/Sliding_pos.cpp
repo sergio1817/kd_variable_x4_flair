@@ -360,7 +360,9 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
 
 
     Eigen::Vector3f u = -Kpm*nurp - m->Value()*g->Value()*ez + m->Value()*xirpp; //- m->Value()*g->Value()*ez + m->Value()*xirpp
-
+    
+    printf("u: %f, %f, %f\n", u(0), u(1), u(2));
+    
     Trs = u.norm();
 
     Eigen::Vector3f Qe3 = q.toRotationMatrix()*ez;

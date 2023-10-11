@@ -322,7 +322,7 @@ void Sliding_kdvar_h::UseDefaultPlot10(const LayoutPosition *position) {
 
 void Sliding_kdvar_h::UseDefaultPlot11(const LayoutPosition *position) {    
     DataPlot1D *rew = new DataPlot1D(position, "reward", -110, 10);
-    rew->AddCurve(state->Element(15), DataPlot::Green);
+    rew->AddCurve(state->Element(16), DataPlot::Green);
     rew->AddCurve(state->Element(17), DataPlot::Red);
     rew->AddCurve(state->Element(18), DataPlot::Black);
     
@@ -409,6 +409,8 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
 
 
     Eigen::Vector3f u = -Kpm*nurp - m->Value()*g->Value()*ez + m->Value()*xirpp; //- m->Value()*g->Value()*ez + m->Value()*xirpp
+
+    //printf("u: %f, %f, %f\n", u(0), u(1), u(2));
 
     Trs = u.norm();
 
@@ -504,7 +506,7 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
 
     //std::cout<<"nu: " << nu << std::endl;
     
-    Eigen::Vector3f nu_t0 = 0.1*Eigen::Vector3f(1,1,1);
+    Eigen::Vector3f nu_t0 = 0.01*Eigen::Vector3f(1,1,1);
     
     Eigen::Vector3f nud = nu_t0*exp(-k->Value()*(tactual));
     
@@ -516,6 +518,8 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     Eigen::Vector3f nur = nuq + gammao*sgnori;
 
     Eigen::Matrix3f Kdm = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
+
+    printf("Kdm: %f %f %f\n",Kdm(0,0),Kdm(1,1),Kdm(2,2));
 
     Eigen::Vector3f reward = kd_var->getR();
 
