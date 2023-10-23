@@ -84,9 +84,10 @@ public:
     
     
     flair::core::Time t0;
+    flair::core::Matrix *state;
 
 private:
-    flair::core::Matrix *state;
+    
     Levant_diff levant;
 
     float sech(float value);

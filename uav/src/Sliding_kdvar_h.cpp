@@ -144,6 +144,7 @@ void Sliding_kdvar_h::Reset(void) {
     sgnori << 0,0,0;
 
     levant.Reset();
+    kd_var->forgetDamping();
 
     // sgnpos2 = Vector3ff(0,0,0);
     // sgn2 = Vector3ff(0,0,0);
@@ -565,6 +566,7 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(16, 0, reward(0));
     state->SetValueNoMutex(17, 0, reward(1));
     state->SetValueNoMutex(18, 0, reward(2));
+    //state->SetDataTime(data->DataTime());
     state->ReleaseMutex();
 
 
@@ -575,6 +577,7 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     output->SetDataTime(data->DataTime());
     
     ProcessUpdate(output);
+    //ProcessUpdate(state);
     
 }
 
