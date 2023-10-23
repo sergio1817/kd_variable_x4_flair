@@ -27,6 +27,8 @@ class DILWAC
         Eigen::Matrix3f getK() const { return actor->getK(); }       
         Eigen::Matrix3f getPsi() const { return actor->getPsi(); }
 
+        void forgetDamping() {actor->forgetDamping();}
+
     private:
         float goal;
         int penalty;
