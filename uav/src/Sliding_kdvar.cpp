@@ -99,7 +99,7 @@ Sliding_kdvar::Sliding_kdvar(const LayoutPosition *position, string name): Contr
 
     kd_var = new DILWAC(3,4);
     
-    
+    AddDataToLog(state);
 }
 
 Sliding_kdvar::~Sliding_kdvar(void) {}

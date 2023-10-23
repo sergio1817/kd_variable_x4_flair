@@ -271,6 +271,7 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     //getFrameworkManager()->AddDeviceToLog(u_sliding);
     AddDeviceToControlLawLog(u_sliding);
     AddDeviceToControlLawLog(u_sliding_kdvar);
+    AddDeviceToControlLawLog(u_sliding_kdvar_h);
     AddDeviceToControlLawLog(u_sliding_pos);
     //AddDeviceToControlLawLog(u_sliding_force);
 

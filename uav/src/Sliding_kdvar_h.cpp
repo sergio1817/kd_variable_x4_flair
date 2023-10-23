@@ -128,6 +128,8 @@ Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): C
     sgnori << 0,0,0;
 
     kd_var = new DILWAC(3,4);
+
+    AddDataToLog(state);
     
     
 }
