@@ -19,6 +19,8 @@ class ANN
         Eigen::Matrix3f getK() const { return K; }       
         Eigen::Matrix3f getPsi() const { return Psi; }
 
+        void forgetDamping() {wa = Eigen::Matrix3f::Zero();}
+
     private:
         Eigen::Matrix3f Lambda;
         Eigen::Matrix3f xa;
