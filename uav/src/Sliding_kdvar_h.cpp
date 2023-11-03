@@ -44,9 +44,9 @@ namespace filter {
 Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): ControlLaw(position->getLayout(), name, 4){ // Salidas 4
     first_update = true;
     // init matrix
-    input = new Matrix(this, 4, 10, floatType, name);
+    input = new Matrix(this, 4, 11, floatType, name);
 
-    MatrixDescriptor *desc = new MatrixDescriptor(19, 1);
+    MatrixDescriptor *desc = new MatrixDescriptor(20, 1);
     desc->SetElementName(0, 0, "u_roll");
     desc->SetElementName(1, 0, "u_pitch");
     desc->SetElementName(2, 0, "u_yaw");
@@ -66,6 +66,7 @@ Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): C
     desc->SetElementName(16, 0, "r_phi");
     desc->SetElementName(17, 0, "r_theta");
     desc->SetElementName(18, 0, "r_psi");
+    desc->SetElementName(19, 0, "battery");
     state = new Matrix(this, desc, floatType, name);
     delete desc;
 
@@ -129,6 +130,9 @@ Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): C
 
     kd_var = new DILWAC(3,4);
 
+    pert = new CheckBox(num->LastRowLastCol(), "Perturbacion");
+    pert_g = new DoubleSpinBox(num->LastRowLastCol(), "Gain Pert:", 0, 1, 0.1);
+
     AddDataToLog(state);
     
     
@@ -160,7 +164,9 @@ void Sliding_kdvar_h::Reset(void) {
 //    pimpl_->first_update = true;
 }
 
-void Sliding_kdvar_h::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector3Df xidpp, Vector3Df xidppp, Vector3Df w, Quaternion q, Vector3Df Lambda, Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l){
+void Sliding_kdvar_h::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector3Df xidpp, Vector3Df xidppp, Vector3Df w, Quaternion q, 
+                                Vector3Df Lambda, Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l, Quaternion q_p, 
+                                float battery){
 
     // float xe = xie.x;
     // float ye = xie.y;
@@ -198,6 +204,8 @@ void Sliding_kdvar_h::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Ve
     input->SetValue(0, 0, xie.x);
     input->SetValue(1, 0, xie.y);
     input->SetValue(2, 0, xie.z);
+
+    input->SetValue(3, 0, battery);
 
     input->SetValue(0, 1, xiep.x);
     input->SetValue(1, 1, xiep.y);
@@ -238,6 +246,11 @@ void Sliding_kdvar_h::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Ve
     input->SetValue(3, 9, lamb_l);
 
     input->SetValue(3, 8, goal);
+
+    input->SetValue(0, 10, q_p.q0);
+    input->SetValue(1, 10, q_p.q1);
+    input->SetValue(2, 10, q_p.q2);
+    input->SetValue(3, 10, q_p.q3);
 
 
 //   input->SetValue(0, 0, ze);
@@ -396,6 +409,10 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     float alph_l2 = input->ValueNoMutex(2, 9);
     float lamb_l2 = input->ValueNoMutex(3, 9);
     float goal = input->ValueNoMutex(3, 8);
+
+    Eigen::Quaternionf q_p(input->ValueNoMutex(0, 10),input->ValueNoMutex(1, 10),input->ValueNoMutex(2, 10),input->ValueNoMutex(3, 10));
+
+    float battery = input->ValueNoMutex(3, 0);
     
     input->ReleaseMutex();
 
@@ -457,6 +474,16 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
                             (uph(1)/sqrtf(-2*uh(2)+2)) + ((uh(1)*uph(2))/powf(-2*uh(2)+2,1.5)),
                             -(uph(0)/sqrtf(-2*uh(2)+2)) - ((uh(0)*uph(2))/powf(-2*uh(2)+2,1.5)),
                             0);
+
+    q_p = q_p.coeffs()*pert_g->Value();
+
+    //Eigen::Quaternionf qd;
+
+    if(pert->IsChecked()){
+        q = q*(q_p);
+    }else{
+        q = q;
+    }
 
     Quaternion qd2 = Quaternion(qd.w(),qd.x(),qd.y(),qd.z());
     Euler eta = qd2.ToEuler();
@@ -566,6 +593,7 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(16, 0, reward(0));
     state->SetValueNoMutex(17, 0, reward(1));
     state->SetValueNoMutex(18, 0, reward(2));
+    state->SetValueNoMutex(19, 0, battery);
     //state->SetDataTime(data->DataTime());
     state->ReleaseMutex();
 

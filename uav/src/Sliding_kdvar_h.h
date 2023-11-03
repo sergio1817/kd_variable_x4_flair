@@ -67,7 +67,8 @@ public:
   */
     void SetValues(flair::core::Vector3Df xie, flair::core::Vector3Df xiep, flair::core::Vector3Df xid, 
                     flair::core::Vector3Df xidpp, flair::core::Vector3Df xidppp, flair::core::Vector3Df w, flair::core::Quaternion q,
-                    flair::core::Vector3Df Lambda, flair::core::Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l);
+                    flair::core::Vector3Df Lambda, flair::core::Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l, 
+                    flair::core::Quaternion q_p, float battery);
     
     void UseDefaultPlot(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot2(const flair::gui::LayoutPosition *position);
@@ -92,8 +93,8 @@ private:
 
     float sech(float value);
 
-    flair::gui::CheckBox *levantd;
-    flair::gui::DoubleSpinBox *T, *gamma, *k, *sat_r, *sat_p, *sat_y, *sat_t, *m, *g, *km, *p, *km_z;
+    flair::gui::CheckBox *levantd, *pert;
+    flair::gui::DoubleSpinBox *T, *gamma, *k, *sat_r, *sat_p, *sat_y, *sat_t, *m, *g, *km, *p, *km_z, *pert_g;
     flair::gui::DoubleSpinBox *gamma_roll, *gamma_pitch, *gamma_yaw, *gamma_x, *gamma_y, *gamma_z;
     flair::gui::DoubleSpinBox *alpha_roll, *alpha_pitch, *alpha_yaw, *alpha_x, *alpha_y, *alpha_z;
     flair::gui::DoubleSpinBox *Kd_roll, *Kd_pitch, *Kd_yaw, *Kd_x, *Kd_y, *Kd_z;

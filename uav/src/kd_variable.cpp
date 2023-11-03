@@ -40,6 +40,7 @@
 #include <GroupBox.h>
 #include <TabWidget.h>
 #include <Tab.h>
+#include <BatteryMonitor.h>
 
 using namespace std;
 using namespace flair::core;
@@ -275,7 +276,11 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     AddDeviceToControlLawLog(u_sliding_pos);
     //AddDeviceToControlLawLog(u_sliding_force);
 
+    //getFrameworkManager()->AddDeviceToLog(b);
 
+    battery = uav->GetBatteryMonitor();
+    
+    
 }
 
 kd_variable::~kd_variable() {
@@ -398,6 +403,7 @@ void kd_variable::ExtraCheckJoystick(void) {
 
 void kd_variable::Startkd_variable(void) {
     control_select->setEnabled(false);
+    //b = Vector3Df(0,0,0);
     //ask UavStateMachine to enter in custom torques
     if (SetTorqueMode(TorqueMode_t::Custom) && SetThrustMode(ThrustMode_t::Custom)) {
         Thread::Info("kd_variable: start\n");
@@ -700,6 +706,10 @@ void kd_variable::sliding_ctrl_kdvar_h(Euler &torques){
     float tactual=double(GetTime())/1000000000-u_sliding_pos->t0;
     //printf("t: %f\n",tactual);
     Vector3Df xid, xidp, xidpp, xidppp;
+    const AhrsData *refOrientation = GetDefaultReferenceOrientation();
+    Quaternion refQuaternion;
+    Vector3Df refAngularRates;
+    refOrientation->GetQuaternionAndAngularRates(refQuaternion, refAngularRates);
 
     Vector3Df uav_pos,uav_vel; // in VRPN coordinate system
     Quaternion uav_quat;
@@ -741,7 +751,8 @@ void kd_variable::sliding_ctrl_kdvar_h(Euler &torques){
     float alph_l_ = alph_l->Value();
     float lamb_l_ = lamb_l->Value();
     
-    u_sliding_kdvar_h->SetValues(uav_pos-xid,uav_vel-xidp,xid,xidpp,xidppp,currentAngularRates,currentQuaternion,Lambda_v,GammaC_v,gamma_,p_,goal_,alph_l_,lamb_l_);
+    u_sliding_kdvar_h->SetValues(uav_pos-xid,uav_vel-xidp,xid,xidpp,xidppp,currentAngularRates,currentQuaternion,Lambda_v,GammaC_v,gamma_,
+                                p_,goal_,alph_l_,lamb_l_,refQuaternion, battery->GetVoltage());
     
     u_sliding_kdvar_h->Update(GetTime());
     

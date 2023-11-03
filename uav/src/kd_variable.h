@@ -45,6 +45,7 @@ namespace flair {
     namespace sensor {
         class TargetController;
         class TargetJR3;
+        class BatteryMonitor;
     }
 }
 
@@ -90,6 +91,8 @@ class kd_variable : public flair::meta::UavStateMachine {
         
         //bool first_update;
 
+        flair::sensor::BatteryMonitor *battery;
+
         float thrust;
 
         flair::gui::DoubleSpinBox *xd, *yd, *zd, *ax, *wx, *bx, *ay, *wy, *by, *az, *wz, *bz;
@@ -101,6 +104,8 @@ class kd_variable : public flair::meta::UavStateMachine {
         flair::gui::TabWidget *tabWidget2, *Pos_tabWidget;
         flair::gui::GroupBox *seg;
         flair::gui::Label *l, *l2, *lx, *ly, *lz;
+
+        flair::core::Vector3Df b;
 
         flair::core::AhrsData *customReferenceOrientation,*customOrientation;
         
