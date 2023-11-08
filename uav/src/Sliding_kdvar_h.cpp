@@ -3,7 +3,7 @@
 // CECILL-C License, Version 1.0.
 // %flair:license}
 //  created:    2023/01/01
-//  filename:   Sliding_pos.cpp
+//  filename:   Sliding_kdvar_h.cpp
 //
 //  author:     Sergio Urzua
 //              Copyright Heudiasyc UMR UTC/CNRS 7253
@@ -14,8 +14,9 @@
 //
 //
 /*********************************************************************/
-#include "Sliding_pos.h"
+#include "Sliding_kdvar_h.h"
 #include "NMethods.h"
+#include "DILWAC.h"
 #include <Matrix.h>
 #include <Vector3D.h>
 #include <Eigen/Dense>
@@ -40,12 +41,12 @@ using namespace flair::filter;
 namespace flair {
 namespace filter {
 
-Sliding_pos::Sliding_pos(const LayoutPosition *position, string name): ControlLaw(position->getLayout(), name, 4){ // Salidas 4
+Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): ControlLaw(position->getLayout(), name, 4){ // Salidas 4
     first_update = true;
     // init matrix
-    input = new Matrix(this, 4, 8, floatType, name);
+    input = new Matrix(this, 4, 11, floatType, name);
 
-    MatrixDescriptor *desc = new MatrixDescriptor(13, 1);
+    MatrixDescriptor *desc = new MatrixDescriptor(20, 1);
     desc->SetElementName(0, 0, "u_roll");
     desc->SetElementName(1, 0, "u_pitch");
     desc->SetElementName(2, 0, "u_yaw");
@@ -59,6 +60,13 @@ Sliding_pos::Sliding_pos(const LayoutPosition *position, string name): ControlLa
     desc->SetElementName(10, 0, "nur_roll");
     desc->SetElementName(11, 0, "nur_pitch");
     desc->SetElementName(12, 0, "nur_yaw");
+    desc->SetElementName(13, 0, "kd_phi");
+    desc->SetElementName(14, 0, "kd_theta");
+    desc->SetElementName(15, 0, "kd_psi");
+    desc->SetElementName(16, 0, "r_phi");
+    desc->SetElementName(17, 0, "r_theta");
+    desc->SetElementName(18, 0, "r_psi");
+    desc->SetElementName(19, 0, "battery");
     state = new Matrix(this, desc, floatType, name);
     delete desc;
 
@@ -119,13 +127,20 @@ Sliding_pos::Sliding_pos(const LayoutPosition *position, string name): ControlLa
 
     sgnori_p << 0,0,0;
     sgnori << 0,0,0;
+
+    kd_var = new DILWAC(3,4);
+
+    pert = new CheckBox(num->LastRowLastCol(), "Perturbacion");
+    pert_g = new DoubleSpinBox(num->LastRowLastCol(), "Gain Pert:", 0, 1, 0.1);
+
+    AddDataToLog(state);
     
     
 }
 
-Sliding_pos::~Sliding_pos(void) {}
+Sliding_kdvar_h::~Sliding_kdvar_h(void) {}
 
-void Sliding_pos::Reset(void) {
+void Sliding_kdvar_h::Reset(void) {
     first_update = true;
     t0 = 0;
     t0 = double(GetTime())/1000000000;
@@ -133,6 +148,7 @@ void Sliding_pos::Reset(void) {
     sgnori << 0,0,0;
 
     levant.Reset();
+    kd_var->forgetDamping();
 
     // sgnpos2 = Vector3ff(0,0,0);
     // sgn2 = Vector3ff(0,0,0);
@@ -148,7 +164,9 @@ void Sliding_pos::Reset(void) {
 //    pimpl_->first_update = true;
 }
 
-void Sliding_pos::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector3Df xidpp, Vector3Df xidppp, Vector3Df w, Quaternion q){
+void Sliding_kdvar_h::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector3Df xidpp, Vector3Df xidppp, Vector3Df w, Quaternion q, 
+                                Vector3Df Lambda, Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l, Quaternion q_p, 
+                                float battery){
 
     // float xe = xie.x;
     // float ye = xie.y;
@@ -187,6 +205,8 @@ void Sliding_pos::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector
     input->SetValue(1, 0, xie.y);
     input->SetValue(2, 0, xie.z);
 
+    input->SetValue(3, 0, battery);
+
     input->SetValue(0, 1, xiep.x);
     input->SetValue(1, 1, xiep.y);
     input->SetValue(2, 1, xiep.z);
@@ -212,6 +232,26 @@ void Sliding_pos::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector
     input->SetValue(2, 7, q.q2);
     input->SetValue(3, 7, q.q3);
 
+    input->SetValue(0, 3, Lambda.x);
+    input->SetValue(1, 3, Lambda.y);
+    input->SetValue(2, 3, Lambda.z);
+
+    input->SetValue(0, 8, GammaC.x);
+    input->SetValue(1, 8, GammaC.y);
+    input->SetValue(2, 8, GammaC.z);
+
+    input->SetValue(0, 9, gamma);
+    input->SetValue(1, 9, p);
+    input->SetValue(2, 9, alph_l);
+    input->SetValue(3, 9, lamb_l);
+
+    input->SetValue(3, 8, goal);
+
+    input->SetValue(0, 10, q_p.q0);
+    input->SetValue(1, 10, q_p.q1);
+    input->SetValue(2, 10, q_p.q2);
+    input->SetValue(3, 10, q_p.q3);
+
 
 //   input->SetValue(0, 0, ze);
 //   input->SetValue(1, 0, wex);
@@ -230,49 +270,49 @@ void Sliding_pos::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector
 //   input->SetValue(3, 2, qd3);
 }
 
-void Sliding_pos::UseDefaultPlot(const LayoutPosition *position) {
+void Sliding_kdvar_h::UseDefaultPlot(const LayoutPosition *position) {
     DataPlot1D *rollg = new DataPlot1D(position, "u_roll", -1, 1);
     rollg->AddCurve(state->Element(0));
     
 }
 
-void Sliding_pos::UseDefaultPlot2(const LayoutPosition *position) {
+void Sliding_kdvar_h::UseDefaultPlot2(const LayoutPosition *position) {
     DataPlot1D *pitchg = new DataPlot1D(position, "u_pitch", -1, 1);
     pitchg->AddCurve(state->Element(1));
     
 }
 
-void Sliding_pos::UseDefaultPlot3(const LayoutPosition *position) {
+void Sliding_kdvar_h::UseDefaultPlot3(const LayoutPosition *position) {
     DataPlot1D *yawg = new DataPlot1D(position, "u_yaw", -1, 1);
     yawg->AddCurve(state->Element(2));
     
 }
 
-void Sliding_pos::UseDefaultPlot4(const LayoutPosition *position) {    
+void Sliding_kdvar_h::UseDefaultPlot4(const LayoutPosition *position) {    
     DataPlot1D *uz = new DataPlot1D(position, "u_z", -1, 1);
     uz->AddCurve(state->Element(3));
     
 }
 
-void Sliding_pos::UseDefaultPlot5(const LayoutPosition *position) {    
+void Sliding_kdvar_h::UseDefaultPlot5(const LayoutPosition *position) {    
     DataPlot1D *r = new DataPlot1D(position, "r", -3.14, 3.14);
     r->AddCurve(state->Element(4));
     
 }
 
-void Sliding_pos::UseDefaultPlot6(const LayoutPosition *position) {    
+void Sliding_kdvar_h::UseDefaultPlot6(const LayoutPosition *position) {    
     DataPlot1D *p = new DataPlot1D(position, "p", -3.14, 3.14);
     p->AddCurve(state->Element(5));
     
 }
 
-void Sliding_pos::UseDefaultPlot7(const LayoutPosition *position) {    
+void Sliding_kdvar_h::UseDefaultPlot7(const LayoutPosition *position) {    
     DataPlot1D *y = new DataPlot1D(position, "y", -3.14, 3.14);
     y->AddCurve(state->Element(6));
     
 }
 
-void Sliding_pos::UseDefaultPlot8(const LayoutPosition *position) {    
+void Sliding_kdvar_h::UseDefaultPlot8(const LayoutPosition *position) {    
     DataPlot1D *Sp = new DataPlot1D(position, "nu_rp", -5, 5);
     Sp->AddCurve(state->Element(7), DataPlot::Red);
     Sp->AddCurve(state->Element(8), DataPlot::Green);
@@ -280,7 +320,7 @@ void Sliding_pos::UseDefaultPlot8(const LayoutPosition *position) {
     
 }
 
-void Sliding_pos::UseDefaultPlot9(const LayoutPosition *position) {    
+void Sliding_kdvar_h::UseDefaultPlot9(const LayoutPosition *position) {    
     DataPlot1D *Sq = new DataPlot1D(position, "nu_r", -5, 5);
     Sq->AddCurve(state->Element(10), DataPlot::Green);
     Sq->AddCurve(state->Element(11), DataPlot::Red);
@@ -288,8 +328,24 @@ void Sliding_pos::UseDefaultPlot9(const LayoutPosition *position) {
     
 }
 
+void Sliding_kdvar_h::UseDefaultPlot10(const LayoutPosition *position) {    
+    DataPlot1D *Kd = new DataPlot1D(position, "Kd", -1, 100);
+    Kd->AddCurve(state->Element(13), DataPlot::Green);
+    Kd->AddCurve(state->Element(14), DataPlot::Red);
+    Kd->AddCurve(state->Element(15), DataPlot::Black);
+    
+}
 
-void Sliding_pos::UpdateFrom(const io_data *data) {
+void Sliding_kdvar_h::UseDefaultPlot11(const LayoutPosition *position) {    
+    DataPlot1D *rew = new DataPlot1D(position, "reward", -110, 10);
+    rew->AddCurve(state->Element(16), DataPlot::Green);
+    rew->AddCurve(state->Element(17), DataPlot::Red);
+    rew->AddCurve(state->Element(18), DataPlot::Black);
+    
+}
+
+
+void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     float tactual=double(GetTime())/1000000000-t0;
     //Printf("tactual: %f\n",tactual);
     float Trs=0, tau_roll=0, tau_pitch=0, tau_yaw=0, Tr=0;
@@ -311,7 +367,7 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
     Eigen::Matrix3f gammao = gammao_v.asDiagonal();
 
     Eigen::Vector3f Kdv(Kd_roll->Value(), Kd_pitch->Value(), Kd_yaw->Value());
-    Eigen::Matrix3f Kdm = Kdv.asDiagonal();
+    //Eigen::Matrix3f Kdm = Kdv.asDiagonal();
 
     if (T->Value() == 0) {
         delta_t = (float)(data->DataDeltaTime()) / 1000000000.;
@@ -344,6 +400,19 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
     Eigen::Vector3f w(input->ValueNoMutex(0, 6),input->ValueNoMutex(1, 6),input->ValueNoMutex(2, 6));
 
     Eigen::Quaternionf q(input->ValueNoMutex(0, 7),input->ValueNoMutex(1, 7),input->ValueNoMutex(2, 7),input->ValueNoMutex(3, 7));
+
+    Eigen::Matrix3f Lambda = Eigen::Vector3f(input->ValueNoMutex(0, 3),input->ValueNoMutex(1, 3),input->ValueNoMutex(2, 3)).asDiagonal();
+    Eigen::Matrix4f GammaC = Eigen::Vector4f(input->ValueNoMutex(0, 8),input->ValueNoMutex(1, 8),input->ValueNoMutex(2, 8),input->ValueNoMutex(2, 8)).asDiagonal();
+
+    float gamma = input->ValueNoMutex(0, 9);
+    float penalty = input->ValueNoMutex(1, 9);
+    float alph_l2 = input->ValueNoMutex(2, 9);
+    float lamb_l2 = input->ValueNoMutex(3, 9);
+    float goal = input->ValueNoMutex(3, 8);
+
+    Eigen::Quaternionf q_p(input->ValueNoMutex(0, 10),input->ValueNoMutex(1, 10),input->ValueNoMutex(2, 10),input->ValueNoMutex(3, 10));
+
+    float battery = input->ValueNoMutex(3, 0);
     
     input->ReleaseMutex();
 
@@ -360,9 +429,9 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
 
 
     Eigen::Vector3f u = -Kpm*nurp - m->Value()*g->Value()*ez + m->Value()*xirpp; //- m->Value()*g->Value()*ez + m->Value()*xirpp
-    
+
     //printf("u: %f, %f, %f\n", u(0), u(1), u(2));
-    
+
     Trs = u.norm();
 
     Eigen::Vector3f Qe3 = q.toRotationMatrix()*ez;
@@ -406,6 +475,16 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
                             -(uph(0)/sqrtf(-2*uh(2)+2)) - ((uh(0)*uph(2))/powf(-2*uh(2)+2,1.5)),
                             0);
 
+    q_p = q_p.coeffs()*pert_g->Value();
+
+    //Eigen::Quaternionf qd;
+
+    if(pert->IsChecked()){
+        q = q*(q_p);
+    }else{
+        q = q;
+    }
+
     Quaternion qd2 = Quaternion(qd.w(),qd.x(),qd.y(),qd.z());
     Euler eta = qd2.ToEuler();
     // Eigen::Vector3f eta = qd.toRotationMatrix().eulerAngles(0, 1, 2);
@@ -423,15 +502,29 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
     //std::cout<<"w: " << w << std::endl;
     //std::cout<<"wd: " << wd << std::endl;
 
-    
+    kd_var->setANN(Lambda);
+    kd_var->setCNN(gamma, penalty, GammaC, goal, alph_l2, lamb_l2);
 
     flair::core::Time dt_pos = GetTime() - t0_p;
 
     //lp->SetText("Latecia pos: %.3f ms",(float)dt_pos/1000000);
 
+    
+
     flair::core::Time t0_o = GetTime();
 
     Eigen::Vector3f we = w - wd;
+
+    Eigen::Quaternionf wet(0, we(0), we(1), we(2));
+    Eigen::Quaternionf wt(0, w(0), w(1), w(2));
+
+    Eigen::Quaternionf qep1 = q*wet*qd.conjugate();
+
+    Eigen::Quaternionf qep(qep1.coeffs()*0.5);
+
+    Eigen::Quaternionf qp1 = q*wt;
+
+    Eigen::Quaternionf qp(qp1.coeffs()*0.5);
 
     //std::cout<<"we: " << we << std::endl;
 
@@ -443,7 +536,7 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
 
     //std::cout<<"nu: " << nu << std::endl;
     
-    Eigen::Vector3f nu_t0 = 0.1*Eigen::Vector3f(1,1,1);
+    Eigen::Vector3f nu_t0 = 0.01*Eigen::Vector3f(1,1,1);
     
     Eigen::Vector3f nud = nu_t0*exp(-k->Value()*(tactual));
     
@@ -453,6 +546,12 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
     sgnori = rk4_vec(sgnori, sgnori_p, delta_t);
 
     Eigen::Vector3f nur = nuq + gammao*sgnori;
+
+    Eigen::Matrix3f Kdm = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
+
+    printf("Kdm: %f %f %f\n",Kdm(0,0),Kdm(1,1),Kdm(2,2));
+
+    Eigen::Vector3f reward = kd_var->getR();
 
     Eigen::Vector3f tau = -Kdm*nur;
 
@@ -488,6 +587,14 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(10, 0, nuq.x());
     state->SetValueNoMutex(11, 0, nuq.y());
     state->SetValueNoMutex(12, 0, nuq.z());
+    state->SetValueNoMutex(13, 0, Kdm(0,0));
+    state->SetValueNoMutex(14, 0, Kdm(1,1));
+    state->SetValueNoMutex(15, 0, Kdm(2,2));
+    state->SetValueNoMutex(16, 0, reward(0));
+    state->SetValueNoMutex(17, 0, reward(1));
+    state->SetValueNoMutex(18, 0, reward(2));
+    state->SetValueNoMutex(19, 0, battery);
+    //state->SetDataTime(data->DataTime());
     state->ReleaseMutex();
 
 
@@ -498,10 +605,11 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
     output->SetDataTime(data->DataTime());
     
     ProcessUpdate(output);
+    //ProcessUpdate(state);
     
 }
 
-float Sliding_pos::Sat(float value, float borne) {
+float Sliding_kdvar_h::Sat(float value, float borne) {
     if (value < -borne)
         return -borne;
     if (value > borne)
@@ -509,7 +617,7 @@ float Sliding_pos::Sat(float value, float borne) {
     return value;
 }
 
-float Sliding_pos::sech(float value) {
+float Sliding_kdvar_h::sech(float value) {
     return 1 / coshf(value);
 }
 

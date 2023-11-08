@@ -17,6 +17,7 @@
 #include "Sliding_pos.h"
 #include "TargetJR3.h"
 #include "Sliding_force.h"
+#include "Sliding_kdvar_h.h"
 //#include "MetaJR3.h"
 #include <TargetController.h>
 #include <Uav.h>
@@ -39,6 +40,7 @@
 #include <GroupBox.h>
 #include <TabWidget.h>
 #include <Tab.h>
+#include <BatteryMonitor.h>
 
 using namespace std;
 using namespace flair::core;
@@ -95,26 +97,31 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     TabWidget *acTabWidget = new TabWidget(acTab->NewRow(), "setup");
     setupLawTabAC = new Tab(acTabWidget, "Setup AC");
     setupLawTabACp = new Tab(acTabWidget, "Plots");
+    setupLawTabACph = new Tab(acTabWidget, "Plots h");
 
     GroupBox *actorBox = new GroupBox(setupLawTabAC->NewRow(), "Actor");
     GroupBox *criticBox = new GroupBox(setupLawTabAC->NewRow(), "Critic");
 
 
-    Lambda = new DoubleSpinBox(actorBox->NewRow(), "Lambda", 0, 500, 0.1, 2); // vec
+    Lambda_phi = new DoubleSpinBox(actorBox->NewRow(), "Lambda_phi", 0, 500000, 0.1, 2); // vec
+    Lambda_th = new DoubleSpinBox(actorBox->LastRowLastCol(), "Lambda_th", 0, 500000, 0.1, 2); // vec
+    Lambda_psi = new DoubleSpinBox(actorBox->LastRowLastCol(), "Lambda_psi", 0, 500000, 0.1, 2); // vec
 
     Gamma_c = new DoubleSpinBox(criticBox->NewRow(), "Gamma_c", 0, 50, 0.1, 2); 
     gamma = new DoubleSpinBox(criticBox->LastRowLastCol(), "gamma", 0, 1000, 1, 2); // vec
     p = new DoubleSpinBox(criticBox->LastRowLastCol(), "p", 0, 300, 0.1, 2);
-    goal = new DoubleSpinBox(criticBox->LastRowLastCol(), "goal", 0, 1, 0.0001, 6);
+    goal = new DoubleSpinBox(criticBox->LastRowLastCol(), "goal", 0, 50, 0.0001, 6);
     alph_l = new DoubleSpinBox(criticBox->LastRowLastCol(), "alpha l", 0, 10000, 0.1, 3);
     lamb_l = new DoubleSpinBox(criticBox->LastRowLastCol(), "lamb l", 0, 10000, 0.1, 3);
     //gamma = new DoubleSpinBox(criticBox->LastRowLastCol(), "p", -2, 2, 0.1, 2);
     
     setupLawTab2 = new Tab(tabWidget2, "Setup Sliding");
     setupLawKDvar = new Tab(tabWidget2, "Setup Sliding kd var");
+    setuoLawKDvarh = new Tab(tabWidget2, "Setup Sliding kd var h");
     setupLawTab3 = new Tab(tabWidget2, "Setup Sliding Pos");
     graphLawTab2 = new Tab(tabWidget2, "Graficas Sliding");
     graphLawKDvar = new Tab(tabWidget2, "Graficas Sliding kd var");
+    graphLawKDvarh = new Tab(tabWidget2, "Graficas Sliding kd var h");
     graphLawTab3 = new Tab(tabWidget2, "Graficas Sliding Pos");
 
     Tab *posTab = new Tab(getFrameworkManager()->GetTabWidget(), "position");
@@ -177,6 +184,7 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     control_select=new ComboBox(groupbox->NewRow(),"select control");
     control_select->AddItem("Sliding");
     control_select->AddItem("Sliding_kd_var");
+    control_select->AddItem("Sliding_kd_var_h");
     control_select->AddItem("Sliding Pos");
     //control_select->AddItem("Sliding Force-Position");
     
@@ -217,6 +225,19 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     u_sliding_pos->UseDefaultPlot6(positiongTab->At(0, 1));
     u_sliding_pos->UseDefaultPlot7(positiongTab->At(0, 2));
     
+    u_sliding_kdvar_h = new Sliding_kdvar_h(setuoLawKDvarh->At(0, 0), "u_smc_kdvar_h");
+    u_sliding_kdvar_h->UseDefaultPlot(graphLawKDvarh->At(0, 0));
+    u_sliding_kdvar_h->UseDefaultPlot2(graphLawKDvarh->At(0, 1));
+    u_sliding_kdvar_h->UseDefaultPlot3(graphLawKDvarh->At(0, 2));
+    u_sliding_kdvar_h->UseDefaultPlot4(graphLawKDvarh->At(1, 2));
+    u_sliding_kdvar_h->UseDefaultPlot8(graphLawKDvarh->At(1, 0));
+    u_sliding_kdvar_h->UseDefaultPlot9(graphLawKDvarh->At(1, 1));
+    u_sliding_kdvar_h->UseDefaultPlot5(positiongTab->At(1, 0));
+    u_sliding_kdvar_h->UseDefaultPlot6(positiongTab->At(1, 1));
+    u_sliding_kdvar_h->UseDefaultPlot7(positiongTab->At(1, 2));
+
+    u_sliding_kdvar_h->UseDefaultPlot10(setupLawTabACph->At(1, 0));
+    u_sliding_kdvar_h->UseDefaultPlot11(setupLawTabACph->At(1, 1));
     
     customOrientation=new AhrsData(this,"orientation");
 
@@ -251,10 +272,15 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     //getFrameworkManager()->AddDeviceToLog(u_sliding);
     AddDeviceToControlLawLog(u_sliding);
     AddDeviceToControlLawLog(u_sliding_kdvar);
+    AddDeviceToControlLawLog(u_sliding_kdvar_h);
     AddDeviceToControlLawLog(u_sliding_pos);
     //AddDeviceToControlLawLog(u_sliding_force);
 
+    //getFrameworkManager()->AddDeviceToLog(b);
 
+    battery = uav->GetBatteryMonitor();
+    
+    
 }
 
 kd_variable::~kd_variable() {
@@ -273,10 +299,13 @@ void kd_variable::ComputeCustomTorques(Euler &torques) {
             sliding_kdvar_ctrl(torques);
             break;
         case 2:
+            sliding_ctrl_kdvar_h(torques);
+            break;
+        case 3:
             sliding_ctrl_pos(torques);
             break;
         
-        case 3:
+        case 4:
             //sliding_ctrl_force(torques);
             break;
     }
@@ -374,12 +403,14 @@ void kd_variable::ExtraCheckJoystick(void) {
 
 void kd_variable::Startkd_variable(void) {
     control_select->setEnabled(false);
+    //b = Vector3Df(0,0,0);
     //ask UavStateMachine to enter in custom torques
     if (SetTorqueMode(TorqueMode_t::Custom) && SetThrustMode(ThrustMode_t::Custom)) {
         Thread::Info("kd_variable: start\n");
         u_sliding->Reset();
         u_sliding_kdvar->Reset();
         u_sliding_pos->Reset();
+        u_sliding_kdvar_h->Reset();
         //u_sliding_force->Reset();
     } else {
         Thread::Warn("kd_variable: could not start\n");
@@ -397,11 +428,15 @@ void kd_variable::Startkd_variable(void) {
             Thread::Info("Sliding kfvar\n");
             break;
         case 2:
+            l2->SetText("Control: Sliding kdvar h");
+            Thread::Info("Sliding kdvar h\n");
+            break;
+        case 3:
             l2->SetText("Control: Sliding pos");
             Thread::Info("Sliding pos\n");
             break;
         
-        case 3:
+        case 4:
             //l2->SetText("Control: Sliding force-position");
             //Thread::Info("Sliding force-position\n");
             break;
@@ -595,7 +630,7 @@ void kd_variable::sliding_kdvar_ctrl(Euler &torques){
     
     float ze = z - refAltitude;
 
-    Vector3Df Lambda_v(Lambda->Value(),Lambda->Value(),Lambda->Value()); 
+    Vector3Df Lambda_v(Lambda_phi->Value(),Lambda_th->Value(),Lambda_psi->Value()); 
     Vector3Df GammaC_v(Gamma_c->Value(),Gamma_c->Value(),Gamma_c->Value());
     int gamma_ = gamma->Value();
     int p_ = p->Value();
@@ -667,6 +702,67 @@ void kd_variable::sliding_ctrl_pos(Euler &torques){
     thrust = u_sliding_pos->Output(3);
 }
 
+void kd_variable::sliding_ctrl_kdvar_h(Euler &torques){
+    float tactual=double(GetTime())/1000000000-u_sliding_pos->t0;
+    //printf("t: %f\n",tactual);
+    Vector3Df xid, xidp, xidpp, xidppp;
+    const AhrsData *refOrientation = GetDefaultReferenceOrientation();
+    Quaternion refQuaternion;
+    Vector3Df refAngularRates;
+    refOrientation->GetQuaternionAndAngularRates(refQuaternion, refAngularRates);
+
+    Vector3Df uav_pos,uav_vel; // in VRPN coordinate system
+    Quaternion uav_quat;
+
+    flair::core::Time ti = GetTime();
+    uavVrpn->GetPosition(uav_pos);
+    uavVrpn->GetSpeed(uav_vel);
+    uavVrpn->GetQuaternion(uav_quat);
+    flair::core::Time  tf = GetTime()-ti;
+
+    //Printf("pos: %f ms\n",  (float)tf/1000000);
+
+    //Thread::Info("Pos: %f\t %f\t %f\n",uav_pos.x,uav_pos.y, uav_pos.z);
+    //Printf("Pos: %f\t %f\t %f\n",uav_pos.x,uav_pos.y, uav_pos.z);
+    //Printf("Vel: %f\t %f\t %f\n",uav_vel.x,uav_vel.y, uav_vel.z);
+    //Thread::Info("Vel: %f\t %f\t %f\n",uav_vel.x,uav_vel.y, uav_vel.z);
+
+    ti = GetTime();
+    const AhrsData *currentOrientation = GetDefaultOrientation();
+    Quaternion currentQuaternion;
+    Vector3Df currentAngularRates;
+    currentOrientation->GetQuaternionAndAngularRates(currentQuaternion, currentAngularRates);
+    tf = GetTime()-ti;
+
+    //Printf("ori: %f ms\n",  (float)tf/1000000);
+    
+    Vector3Df currentAngularSpeed = GetCurrentAngularSpeed();
+
+
+    //printf("xid: %f\t %f\t %f\n",xid.x,xid.y, xid.z);
+
+    pos_reference(xid, xidp, xidpp, xidppp, tactual);
+
+    Vector3Df Lambda_v(Lambda_phi->Value(),Lambda_th->Value(),Lambda_psi->Value()); 
+    Vector3Df GammaC_v(Gamma_c->Value(),Gamma_c->Value(),Gamma_c->Value());
+    int gamma_ = gamma->Value();
+    int p_ = p->Value();
+    float goal_ = goal->Value();
+    float alph_l_ = alph_l->Value();
+    float lamb_l_ = lamb_l->Value();
+    
+    u_sliding_kdvar_h->SetValues(uav_pos-xid,uav_vel-xidp,xid,xidpp,xidppp,currentAngularRates,currentQuaternion,Lambda_v,GammaC_v,gamma_,
+                                p_,goal_,alph_l_,lamb_l_,refQuaternion, battery->GetVoltage());
+    
+    u_sliding_kdvar_h->Update(GetTime());
+    
+    //Thread::Info("%f\t %f\t %f\t %f\n",u_sliding->Output(0),u_sliding->Output(1), u_sliding->Output(2), u_sliding->Output(3));
+    
+    torques.roll = u_sliding_kdvar_h->Output(0);
+    torques.pitch = u_sliding_kdvar_h->Output(1);
+    torques.yaw = u_sliding_kdvar_h->Output(2);
+    thrust = u_sliding_kdvar_h->Output(3);
+}
 
 // void kd_variable::sliding_ctrl_force(Euler &torques){
 //     float tactual=double(GetTime())/1000000000-u_sliding_pos->t0;

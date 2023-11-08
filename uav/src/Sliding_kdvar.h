@@ -48,6 +48,7 @@ namespace flair {
     
     
 public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     Sliding_kdvar(const flair::gui::LayoutPosition *position, std::string name);
     ~Sliding_kdvar();
     void UpdateFrom(const flair::core::io_data *data);

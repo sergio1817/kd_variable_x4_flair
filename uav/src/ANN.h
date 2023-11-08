@@ -6,7 +6,8 @@
 class ANN 
 {
     public:
-        ANN(const uint16_t DoF);
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+        ANN(const int& DoF);
         ~ANN();
 
         void setLearningParameters(const Eigen::Matrix3f& Lambda_);
@@ -17,6 +18,8 @@ class ANN
 
         Eigen::Matrix3f getK() const { return K; }       
         Eigen::Matrix3f getPsi() const { return Psi; }
+
+        void forgetDamping() {wa = Eigen::Matrix3f::Zero();}
 
     private:
         Eigen::Matrix3f Lambda;

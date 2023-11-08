@@ -37,7 +37,7 @@ float rk4(float(*fPtr)(float), const float iC, const float iCdt, const float dt)
   * 
   * \return Integral of the function
   */
-Eigen::Vector3f rk4_vec(const Eigen::Vector3f iC, const Eigen::Vector3f iCdt, const float dt);
+Eigen::Vector3f rk4_vec(const Eigen::Vector3f& iC, const Eigen::Vector3f& iCdt, const float& dt);
 
 
 /*! \fn function1d.
@@ -52,11 +52,11 @@ float sigmoide(const float a, const float d);
 
 float signth(const float a, const float p);
 
-Eigen::Vector3f signth(const Eigen::Vector3f a, const float p);
+Eigen::Vector3f signth(const Eigen::Vector3f& a, const float p);
 
-Eigen::VectorXf rk4_vec(const Eigen::VectorXf iC, const Eigen::VectorXf iCdt, const float dt);
+Eigen::VectorXf rk4_vec(const Eigen::VectorXf& iC, const Eigen::VectorXf& iCdt, const float& dt);
 
-Eigen::MatrixXf rk4_mat(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float dt);
+Eigen::MatrixXf rk4_mat(const Eigen::MatrixXf& iC, const Eigen::MatrixXf& iCdt, const float& dt);
 
 
 
@@ -105,7 +105,7 @@ public:
     * 
     * \return Derivative of the input signal
     */
-    float Compute(const float f, const float dt);
+    float Compute(const float& f, const float& dt);
 
     /*!
     *
@@ -115,7 +115,7 @@ public:
     * \param dt Time step
     * 
     */
-    void Compute(float &u, const float f, const float dt);
+    void Compute(float &u, const float& f, const float& dt);
 
     /*!
     * \brief Compute the Levant's derivative.
@@ -125,7 +125,7 @@ public:
     * 
     * \return Derivative of the input signal
     */
-    Eigen::Vector3f Compute(const Eigen::Vector3f f, const float dt);
+    Eigen::Vector3f Compute(const Eigen::Vector3f& f, const float& dt);
 
 private:
     std::string mode;
