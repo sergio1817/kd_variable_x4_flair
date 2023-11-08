@@ -78,5 +78,6 @@
         "core": "cpp",
         "dense": "cpp"
     },
-    "codegpt.apiKey": "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"
+    "codegpt.apiKey": "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",
+    "C_Cpp.errorSquiggles": "disabled"
 }
