@@ -46,14 +46,14 @@ Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): C
     // init matrix
     input = new Matrix(this, 4, 11, floatType, name);
 
-    MatrixDescriptor *desc = new MatrixDescriptor(20, 1);
+    MatrixDescriptor *desc = new MatrixDescriptor(26, 1);
     desc->SetElementName(0, 0, "u_roll");
     desc->SetElementName(1, 0, "u_pitch");
     desc->SetElementName(2, 0, "u_yaw");
     desc->SetElementName(3, 0, "u_z");
-    desc->SetElementName(4, 0, "roll");
-    desc->SetElementName(5, 0, "pitch");
-    desc->SetElementName(6, 0, "yaw");
+    desc->SetElementName(4, 0, "roll_d");
+    desc->SetElementName(5, 0, "pitch_d");
+    desc->SetElementName(6, 0, "yaw_d");
     desc->SetElementName(7, 0, "nurp_x");
     desc->SetElementName(8, 0, "nurp_y");
     desc->SetElementName(9, 0, "nurp_z");
@@ -66,7 +66,13 @@ Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): C
     desc->SetElementName(16, 0, "r_phi");
     desc->SetElementName(17, 0, "r_theta");
     desc->SetElementName(18, 0, "r_psi");
-    desc->SetElementName(19, 0, "battery");
+    desc->SetElementName(19, 0, "ec_phi");
+    desc->SetElementName(20, 0, "ec_theta");
+    desc->SetElementName(21, 0, "ec_psi");
+    desc->SetElementName(22, 0, "J_phi");
+    desc->SetElementName(23, 0, "J_theta");
+    desc->SetElementName(24, 0, "J_psi");
+    desc->SetElementName(25, 0, "battery");
     state = new Matrix(this, desc, floatType, name);
     delete desc;
 
@@ -329,7 +335,7 @@ void Sliding_kdvar_h::UseDefaultPlot9(const LayoutPosition *position) {
 }
 
 void Sliding_kdvar_h::UseDefaultPlot10(const LayoutPosition *position) {    
-    DataPlot1D *Kd = new DataPlot1D(position, "Kd", -1, 100);
+    DataPlot1D *Kd = new DataPlot1D(position, "Kd", -1, 10);
     Kd->AddCurve(state->Element(13), DataPlot::Green);
     Kd->AddCurve(state->Element(14), DataPlot::Red);
     Kd->AddCurve(state->Element(15), DataPlot::Black);
@@ -341,6 +347,22 @@ void Sliding_kdvar_h::UseDefaultPlot11(const LayoutPosition *position) {
     rew->AddCurve(state->Element(16), DataPlot::Green);
     rew->AddCurve(state->Element(17), DataPlot::Red);
     rew->AddCurve(state->Element(18), DataPlot::Black);
+    
+}
+
+void Sliding_kdvar_h::UseDefaultPlot12(const LayoutPosition *position) {    
+    DataPlot1D *ec = new DataPlot1D(position, "ec", -5, 5);
+    ec->AddCurve(state->Element(19), DataPlot::Green);
+    ec->AddCurve(state->Element(20), DataPlot::Red);
+    ec->AddCurve(state->Element(21), DataPlot::Black);
+    
+}
+
+void Sliding_kdvar_h::UseDefaultPlot13(const LayoutPosition *position) {    
+    DataPlot1D *J = new DataPlot1D(position, "J", 0, 3000);
+    J->AddCurve(state->Element(22), DataPlot::Green);
+    J->AddCurve(state->Element(23), DataPlot::Red);
+    J->AddCurve(state->Element(24), DataPlot::Black);
     
 }
 
@@ -469,6 +491,7 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
 
 
     Eigen::Quaternionf qd( (0.5)*sqrtf(-2*uh(2)+2) , uh(1)/sqrtf(-2*uh(2)+2), -uh(0)/sqrtf(-2*uh(2)+2), 0);
+    
 
     Eigen::Quaternionf qdp(-(0.5)*(uph(2)/sqrtf(-2*uh(2)+2)),
                             (uph(1)/sqrtf(-2*uh(2)+2)) + ((uh(1)*uph(2))/powf(-2*uh(2)+2,1.5)),
@@ -553,6 +576,12 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
 
     Eigen::Vector3f reward = kd_var->getR();
 
+    Eigen::Vector3f ec = kd_var->getEc();
+
+    Eigen::Vector3f J = kd_var->getJ();
+
+    Eigen::Matrix3f psi = kd_var->getPsi();
+
     Eigen::Vector3f tau = -Kdm*nur;
 
     flair::core::Time dt_ori = GetTime() - t0_o;
@@ -593,7 +622,13 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(16, 0, reward(0));
     state->SetValueNoMutex(17, 0, reward(1));
     state->SetValueNoMutex(18, 0, reward(2));
-    state->SetValueNoMutex(19, 0, battery);
+    state->SetValueNoMutex(19, 0, ec(0));
+    state->SetValueNoMutex(20, 0, ec(1));
+    state->SetValueNoMutex(21, 0, ec(2));
+    state->SetValueNoMutex(22, 0, J(0));
+    state->SetValueNoMutex(23, 0, J(1));
+    state->SetValueNoMutex(24, 0, J(2));
+    state->SetValueNoMutex(25, 0, battery);
     //state->SetDataTime(data->DataTime());
     state->ReleaseMutex();
 

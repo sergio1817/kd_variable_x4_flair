@@ -221,9 +221,9 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     u_sliding_pos->UseDefaultPlot8(graphLawTab3->At(1, 0));
     u_sliding_pos->UseDefaultPlot9(graphLawTab3->At(1, 1));
 
-    u_sliding_pos->UseDefaultPlot5(positiongTab->At(0, 0));
-    u_sliding_pos->UseDefaultPlot6(positiongTab->At(0, 1));
-    u_sliding_pos->UseDefaultPlot7(positiongTab->At(0, 2));
+    //u_sliding_pos->UseDefaultPlot5(positiongTab->At(0, 0));
+    //u_sliding_pos->UseDefaultPlot6(positiongTab->At(0, 1));
+    //u_sliding_pos->UseDefaultPlot7(positiongTab->At(0, 2));
     
     u_sliding_kdvar_h = new Sliding_kdvar_h(setuoLawKDvarh->At(0, 0), "u_smc_kdvar_h");
     u_sliding_kdvar_h->UseDefaultPlot(graphLawKDvarh->At(0, 0));
@@ -236,8 +236,10 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     u_sliding_kdvar_h->UseDefaultPlot6(positiongTab->At(1, 1));
     u_sliding_kdvar_h->UseDefaultPlot7(positiongTab->At(1, 2));
 
-    u_sliding_kdvar_h->UseDefaultPlot10(setupLawTabACph->At(1, 0));
-    u_sliding_kdvar_h->UseDefaultPlot11(setupLawTabACph->At(1, 1));
+    u_sliding_kdvar_h->UseDefaultPlot10(setupLawTabACph->At(0, 0));
+    u_sliding_kdvar_h->UseDefaultPlot11(setupLawTabACph->At(0, 1));
+    u_sliding_kdvar_h->UseDefaultPlot12(setupLawTabACph->At(1, 0));
+    u_sliding_kdvar_h->UseDefaultPlot13(setupLawTabACph->At(1, 1));
     
     customOrientation=new AhrsData(this,"orientation");
 
