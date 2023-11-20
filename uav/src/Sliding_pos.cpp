@@ -45,7 +45,7 @@ Sliding_pos::Sliding_pos(const LayoutPosition *position, string name): ControlLa
     // init matrix
     input = new Matrix(this, 4, 8, floatType, name);
 
-    MatrixDescriptor *desc = new MatrixDescriptor(13, 1);
+    MatrixDescriptor *desc = new MatrixDescriptor(14, 1);
     desc->SetElementName(0, 0, "u_roll");
     desc->SetElementName(1, 0, "u_pitch");
     desc->SetElementName(2, 0, "u_yaw");
@@ -59,6 +59,7 @@ Sliding_pos::Sliding_pos(const LayoutPosition *position, string name): ControlLa
     desc->SetElementName(10, 0, "nur_roll");
     desc->SetElementName(11, 0, "nur_pitch");
     desc->SetElementName(12, 0, "nur_yaw");
+    desc->SetElementName(13, 0, "battery");
     state = new Matrix(this, desc, floatType, name);
     delete desc;
 
@@ -120,7 +121,7 @@ Sliding_pos::Sliding_pos(const LayoutPosition *position, string name): ControlLa
     sgnori_p << 0,0,0;
     sgnori << 0,0,0;
     
-    
+    AddDataToLog(state);
 }
 
 Sliding_pos::~Sliding_pos(void) {}
@@ -148,7 +149,7 @@ void Sliding_pos::Reset(void) {
 //    pimpl_->first_update = true;
 }
 
-void Sliding_pos::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector3Df xidpp, Vector3Df xidppp, Vector3Df w, Quaternion q){
+void Sliding_pos::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector3Df xidpp, Vector3Df xidppp, Vector3Df w, Quaternion q, float battery){
 
     // float xe = xie.x;
     // float ye = xie.y;
@@ -186,6 +187,7 @@ void Sliding_pos::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector
     input->SetValue(0, 0, xie.x);
     input->SetValue(1, 0, xie.y);
     input->SetValue(2, 0, xie.z);
+    input->SetValue(3, 0, battery);
 
     input->SetValue(0, 1, xiep.x);
     input->SetValue(1, 1, xiep.y);
@@ -344,6 +346,8 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
     Eigen::Vector3f w(input->ValueNoMutex(0, 6),input->ValueNoMutex(1, 6),input->ValueNoMutex(2, 6));
 
     Eigen::Quaternionf q(input->ValueNoMutex(0, 7),input->ValueNoMutex(1, 7),input->ValueNoMutex(2, 7),input->ValueNoMutex(3, 7));
+
+    float battery = input->ValueNoMutex(3, 0);
     
     input->ReleaseMutex();
 
@@ -488,6 +492,7 @@ void Sliding_pos::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(10, 0, nuq.x());
     state->SetValueNoMutex(11, 0, nuq.y());
     state->SetValueNoMutex(12, 0, nuq.z());
+    state->SetValueNoMutex(13, 0, battery);
     state->ReleaseMutex();
 
 

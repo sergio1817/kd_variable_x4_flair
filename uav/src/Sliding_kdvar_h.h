@@ -83,6 +83,7 @@ public:
     void UseDefaultPlot11(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot12(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot13(const flair::gui::LayoutPosition *position);
+    void UseDefaultPlot14(const flair::gui::LayoutPosition *position);
 
     
     

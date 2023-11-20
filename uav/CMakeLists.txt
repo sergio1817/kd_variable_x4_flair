@@ -40,6 +40,7 @@ SET(SRC_FILES
 	src/ANN_LP.cpp 
 	src/CNN_LP.cpp 
 	src/Actor_tauContribution_LP.cpp
+	src/Sliding_LP.cpp
 )
 
 FLAIR_DEMO(${PROJECT_NAME} "${SRC_FILES}"

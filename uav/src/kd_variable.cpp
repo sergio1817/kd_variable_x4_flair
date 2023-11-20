@@ -240,6 +240,7 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     u_sliding_kdvar_h->UseDefaultPlot11(setupLawTabACph->At(0, 1));
     u_sliding_kdvar_h->UseDefaultPlot12(setupLawTabACph->At(1, 0));
     u_sliding_kdvar_h->UseDefaultPlot13(setupLawTabACph->At(1, 1));
+    u_sliding_kdvar_h->UseDefaultPlot14(setupLawTabACph->At(1, 2));
     
     customOrientation=new AhrsData(this,"orientation");
 
@@ -692,7 +693,7 @@ void kd_variable::sliding_ctrl_pos(Euler &torques){
 
     pos_reference(xid, xidp, xidpp, xidppp, tactual);
     
-    u_sliding_pos->SetValues(uav_pos-xid,uav_vel-xidp,xid,xidpp,xidppp,currentAngularRates,currentQuaternion);
+    u_sliding_pos->SetValues(uav_pos-xid,uav_vel-xidp,xid,xidpp,xidppp,currentAngularRates,currentQuaternion, battery->GetVoltage());
     
     u_sliding_pos->Update(GetTime());
     

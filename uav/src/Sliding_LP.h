@@ -10,11 +10,12 @@
  * \version 1.0
  */
 
-#ifndef SLIDING_POS_H
-#define SLIDING_POS_H
+#ifndef SLIDING_LP_H
+#define SLIDING_LP_H
 
 #include <Object.h>
 #include "NMethods.h"
+#include "Actor_tauContribution_LP.h"
 #include <ControlLaw.h>
 #include <Eigen/Dense>
 #include <Vector3D.h>
@@ -32,24 +33,24 @@ namespace flair {
     }
 }
 
-/*! \class Sliding_pos
-* \brief Class defining a Sliding_pos
+/*! \class Sliding_LP
+* \brief Class defining a Sliding_LP
 */
 
     
     
 namespace flair {
     namespace filter {
-    /*! \class Sliding_pos
+    /*! \class Sliding_LP
     *
-    * \brief Class defining a Sliding_pos
+    * \brief Class defining a Sliding_LP
     */
-        class Sliding_pos : public ControlLaw {
+        class Sliding_LP : public ControlLaw {
     
     
 public:
-    Sliding_pos(const flair::gui::LayoutPosition *position, std::string name);
-    ~Sliding_pos();
+    Sliding_LP(const flair::gui::LayoutPosition *position, std::string name);
+    ~Sliding_LP();
     void UpdateFrom(const flair::core::io_data *data);
     void Reset(void);
     
@@ -65,7 +66,9 @@ public:
   * \param q Cuaternio de orientacion
   */
     void SetValues(flair::core::Vector3Df xie, flair::core::Vector3Df xiep, flair::core::Vector3Df xid, 
-                    flair::core::Vector3Df xidpp, flair::core::Vector3Df xidppp, flair::core::Vector3Df w, flair::core::Quaternion q, float battery);
+                    flair::core::Vector3Df xidpp, flair::core::Vector3Df xidppp, flair::core::Vector3Df w, flair::core::Quaternion q,
+                    flair::core::Vector3Df Lambda, flair::core::Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l, 
+                    flair::core::Quaternion q_p, float battery);
     
     void UseDefaultPlot(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot2(const flair::gui::LayoutPosition *position);
@@ -76,19 +79,24 @@ public:
     void UseDefaultPlot7(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot8(const flair::gui::LayoutPosition *position);
     void UseDefaultPlot9(const flair::gui::LayoutPosition *position);
+    void UseDefaultPlot10(const flair::gui::LayoutPosition *position);
+    void UseDefaultPlot11(const flair::gui::LayoutPosition *position);
+    void UseDefaultPlot12(const flair::gui::LayoutPosition *position);
+    void UseDefaultPlot13(const flair::gui::LayoutPosition *position);
 
     
     
     flair::core::Time t0;
+    flair::core::Matrix *state;
 
 private:
-    flair::core::Matrix *state;
+    
     Levant_diff levant;
 
     float sech(float value);
 
-    flair::gui::CheckBox *levantd;
-    flair::gui::DoubleSpinBox *T, *gamma, *k, *sat_r, *sat_p, *sat_y, *sat_t, *m, *g, *km, *p, *km_z;
+    flair::gui::CheckBox *levantd, *pert;
+    flair::gui::DoubleSpinBox *T, *gamma, *k, *sat_r, *sat_p, *sat_y, *sat_t, *m, *g, *km, *p, *km_z, *pert_g;
     flair::gui::DoubleSpinBox *gamma_roll, *gamma_pitch, *gamma_yaw, *gamma_x, *gamma_y, *gamma_z;
     flair::gui::DoubleSpinBox *alpha_roll, *alpha_pitch, *alpha_yaw, *alpha_x, *alpha_y, *alpha_z;
     flair::gui::DoubleSpinBox *Kd_roll, *Kd_pitch, *Kd_yaw, *Kd_x, *Kd_y, *Kd_z;
@@ -106,6 +114,8 @@ private:
     Eigen::Vector3f sgnpos_p, sgnpos, sgnori_p, sgnori;
 
     Eigen::Matrix3f I = Eigen::Matrix3f::Identity(3,3);
+
+    Actor_tauContribution_LP *Yr;
 
     //flair::core::Vector3ff sgnori_p, sgnori;
     

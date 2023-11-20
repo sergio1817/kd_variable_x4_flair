@@ -3,7 +3,7 @@
 // CECILL-C License, Version 1.0.
 // %flair:license}
 //  created:    2023/01/01
-//  filename:   Sliding_kdvar_h.cpp
+//  filename:   Sliding_LP.cpp
 //
 //  author:     Sergio Urzua
 //              Copyright Heudiasyc UMR UTC/CNRS 7253
@@ -14,9 +14,9 @@
 //
 //
 /*********************************************************************/
-#include "Sliding_kdvar_h.h"
+#include "Sliding_LP.h"
 #include "NMethods.h"
-#include "DILWAC.h"
+#include "Actor_tauContribution_LP.h"
 #include <Matrix.h>
 #include <Vector3D.h>
 #include <Eigen/Dense>
@@ -41,12 +41,12 @@ using namespace flair::filter;
 namespace flair {
 namespace filter {
 
-Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): ControlLaw(position->getLayout(), name, 4){ // Salidas 4
+Sliding_LP::Sliding_LP(const LayoutPosition *position, string name): ControlLaw(position->getLayout(), name, 4){ // Salidas 4
     first_update = true;
     // init matrix
     input = new Matrix(this, 4, 11, floatType, name);
 
-    MatrixDescriptor *desc = new MatrixDescriptor(29, 1);
+    MatrixDescriptor *desc = new MatrixDescriptor(26, 1);
     desc->SetElementName(0, 0, "u_roll");
     desc->SetElementName(1, 0, "u_pitch");
     desc->SetElementName(2, 0, "u_yaw");
@@ -72,10 +72,7 @@ Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): C
     desc->SetElementName(22, 0, "J_phi");
     desc->SetElementName(23, 0, "J_theta");
     desc->SetElementName(24, 0, "J_psi");
-    desc->SetElementName(25, 0, "Psi_phi");
-    desc->SetElementName(26, 0, "Psi_th");
-    desc->SetElementName(27, 0, "Psi_psi");
-    desc->SetElementName(28, 0, "battery");
+    desc->SetElementName(25, 0, "battery");
     state = new Matrix(this, desc, floatType, name);
     delete desc;
 
@@ -137,7 +134,7 @@ Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): C
     sgnori_p << 0,0,0;
     sgnori << 0,0,0;
 
-    kd_var = new DILWAC(3,4);
+    Yr = new Actor_tauContribution_LP();
 
     pert = new CheckBox(num->LastRowLastCol(), "Perturbacion");
     pert_g = new DoubleSpinBox(num->LastRowLastCol(), "Gain Pert:", 0, 1, 0.1);
@@ -147,9 +144,9 @@ Sliding_kdvar_h::Sliding_kdvar_h(const LayoutPosition *position, string name): C
     
 }
 
-Sliding_kdvar_h::~Sliding_kdvar_h(void) {}
+Sliding_LP::~Sliding_LP(void) {}
 
-void Sliding_kdvar_h::Reset(void) {
+void Sliding_LP::Reset(void) {
     first_update = true;
     t0 = 0;
     t0 = double(GetTime())/1000000000;
@@ -157,7 +154,7 @@ void Sliding_kdvar_h::Reset(void) {
     sgnori << 0,0,0;
 
     levant.Reset();
-    kd_var->forgetDamping();
+    //kd_var->forgetDamping();
 
     // sgnpos2 = Vector3ff(0,0,0);
     // sgn2 = Vector3ff(0,0,0);
@@ -173,7 +170,7 @@ void Sliding_kdvar_h::Reset(void) {
 //    pimpl_->first_update = true;
 }
 
-void Sliding_kdvar_h::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector3Df xidpp, Vector3Df xidppp, Vector3Df w, Quaternion q, 
+void Sliding_LP::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Vector3Df xidpp, Vector3Df xidppp, Vector3Df w, Quaternion q, 
                                 Vector3Df Lambda, Vector3Df GammaC, int gamma, int p, float goal, float alph_l, float lamb_l, Quaternion q_p, 
                                 float battery){
 
@@ -279,49 +276,49 @@ void Sliding_kdvar_h::SetValues(Vector3Df xie, Vector3Df xiep, Vector3Df xid, Ve
 //   input->SetValue(3, 2, qd3);
 }
 
-void Sliding_kdvar_h::UseDefaultPlot(const LayoutPosition *position) {
+void Sliding_LP::UseDefaultPlot(const LayoutPosition *position) {
     DataPlot1D *rollg = new DataPlot1D(position, "u_roll", -1, 1);
     rollg->AddCurve(state->Element(0));
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot2(const LayoutPosition *position) {
+void Sliding_LP::UseDefaultPlot2(const LayoutPosition *position) {
     DataPlot1D *pitchg = new DataPlot1D(position, "u_pitch", -1, 1);
     pitchg->AddCurve(state->Element(1));
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot3(const LayoutPosition *position) {
+void Sliding_LP::UseDefaultPlot3(const LayoutPosition *position) {
     DataPlot1D *yawg = new DataPlot1D(position, "u_yaw", -1, 1);
     yawg->AddCurve(state->Element(2));
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot4(const LayoutPosition *position) {    
+void Sliding_LP::UseDefaultPlot4(const LayoutPosition *position) {    
     DataPlot1D *uz = new DataPlot1D(position, "u_z", -1, 1);
     uz->AddCurve(state->Element(3));
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot5(const LayoutPosition *position) {    
+void Sliding_LP::UseDefaultPlot5(const LayoutPosition *position) {    
     DataPlot1D *r = new DataPlot1D(position, "r", -3.14, 3.14);
     r->AddCurve(state->Element(4));
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot6(const LayoutPosition *position) {    
+void Sliding_LP::UseDefaultPlot6(const LayoutPosition *position) {    
     DataPlot1D *p = new DataPlot1D(position, "p", -3.14, 3.14);
     p->AddCurve(state->Element(5));
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot7(const LayoutPosition *position) {    
+void Sliding_LP::UseDefaultPlot7(const LayoutPosition *position) {    
     DataPlot1D *y = new DataPlot1D(position, "y", -3.14, 3.14);
     y->AddCurve(state->Element(6));
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot8(const LayoutPosition *position) {    
+void Sliding_LP::UseDefaultPlot8(const LayoutPosition *position) {    
     DataPlot1D *Sp = new DataPlot1D(position, "nu_rp", -5, 5);
     Sp->AddCurve(state->Element(7), DataPlot::Red);
     Sp->AddCurve(state->Element(8), DataPlot::Green);
@@ -329,7 +326,7 @@ void Sliding_kdvar_h::UseDefaultPlot8(const LayoutPosition *position) {
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot9(const LayoutPosition *position) {    
+void Sliding_LP::UseDefaultPlot9(const LayoutPosition *position) {    
     DataPlot1D *Sq = new DataPlot1D(position, "nu_r", -5, 5);
     Sq->AddCurve(state->Element(10), DataPlot::Green);
     Sq->AddCurve(state->Element(11), DataPlot::Red);
@@ -337,7 +334,7 @@ void Sliding_kdvar_h::UseDefaultPlot9(const LayoutPosition *position) {
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot10(const LayoutPosition *position) {    
+void Sliding_LP::UseDefaultPlot10(const LayoutPosition *position) {    
     DataPlot1D *Kd = new DataPlot1D(position, "Kd", -1, 10);
     Kd->AddCurve(state->Element(13), DataPlot::Green);
     Kd->AddCurve(state->Element(14), DataPlot::Red);
@@ -345,7 +342,7 @@ void Sliding_kdvar_h::UseDefaultPlot10(const LayoutPosition *position) {
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot11(const LayoutPosition *position) {    
+void Sliding_LP::UseDefaultPlot11(const LayoutPosition *position) {    
     DataPlot1D *rew = new DataPlot1D(position, "reward", -110, 10);
     rew->AddCurve(state->Element(16), DataPlot::Green);
     rew->AddCurve(state->Element(17), DataPlot::Red);
@@ -353,33 +350,24 @@ void Sliding_kdvar_h::UseDefaultPlot11(const LayoutPosition *position) {
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot12(const LayoutPosition *position) {    
-    DataPlot1D *ec = new DataPlot1D(position, "ec", -1, 1);
+void Sliding_LP::UseDefaultPlot12(const LayoutPosition *position) {    
+    DataPlot1D *ec = new DataPlot1D(position, "ec", -5, 5);
     ec->AddCurve(state->Element(19), DataPlot::Green);
     ec->AddCurve(state->Element(20), DataPlot::Red);
     ec->AddCurve(state->Element(21), DataPlot::Black);
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot13(const LayoutPosition *position) {    
-    DataPlot1D *J = new DataPlot1D(position, "J", 0, 500);
+void Sliding_LP::UseDefaultPlot13(const LayoutPosition *position) {    
+    DataPlot1D *J = new DataPlot1D(position, "J", 0, 3000);
     J->AddCurve(state->Element(22), DataPlot::Green);
     J->AddCurve(state->Element(23), DataPlot::Red);
     J->AddCurve(state->Element(24), DataPlot::Black);
     
 }
 
-void Sliding_kdvar_h::UseDefaultPlot14(const LayoutPosition *position) {    
-    DataPlot1D *Psi = new DataPlot1D(position, "Psi", -1.1, 1.1);
-    Psi->AddCurve(state->Element(25), DataPlot::Green);
-    Psi->AddCurve(state->Element(26), DataPlot::Red);
-    Psi->AddCurve(state->Element(27), DataPlot::Black);
-    
-}
 
-
-
-void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
+void Sliding_LP::UpdateFrom(const io_data *data) {
     float tactual=double(GetTime())/1000000000-t0;
     //Printf("tactual: %f\n",tactual);
     float Trs=0, tau_roll=0, tau_pitch=0, tau_yaw=0, Tr=0;
@@ -401,7 +389,7 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     Eigen::Matrix3f gammao = gammao_v.asDiagonal();
 
     Eigen::Vector3f Kdv(Kd_roll->Value(), Kd_pitch->Value(), Kd_yaw->Value());
-    //Eigen::Matrix3f Kdm = Kdv.asDiagonal();
+    Eigen::Matrix3f Kdm = Kdv.asDiagonal();
 
     if (T->Value() == 0) {
         delta_t = (float)(data->DataDeltaTime()) / 1000000000.;
@@ -537,14 +525,12 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     //std::cout<<"w: " << w << std::endl;
     //std::cout<<"wd: " << wd << std::endl;
 
-    kd_var->setANN(Lambda);
-    kd_var->setCNN(gamma, penalty, GammaC, goal, alph_l2, lamb_l2);
 
     flair::core::Time dt_pos = GetTime() - t0_p;
 
     //lp->SetText("Latecia pos: %.3f ms",(float)dt_pos/1000000);
 
-    
+    //Yr->setCNN();
 
     flair::core::Time t0_o = GetTime();
 
@@ -582,17 +568,17 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
 
     Eigen::Vector3f nur = nuq + gammao*sgnori;
 
-    Eigen::Matrix3f Kdm = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
+    //Eigen::Matrix3f Kdm = kd_var->learnDampingInjection(we, qe, qep, nuq, qd, q, qp, qdp, delta_t);
 
-    printf("Kdm: %f %f %f\n",Kdm(0,0),Kdm(1,1),Kdm(2,2));
+    //printf("Kdm: %f %f %f\n",Kdm(0,0),Kdm(1,1),Kdm(2,2));
 
-    Eigen::Vector3f reward = kd_var->getR();
+    //Eigen::Vector3f reward = kd_var->getR();
 
-    Eigen::Vector3f ec = kd_var->getEc();
+    //Eigen::Vector3f ec = kd_var->getEc();
 
-    Eigen::Vector3f J = kd_var->getJ();
+    //Eigen::Vector3f J = kd_var->getJ();
 
-    Eigen::Matrix3f Psi = kd_var->getPsi();
+    //Eigen::Matrix3f psi = kd_var->getPsi();
 
     Eigen::Vector3f tau = -Kdm*nur;
 
@@ -628,22 +614,19 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(10, 0, nuq.x());
     state->SetValueNoMutex(11, 0, nuq.y());
     state->SetValueNoMutex(12, 0, nuq.z());
-    state->SetValueNoMutex(13, 0, Kdm(0,0));
-    state->SetValueNoMutex(14, 0, Kdm(1,1));
-    state->SetValueNoMutex(15, 0, Kdm(2,2));
-    state->SetValueNoMutex(16, 0, reward(0));
-    state->SetValueNoMutex(17, 0, reward(1));
-    state->SetValueNoMutex(18, 0, reward(2));
-    state->SetValueNoMutex(19, 0, ec(0));
-    state->SetValueNoMutex(20, 0, ec(1));
-    state->SetValueNoMutex(21, 0, ec(2));
-    state->SetValueNoMutex(22, 0, J(0));
-    state->SetValueNoMutex(23, 0, J(1));
-    state->SetValueNoMutex(24, 0, J(2));
-    state->SetValueNoMutex(25, 0, Psi(0,0));
-    state->SetValueNoMutex(26, 0, Psi(1,1));
-    state->SetValueNoMutex(27, 0, Psi(2,2));
-    state->SetValueNoMutex(28, 0, battery);
+    // state->SetValueNoMutex(13, 0, Kdm(0,0));
+    // state->SetValueNoMutex(14, 0, Kdm(1,1));
+    // state->SetValueNoMutex(15, 0, Kdm(2,2));
+    // state->SetValueNoMutex(16, 0, reward(0));
+    // state->SetValueNoMutex(17, 0, reward(1));
+    // state->SetValueNoMutex(18, 0, reward(2));
+    // state->SetValueNoMutex(19, 0, ec(0));
+    // state->SetValueNoMutex(20, 0, ec(1));
+    // state->SetValueNoMutex(21, 0, ec(2));
+    // state->SetValueNoMutex(22, 0, J(0));
+    // state->SetValueNoMutex(23, 0, J(1));
+    // state->SetValueNoMutex(24, 0, J(2));
+    state->SetValueNoMutex(25, 0, battery);
     //state->SetDataTime(data->DataTime());
     state->ReleaseMutex();
 
@@ -659,7 +642,7 @@ void Sliding_kdvar_h::UpdateFrom(const io_data *data) {
     
 }
 
-float Sliding_kdvar_h::Sat(float value, float borne) {
+float Sliding_LP::Sat(float value, float borne) {
     if (value < -borne)
         return -borne;
     if (value > borne)
@@ -667,7 +650,7 @@ float Sliding_kdvar_h::Sat(float value, float borne) {
     return value;
 }
 
-float Sliding_kdvar_h::sech(float value) {
+float Sliding_LP::sech(float value) {
     return 1 / coshf(value);
 }
 
