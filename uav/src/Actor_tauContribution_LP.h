@@ -1,5 +1,5 @@
-#ifndef DILWAC_H //CAMBIAR
-#define DILWAC_H //CAMBIAR
+#ifndef ACTOR_TAUCONTRIBUTION_LP //CAMBIAR
+#define ACTOR_TAUCONTRIBUTION_LP //CAMBIAR
 
 #include <Eigen/Dense>
 #include "ANN_LP.h"
@@ -36,4 +36,4 @@ class Actor_tauContribution_LP
 
 };
 
-#endif // DILWAC_H
+#endif // ACTOR_TAUCONTRIBUTION_LP

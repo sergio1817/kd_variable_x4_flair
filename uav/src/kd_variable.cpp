@@ -14,6 +14,7 @@
 #include "kd_variable.h"
 #include "Sliding.h"
 #include "Sliding_kdvar.h"
+#include "Sliding_LP.h"
 #include "Sliding_pos.h"
 #include "TargetJR3.h"
 #include "Sliding_force.h"
@@ -50,7 +51,7 @@ using namespace flair::filter;
 using namespace flair::meta;
 
 
-kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavStateMachine(controller), behaviourMode(BehaviourMode_t::Default), vrpnLost(false), jr3(jr3) {
+kd_variable::kd_variable(TargetController *controller): UavStateMachine(controller), behaviourMode(BehaviourMode_t::Default), vrpnLost(false), jr3(jr3) {
     Uav* uav=GetUav();
 
     std::string ip_dir;
@@ -241,6 +242,8 @@ kd_variable::kd_variable(TargetController *controller, TargetJR3 *jr3): UavState
     u_sliding_kdvar_h->UseDefaultPlot12(setupLawTabACph->At(1, 0));
     u_sliding_kdvar_h->UseDefaultPlot13(setupLawTabACph->At(1, 1));
     u_sliding_kdvar_h->UseDefaultPlot14(setupLawTabACph->At(1, 2));
+
+    u_sliding_LP = new Sliding_LP(setuoLawKDvarh->At(0, 1),setupLawTabAC->NewRow(), "u_smc_LP");
     
     customOrientation=new AhrsData(this,"orientation");
 
@@ -706,6 +709,69 @@ void kd_variable::sliding_ctrl_pos(Euler &torques){
 }
 
 void kd_variable::sliding_ctrl_kdvar_h(Euler &torques){
+    float tactual=double(GetTime())/1000000000-u_sliding_pos->t0;
+    //printf("t: %f\n",tactual);
+    Vector3Df xid, xidp, xidpp, xidppp;
+    const AhrsData *refOrientation = GetDefaultReferenceOrientation();
+    Quaternion refQuaternion;
+    Vector3Df refAngularRates;
+    refOrientation->GetQuaternionAndAngularRates(refQuaternion, refAngularRates);
+
+    Vector3Df uav_pos,uav_vel; // in VRPN coordinate system
+    Quaternion uav_quat;
+
+    flair::core::Time ti = GetTime();
+    uavVrpn->GetPosition(uav_pos);
+    uavVrpn->GetSpeed(uav_vel);
+    uavVrpn->GetQuaternion(uav_quat);
+    flair::core::Time  tf = GetTime()-ti;
+
+    //Printf("pos: %f ms\n",  (float)tf/1000000);
+
+    //Thread::Info("Pos: %f\t %f\t %f\n",uav_pos.x,uav_pos.y, uav_pos.z);
+    //Printf("Pos: %f\t %f\t %f\n",uav_pos.x,uav_pos.y, uav_pos.z);
+    //Printf("Vel: %f\t %f\t %f\n",uav_vel.x,uav_vel.y, uav_vel.z);
+    //Thread::Info("Vel: %f\t %f\t %f\n",uav_vel.x,uav_vel.y, uav_vel.z);
+
+    ti = GetTime();
+    const AhrsData *currentOrientation = GetDefaultOrientation();
+    Quaternion currentQuaternion;
+    Vector3Df currentAngularRates;
+    currentOrientation->GetQuaternionAndAngularRates(currentQuaternion, currentAngularRates);
+    tf = GetTime()-ti;
+
+    //Printf("ori: %f ms\n",  (float)tf/1000000);
+    
+    Vector3Df currentAngularSpeed = GetCurrentAngularSpeed();
+
+
+    //printf("xid: %f\t %f\t %f\n",xid.x,xid.y, xid.z);
+
+    pos_reference(xid, xidp, xidpp, xidppp, tactual);
+
+    Vector3Df Lambda_v(Lambda_phi->Value(),Lambda_th->Value(),Lambda_psi->Value()); 
+    Vector3Df GammaC_v(Gamma_c->Value(),Gamma_c->Value(),Gamma_c->Value());
+    int gamma_ = gamma->Value();
+    int p_ = p->Value();
+    float goal_ = goal->Value();
+    float alph_l_ = alph_l->Value();
+    float lamb_l_ = lamb_l->Value();
+    
+    u_sliding_kdvar_h->SetValues(uav_pos-xid,uav_vel-xidp,xid,xidpp,xidppp,currentAngularRates,currentQuaternion,Lambda_v,GammaC_v,gamma_,
+                                p_,goal_,alph_l_,lamb_l_,refQuaternion, battery->GetVoltage());
+    
+    u_sliding_kdvar_h->Update(GetTime());
+    
+    //Thread::Info("%f\t %f\t %f\t %f\n",u_sliding->Output(0),u_sliding->Output(1), u_sliding->Output(2), u_sliding->Output(3));
+    
+    torques.roll = u_sliding_kdvar_h->Output(0);
+    torques.pitch = u_sliding_kdvar_h->Output(1);
+    torques.yaw = u_sliding_kdvar_h->Output(2);
+    thrust = u_sliding_kdvar_h->Output(3);
+}
+
+
+void kd_variable::sliding_ctrl_LP_h(Euler &torques){
     float tactual=double(GetTime())/1000000000-u_sliding_pos->t0;
     //printf("t: %f\n",tactual);
     Vector3Df xid, xidp, xidpp, xidppp;

@@ -20,6 +20,7 @@
 #include "Sliding_pos.h"
 #include "Sliding_force.h"
 #include "Sliding_kdvar_h.h"
+#include "Sliding_LP.h"
 
 namespace flair {
     namespace gui {
@@ -38,6 +39,7 @@ namespace flair {
         class Sliding_force;
         class Sliding_kdvar;
         class Sliding_kdvar_h;
+        class Sliding_LP;
     }
     namespace meta {
         class MetaVrpnObject;
@@ -51,7 +53,7 @@ namespace flair {
 
 class kd_variable : public flair::meta::UavStateMachine {
     public:
-        kd_variable(flair::sensor::TargetController *controller, flair::sensor::TargetJR3 *sensor);
+        kd_variable(flair::sensor::TargetController *controller);
         ~kd_variable();
 
     private:
@@ -78,6 +80,7 @@ class kd_variable : public flair::meta::UavStateMachine {
         void sliding_kdvar_ctrl(flair::core::Euler &torques);
         void sliding_ctrl_force(flair::core::Euler &torques);
         void sliding_ctrl_kdvar_h(flair::core::Euler &torques);
+        void sliding_ctrl_LP_h(flair::core::Euler &torques);
         //const flair::core::AhrsData *GetOrientation(void) const;
         void pos_reference(flair::core::Vector3Df &xid, flair::core::Vector3Df &xidp, flair::core::Vector3Df &xidpp, flair::core::Vector3Df &xidppp, float tactual);
 
@@ -86,6 +89,7 @@ class kd_variable : public flair::meta::UavStateMachine {
         flair::filter::Sliding_pos *u_sliding_pos;
         flair::filter::Sliding_force *u_sliding_force;
         flair::filter::Sliding_kdvar_h* u_sliding_kdvar_h;
+        flair::filter::Sliding_LP* u_sliding_LP;
 
         flair::meta::MetaVrpnObject *targetVrpn,*uavVrpn;
         
@@ -94,6 +98,7 @@ class kd_variable : public flair::meta::UavStateMachine {
         flair::sensor::BatteryMonitor *battery;
 
         float thrust;
+
 
         flair::gui::DoubleSpinBox *xd, *yd, *zd, *ax, *wx, *bx, *ay, *wy, *by, *az, *wz, *bz;
         flair::gui::DoubleSpinBox *Lambda_phi, *Lambda_th, *Lambda_psi, *Gamma_c, *gamma, *p, *goal, *alph_l, *lamb_l;

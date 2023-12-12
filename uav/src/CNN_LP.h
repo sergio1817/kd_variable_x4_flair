@@ -1,5 +1,5 @@
-#ifndef CNN_H
-#define CNN_H
+#ifndef CNN_LP_H
+#define CNN_LP_H
 
 #include <Eigen/Dense>
 #include "NMethods.h"

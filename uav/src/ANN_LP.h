@@ -1,5 +1,5 @@
-#ifndef ANN_H
-#define ANN_H
+#ifndef ANN_LP_H
+#define ANN_LP_H
 
 #include <Eigen/Dense>
 

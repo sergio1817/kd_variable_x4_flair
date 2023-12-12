@@ -41,7 +41,7 @@ using namespace flair::filter;
 namespace flair {
 namespace filter {
 
-Sliding_LP::Sliding_LP(const LayoutPosition *position, string name): ControlLaw(position->getLayout(), name, 4){ // Salidas 4
+Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *position_AC, string name): ControlLaw(position->getLayout(), name, 4){ // Salidas 4
     first_update = true;
     // init matrix
     input = new Matrix(this, 4, 11, floatType, name);
@@ -82,6 +82,10 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, string name): ControlLaw(
     GroupBox *ori = new GroupBox(reglages_groupbox->NewRow(), "Orientacion");
     GroupBox *pos = new GroupBox(reglages_groupbox->NewRow(), "Posicion");
     GroupBox *mot = new GroupBox(reglages_groupbox->NewRow(), "Motores");
+
+    GroupBox *reglages_groupbox_AC = new GroupBox(position_AC, name);
+    GroupBox *actorBox_LP = new GroupBox(reglages_groupbox_AC->NewRow(), "Actor LP");
+    GroupBox *criticBox_LP = new GroupBox(reglages_groupbox_AC->NewRow(), "Critic LP");
 
     T = new DoubleSpinBox(num->NewRow(), "period, 0 for auto", " s", 0, 1, 0.01,3);
     alpha_l = new DoubleSpinBox(num->NewRow(), "alpha Levant:", 0, 500, 0.001, 3);
@@ -127,6 +131,32 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, string name): ControlLaw(
     t0 = double(GetTime())/1000000000;
 
     levant = Levant_diff("tanh", 8, 6, 3000);
+
+    V = new DoubleSpinBox *[40];
+
+    for (unsigned int i = 0; i < 40; i++){
+	    unsigned int columns = 10;
+        LayoutPosition *position;
+		if (i % columns == 0) {
+            position = actorBox_LP->NewRow();
+		}else{
+            position = actorBox_LP->LastRowLastCol();
+		}
+		V[i] = new DoubleSpinBox(position, "V " + std::to_string(i+1), -100000, 100000,1,2);
+	}
+
+    G = new DoubleSpinBox *[100];
+
+    for (unsigned int i = 0; i < 100; i++){
+        unsigned int columns = 10;
+        LayoutPosition *position;
+		if (i % columns == 0) {
+            position = actorBox_LP->NewRow();
+		}else{
+            position = actorBox_LP->LastRowLastCol();
+		}
+		G[i] = new DoubleSpinBox(position, "G " + std::to_string(i+1), -100000, 100000,1,2);
+	}
 
     sgnpos_p << 0,0,0;
     sgnpos << 0,0,0;
@@ -502,11 +532,11 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
 
     //Eigen::Quaternionf qd;
 
-    if(pert->IsChecked()){
-        q = q*(q_p);
-    }else{
-        q = q;
-    }
+    // if(pert->IsChecked()){
+    //     q = q*(q_p);
+    // }else{
+    //     q = q;
+    // }
 
     Quaternion qd2 = Quaternion(qd.w(),qd.x(),qd.y(),qd.z());
     Euler eta = qd2.ToEuler();
@@ -580,7 +610,16 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
 
     //Eigen::Matrix3f psi = kd_var->getPsi();
 
-    Eigen::Vector3f tau = -Kdm*nur;
+    Eigen::Matrix<float,4,10> Va;
+    Eigen::Matrix<float,4,10> Vc;
+    Eigen::Matrix<float,10,10> GAMMA_a2;
+
+    Yr->setANN(nuq,Va2,GAMMA_a2,delta_t);
+    Yr->setCNN(qe,qep,Q,P,psi,K,Kw);
+    
+    Yr->ActorCritic_Compute(delta_t);
+
+    Eigen::Vector3f tau = -Kdm*nur + Yr->YrOutput();
 
     flair::core::Time dt_ori = GetTime() - t0_o;
 
