@@ -26,6 +26,7 @@ class ANN_LP
         // METODOS LUIS PANTOJA
         float Sigmoid(float z);
 
+        void reset(Eigen::Matrix<float,10,3> Wa_0);
         void getInputs(const Eigen::Vector3f& nur2,Eigen::Matrix<float,4,10>& Va2, const Eigen::Matrix<float,10,10>&GAMMA_a2,float delta_t);
         void computeVect_Za();
         void updateWeights(float gamma_hat, float r, float delta_t);

@@ -22,6 +22,12 @@ actor->getInputs(nur2, Va2, GAMMA_a2, delta_t);
 
 }
 
+void Actor_tauContribution_LP::reset(Eigen::Matrix<float,10,3> Wa_0, Eigen::Matrix<float,10,1> Wc_0){
+    critic->reset(Wc_0);
+    actor->reset(Wa_0);
+
+}
+
 void Actor_tauContribution_LP::setCNN(Eigen::Quaternionf& qe_,Eigen::Quaternionf qep_, float Q_, float P_,const Eigen::Matrix<float,4,10>& Vc2,const float psi_,const float K_,const float Kw_)
 {
     critic->getInputs(qe_, qep_, Q_, P_, Vc2, psi_, K_, Kw_);

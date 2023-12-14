@@ -99,6 +99,7 @@ kd_variable::kd_variable(TargetController *controller): UavStateMachine(controll
     setupLawTabAC = new Tab(acTabWidget, "Setup AC");
     setupLawTabACp = new Tab(acTabWidget, "Plots");
     setupLawTabACph = new Tab(acTabWidget, "Plots h");
+    setupLawTabACLP = new Tab(acTabWidget, "Plots LP");
 
     GroupBox *actorBox = new GroupBox(setupLawTabAC->NewRow(), "Actor");
     GroupBox *criticBox = new GroupBox(setupLawTabAC->NewRow(), "Critic");
@@ -124,6 +125,7 @@ kd_variable::kd_variable(TargetController *controller): UavStateMachine(controll
     graphLawKDvar = new Tab(tabWidget2, "Graficas Sliding kd var");
     graphLawKDvarh = new Tab(tabWidget2, "Graficas Sliding kd var h");
     graphLawTab3 = new Tab(tabWidget2, "Graficas Sliding Pos");
+    graphLawTabLP = new Tab(tabWidget2, "Graficas Sliding LP");
 
     Tab *posTab = new Tab(getFrameworkManager()->GetTabWidget(), "position");
     TabWidget *Pos_tabWidget = new TabWidget(posTab->NewRow(), "position");
@@ -187,6 +189,7 @@ kd_variable::kd_variable(TargetController *controller): UavStateMachine(controll
     control_select->AddItem("Sliding_kd_var");
     control_select->AddItem("Sliding_kd_var_h");
     control_select->AddItem("Sliding Pos");
+    control_select->AddItem("Sliding LP");
     //control_select->AddItem("Sliding Force-Position");
     
     l2 = new Label(groupbox->LastRowLastCol(), "Control selec");
@@ -244,6 +247,16 @@ kd_variable::kd_variable(TargetController *controller): UavStateMachine(controll
     u_sliding_kdvar_h->UseDefaultPlot14(setupLawTabACph->At(1, 2));
 
     u_sliding_LP = new Sliding_LP(setuoLawKDvarh->At(0, 1),setupLawTabAC->NewRow(), "u_smc_LP");
+    u_sliding_LP->UseDefaultPlot(graphLawTabLP->At(0, 0));
+    u_sliding_LP->UseDefaultPlot2(graphLawTabLP->At(0, 1));
+    u_sliding_LP->UseDefaultPlot3(graphLawTabLP->At(0, 2));
+    u_sliding_LP->UseDefaultPlot4(graphLawTabLP->At(1, 2));
+    u_sliding_LP->UseDefaultPlot8(graphLawTabLP->At(1, 0));
+    u_sliding_LP->UseDefaultPlot9(graphLawTabLP->At(1, 1));
+
+    u_sliding_LP->UseDefaultPlot10(setupLawTabACLP->At(0, 1));
+    u_sliding_LP->UseDefaultPlot11(setupLawTabACLP->At(0, 0));
+    u_sliding_LP->UseDefaultPlot12(setupLawTabACLP->At(0, 2));
     
     customOrientation=new AhrsData(this,"orientation");
 
@@ -312,7 +325,7 @@ void kd_variable::ComputeCustomTorques(Euler &torques) {
             break;
         
         case 4:
-            //sliding_ctrl_force(torques);
+            sliding_ctrl_LP_h(torques);
             break;
     }
     
@@ -417,6 +430,7 @@ void kd_variable::Startkd_variable(void) {
         u_sliding_kdvar->Reset();
         u_sliding_pos->Reset();
         u_sliding_kdvar_h->Reset();
+        u_sliding_LP->Reset();
         //u_sliding_force->Reset();
     } else {
         Thread::Warn("kd_variable: could not start\n");
@@ -443,8 +457,8 @@ void kd_variable::Startkd_variable(void) {
             break;
         
         case 4:
-            //l2->SetText("Control: Sliding force-position");
-            //Thread::Info("Sliding force-position\n");
+            l2->SetText("Control: Sliding LP");
+            Thread::Info("Sliding LP\n");
             break;
     }
 
@@ -820,17 +834,17 @@ void kd_variable::sliding_ctrl_LP_h(Euler &torques){
     float alph_l_ = alph_l->Value();
     float lamb_l_ = lamb_l->Value();
     
-    u_sliding_kdvar_h->SetValues(uav_pos-xid,uav_vel-xidp,xid,xidpp,xidppp,currentAngularRates,currentQuaternion,Lambda_v,GammaC_v,gamma_,
+    u_sliding_LP->SetValues(uav_pos-xid,uav_vel-xidp,xid,xidpp,xidppp,currentAngularRates,currentQuaternion,Lambda_v,GammaC_v,gamma_,
                                 p_,goal_,alph_l_,lamb_l_,refQuaternion, battery->GetVoltage());
     
-    u_sliding_kdvar_h->Update(GetTime());
+    u_sliding_LP->Update(GetTime());
     
     //Thread::Info("%f\t %f\t %f\t %f\n",u_sliding->Output(0),u_sliding->Output(1), u_sliding->Output(2), u_sliding->Output(3));
     
-    torques.roll = u_sliding_kdvar_h->Output(0);
-    torques.pitch = u_sliding_kdvar_h->Output(1);
-    torques.yaw = u_sliding_kdvar_h->Output(2);
-    thrust = u_sliding_kdvar_h->Output(3);
+    torques.roll = u_sliding_LP->Output(0);
+    torques.pitch = u_sliding_LP->Output(1);
+    torques.yaw = u_sliding_LP->Output(2);
+    thrust = u_sliding_LP->Output(3);
 }
 
 // void kd_variable::sliding_ctrl_force(Euler &torques){

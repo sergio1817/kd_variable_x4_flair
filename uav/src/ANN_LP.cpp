@@ -23,10 +23,17 @@ float ANN_LP::Sigmoid(float z) {
 }
 
 
+void ANN_LP::reset(Eigen::Matrix<float,10,3> Wa_0){
+    Wa = Wa_0;
+    Za=Eigen::Matrix<float,10,1>::Zero();
+    Xi=Eigen::Matrix<float,10,1>::Zero();
+    xa=Eigen::Vector4f::Zero();
+    Wadot = Eigen::Matrix<float,10,3>::Zero();
+}
 
 void ANN_LP::getInputs(const Eigen::Vector3f& nur2,Eigen::Matrix<float,4,10>& Va2, const Eigen::Matrix<float,10,10>&GAMMA_a2, float delta_t)
 {   
-     Va=Va2;
+    Va=Va2;
     nur=nur2;
     GAMMA_a=GAMMA_a2;
     int_nur=rk4_vec(int_nur, nur, delta_t);

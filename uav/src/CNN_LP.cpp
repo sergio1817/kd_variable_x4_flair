@@ -23,6 +23,19 @@ CNN_LP::CNN_LP()
 
 CNN_LP::~CNN_LP() { }
 
+void CNN_LP::reset(Eigen::Matrix<float,10,1> Wc_0){
+    wc = Wc_0;
+    wcp = Eigen::Matrix<float,10,1>::Zero();
+    xc    = Eigen::Vector4f::Zero();
+    J     = 0;
+    gamma_hat=0; 
+    r=0;
+    Zc=Eigen::Matrix<float,10,1>::Zero();
+    Xic=Eigen::Matrix<float,10,1>::Zero();
+    int_wc_Zc=0;
+    int_r = 0;
+}
+
 float CNN_LP::compute_reward() 
 {
     

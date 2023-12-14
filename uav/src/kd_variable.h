@@ -105,7 +105,9 @@ class kd_variable : public flair::meta::UavStateMachine {
 
         flair::gui::PushButton *start_prueba1,*stop_prueba1;
         flair::gui::ComboBox *control_select, *position_behavior, *xd_behavior, *yd_behavior, *zd_behavior;    
-        flair::gui::Tab *setupLawTab2, *graphLawTab2, *lawTab2, *setupLawTab3, *graphLawTab3, *positionTab, *positiongTab, *setupLawTabAC, *setupLawTabACp, *setupLawKDvar, *graphLawKDvar, *setuoLawKDvarh, *graphLawKDvarh, *setupLawTabACph;
+        flair::gui::Tab *setupLawTab2, *graphLawTab2, *lawTab2, *setupLawTab3, *graphLawTab3, *positionTab, *positiongTab,
+                     *setupLawTabAC, *setupLawTabACp, *setupLawKDvar, *graphLawKDvar, *setuoLawKDvarh, *graphLawKDvarh, *setupLawTabACph, *graphLawTabLP,
+                     *setupLawTabACLP;
         flair::gui::TabWidget *tabWidget2, *Pos_tabWidget;
         flair::gui::GroupBox *seg;
         flair::gui::Label *l, *l2, *lx, *ly, *lz;

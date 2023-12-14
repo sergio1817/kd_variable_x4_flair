@@ -95,8 +95,7 @@ private:
 
     float sech(float value);
 
-    flair::gui::DoubleSpinBox **V;
-    flair::gui::DoubleSpinBox **G;
+    flair::gui::DoubleSpinBox **Va,**G,**Vc, *Q, *P, *Psi, *K, *Kw, **Wa, **Wc;
     flair::gui::CheckBox *levantd, *pert;
     flair::gui::DoubleSpinBox *T, *gamma, *k, *sat_r, *sat_p, *sat_y, *sat_t, *m, *g, *km, *p, *km_z, *pert_g;
     flair::gui::DoubleSpinBox *gamma_roll, *gamma_pitch, *gamma_yaw, *gamma_x, *gamma_y, *gamma_z;

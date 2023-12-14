@@ -42,6 +42,7 @@ class CNN_LP
         float compute_reward();
         void computeVect_Zc();
 
+        void reset(Eigen::Matrix<float,10,1> Wc_0);
         void approximateValueFunction();
 
         void updateWeights(float delta_t);

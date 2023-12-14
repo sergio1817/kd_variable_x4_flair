@@ -15,6 +15,7 @@ class Actor_tauContribution_LP
         Actor_tauContribution_LP();
         ~Actor_tauContribution_LP();
 
+        void reset(Eigen::Matrix<float,10,3> Wa_0, Eigen::Matrix<float,10,1> Wc_0);
         void setANN(const Eigen::Vector3f& nur2,Eigen::Matrix<float,4,10>& Va2, const Eigen::Matrix<float,10,10>&GAMMA_a2, float delta_t);
         void setCNN(Eigen::Quaternionf& qe_,Eigen::Quaternionf qep_, float Q_, float P_,const Eigen::Matrix<float,4,10>& Vc2,const float psi_,const float K_,const float Kw_);
         void ActorCritic_Compute(float delta_t);

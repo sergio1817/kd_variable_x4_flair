@@ -60,15 +60,15 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
     desc->SetElementName(10, 0, "nur_roll");
     desc->SetElementName(11, 0, "nur_pitch");
     desc->SetElementName(12, 0, "nur_yaw");
-    desc->SetElementName(13, 0, "kd_phi");
-    desc->SetElementName(14, 0, "kd_theta");
-    desc->SetElementName(15, 0, "kd_psi");
-    desc->SetElementName(16, 0, "r_phi");
-    desc->SetElementName(17, 0, "r_theta");
-    desc->SetElementName(18, 0, "r_psi");
-    desc->SetElementName(19, 0, "ec_phi");
-    desc->SetElementName(20, 0, "ec_theta");
-    desc->SetElementName(21, 0, "ec_psi");
+    desc->SetElementName(13, 0, "Yr_phi");
+    desc->SetElementName(14, 0, "Yr_theta");
+    desc->SetElementName(15, 0, "Yr_psi");
+    desc->SetElementName(16, 0, "tau_phi");
+    desc->SetElementName(17, 0, "tau_theta");
+    desc->SetElementName(18, 0, "tau_psi");
+    desc->SetElementName(19, 0, "tauf_phi");
+    desc->SetElementName(20, 0, "tauf_theta");
+    desc->SetElementName(21, 0, "tauf_psi");
     desc->SetElementName(22, 0, "J_phi");
     desc->SetElementName(23, 0, "J_theta");
     desc->SetElementName(24, 0, "J_psi");
@@ -132,7 +132,7 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
 
     levant = Levant_diff("tanh", 8, 6, 3000);
 
-    V = new DoubleSpinBox *[40];
+    Va = new DoubleSpinBox *[40];
 
     for (unsigned int i = 0; i < 40; i++){
 	    unsigned int columns = 10;
@@ -142,21 +142,64 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
 		}else{
             position = actorBox_LP->LastRowLastCol();
 		}
-		V[i] = new DoubleSpinBox(position, "V " + std::to_string(i+1), -100000, 100000,1,2);
+		Va[i] = new DoubleSpinBox(position, "Va " + std::to_string(i+1), -100000, 100000,1,2);
 	}
 
-    G = new DoubleSpinBox *[100];
-
-    for (unsigned int i = 0; i < 100; i++){
-        unsigned int columns = 10;
+    Wa = new DoubleSpinBox *[30];
+    for (unsigned int i = 0; i < 30; i++){
+	    unsigned int columns = 10;
         LayoutPosition *position;
 		if (i % columns == 0) {
             position = actorBox_LP->NewRow();
 		}else{
             position = actorBox_LP->LastRowLastCol();
 		}
-		G[i] = new DoubleSpinBox(position, "G " + std::to_string(i+1), -100000, 100000,1,2);
+		Wa[i] = new DoubleSpinBox(position, "Wa " + std::to_string(i+1), -100000, 100000,1,2);
 	}
+
+    G = new DoubleSpinBox *[100];
+    G[0] = new DoubleSpinBox(actorBox_LP->NewRow(), "Gamma ", -100000, 100000,1,2);
+
+    // for (unsigned int i = 0; i < 100; i++){
+    //     unsigned int columns = 10;
+    //     LayoutPosition *position;
+	// 	if (i % columns == 0) {
+    //         position = actorBox_LP->NewRow();
+	// 	}else{
+    //         position = actorBox_LP->LastRowLastCol();
+	// 	}
+	// 	G[i] = new DoubleSpinBox(position, "G " + std::to_string(i+1), -100000, 100000,1,2);
+	// }
+
+    Vc = new DoubleSpinBox *[40];
+    for (unsigned int i = 0; i < 40; i++){
+        unsigned int columns = 10;
+        LayoutPosition *position;
+		if (i % columns == 0) {
+            position = criticBox_LP->NewRow();
+		}else{
+            position = criticBox_LP->LastRowLastCol();
+		}
+		Vc[i] = new DoubleSpinBox(position, "Vc " + std::to_string(i+1), -100000, 100000,1,2);
+	}
+
+    Wc = new DoubleSpinBox *[10];
+    for (unsigned int i = 0; i < 10; i++){
+	    unsigned int columns = 10;
+        LayoutPosition *position;
+		if (i % columns == 0) {
+            position = criticBox_LP->NewRow();
+		}else{
+            position = criticBox_LP->LastRowLastCol();
+		}
+		Wc[i] = new DoubleSpinBox(position, "Wc " + std::to_string(i+1), -100000, 100000,1,2);
+	}
+
+    Q = new DoubleSpinBox(criticBox_LP->NewRow(),"Q",-2000,2000,0.1,2);
+    P = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"P",-2000,2000,0.1,2);
+    Psi = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"Psi",-2000,2000,0.1,2);
+    K = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"K",-2000,2000,0.1,2);
+    Kw = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"Kw",-2000,2000,0.1,2);
 
     sgnpos_p << 0,0,0;
     sgnpos << 0,0,0;
@@ -182,6 +225,19 @@ void Sliding_LP::Reset(void) {
     t0 = double(GetTime())/1000000000;
     sgnori_p << 0,0,0;
     sgnori << 0,0,0;
+
+    Eigen::Matrix<float,10,3> Wa_0;
+    Eigen::Matrix<float,10,1> Wc_0;
+
+    Wa_0 << Wa[0]->Value(),Wa[1]->Value(),Wa[2]->Value(),Wa[3]->Value(),Wa[4]->Value(),Wa[5]->Value(),Wa[6]->Value(),Wa[7]->Value(),Wa[8]->Value(),
+            Wa[9]->Value(),Wa[10]->Value(),Wa[11]->Value(),Wa[12]->Value(),Wa[13]->Value(),Wa[14]->Value(),Wa[15]->Value(),Wa[16]->Value(),Wa[17]->Value(),
+            Wa[18]->Value(),Wa[19]->Value(),Wa[20]->Value(),Wa[21]->Value(),Wa[22]->Value(),Wa[23]->Value(),Wa[24]->Value(),Wa[25]->Value(),Wa[26]->Value(),
+            Wa[27]->Value(),Wa[28]->Value(),Wa[29]->Value();
+
+    Wc_0 << Wc[0]->Value(),Wc[1]->Value(),Wc[2]->Value(),Wc[3]->Value(),Wc[4]->Value(),Wc[5]->Value(),Wc[6]->Value(),Wc[7]->Value(),Wc[8]->Value(),
+            Wc[9]->Value();
+
+    Yr->reset(Wa_0, Wc_0);
 
     levant.Reset();
     //kd_var->forgetDamping();
@@ -365,7 +421,7 @@ void Sliding_LP::UseDefaultPlot9(const LayoutPosition *position) {
 }
 
 void Sliding_LP::UseDefaultPlot10(const LayoutPosition *position) {    
-    DataPlot1D *Kd = new DataPlot1D(position, "Kd", -1, 10);
+    DataPlot1D *Kd = new DataPlot1D(position, "Yr", -3, 3);
     Kd->AddCurve(state->Element(13), DataPlot::Green);
     Kd->AddCurve(state->Element(14), DataPlot::Red);
     Kd->AddCurve(state->Element(15), DataPlot::Black);
@@ -373,18 +429,18 @@ void Sliding_LP::UseDefaultPlot10(const LayoutPosition *position) {
 }
 
 void Sliding_LP::UseDefaultPlot11(const LayoutPosition *position) {    
-    DataPlot1D *rew = new DataPlot1D(position, "reward", -110, 10);
-    rew->AddCurve(state->Element(16), DataPlot::Green);
-    rew->AddCurve(state->Element(17), DataPlot::Red);
-    rew->AddCurve(state->Element(18), DataPlot::Black);
+    DataPlot1D *tau = new DataPlot1D(position, "tau", -3, 3);
+    tau->AddCurve(state->Element(16), DataPlot::Green);
+    tau->AddCurve(state->Element(17), DataPlot::Red);
+    tau->AddCurve(state->Element(18), DataPlot::Black);
     
 }
 
 void Sliding_LP::UseDefaultPlot12(const LayoutPosition *position) {    
-    DataPlot1D *ec = new DataPlot1D(position, "ec", -5, 5);
-    ec->AddCurve(state->Element(19), DataPlot::Green);
-    ec->AddCurve(state->Element(20), DataPlot::Red);
-    ec->AddCurve(state->Element(21), DataPlot::Black);
+    DataPlot1D *tau = new DataPlot1D(position, "tau f", -3, 3);
+    tau->AddCurve(state->Element(19), DataPlot::Green);
+    tau->AddCurve(state->Element(20), DataPlot::Red);
+    tau->AddCurve(state->Element(21), DataPlot::Black);
     
 }
 
@@ -610,16 +666,70 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
 
     //Eigen::Matrix3f psi = kd_var->getPsi();
 
-    Eigen::Matrix<float,4,10> Va;
-    Eigen::Matrix<float,4,10> Vc;
-    Eigen::Matrix<float,10,10> GAMMA_a2;
+    Eigen::Matrix<float,4,10> Vam;
+    
+    Vam << Va[0]->Value(),Va[1]->Value(),Va[2]->Value(),Va[3]->Value(),Va[4]->Value(),Va[5]->Value(),Va[6]->Value(),Va[7]->Value(),Va[8]->Value(),
+            Va[9]->Value(),Va[10]->Value(),Va[11]->Value(),Va[12]->Value(),Va[13]->Value(),Va[14]->Value(),Va[15]->Value(),Va[16]->Value(),Va[17]->Value(),
+            Va[18]->Value(),Va[19]->Value(),Va[20]->Value(),Va[21]->Value(),Va[22]->Value(),Va[23]->Value(),Va[24]->Value(),Va[25]->Value(),Va[26]->Value(),
+            Va[27]->Value(),Va[28]->Value(),Va[29]->Value(),Va[30]->Value(),Va[31]->Value(),Va[32]->Value(),Va[33]->Value(),Va[34]->Value(),Va[35]->Value(),
+            Va[36]->Value(),Va[37]->Value(),Va[38]->Value(),Va[39]->Value();
 
-    Yr->setANN(nuq,Va2,GAMMA_a2,delta_t);
-    Yr->setCNN(qe,qep,Q,P,psi,K,Kw);
+    // int j=0, i2=0;
+    // for(unsigned int i; i<40; i++){
+    //     unsigned int columns = 10;
+    //     Vam(j,i2-1) = (float)Va[i]->Value();
+    //     if (i % columns == 0) {
+    //         j++;
+    //         i2 = 0;
+	// 	}else{
+    //         i2++;
+    //     }
+	// }
+
+    Eigen::Matrix<float,4,10> Vcm;
+
+    Vcm << Vc[0]->Value(),Vc[1]->Value(),Vc[2]->Value(),Vc[3]->Value(),Vc[4]->Value(),Vc[5]->Value(),Vc[6]->Value(),Vc[7]->Value(),Vc[8]->Value(),
+            Vc[9]->Value(),Vc[10]->Value(),Vc[11]->Value(),Vc[12]->Value(),Vc[13]->Value(),Vc[14]->Value(),Vc[15]->Value(),Vc[16]->Value(),Vc[17]->Value(),
+            Vc[18]->Value(),Vc[19]->Value(),Vc[20]->Value(),Vc[21]->Value(),Vc[22]->Value(),Vc[23]->Value(),Vc[24]->Value(),Vc[25]->Value(),Vc[26]->Value(),
+            Vc[27]->Value(),Vc[28]->Value(),Vc[29]->Value(),Vc[30]->Value(),Vc[31]->Value(),Vc[32]->Value(),Vc[33]->Value(),Vc[34]->Value(),Vc[35]->Value(),
+            Vc[36]->Value(),Vc[37]->Value(),Vc[38]->Value(),Vc[39]->Value();
+
+    // j=0, i2=0;
+    // for(unsigned int i; i<40; i++){
+    //     unsigned int columns = 10;
+    //     Vcm(j,i2-1) = (float)Vc[i]->Value();
+    //     if (i % columns == 0) {
+    //         j++;
+    //         i2 = 0;
+	// 	}else{
+    //         i2++;
+    //     }
+	// }
+
+    Eigen::Matrix<float,10,10> GAMMA_a2 = Eigen::Matrix<float,10,10>::Identity();
+    // j=0, i2=0;
+    // for(unsigned int i; i<100; i++){
+    //     unsigned int columns = 10;
+    //     GAMMA_a2(j,i2-1) = (float)G[i]->Value();
+    //     if (i % columns == 0) {
+    //         j++;
+    //         i2 = 0;
+	// 	}else{
+    //         i2++;
+    //     }
+	// }
+
+
+    Yr->setANN(nuq,Vam,GAMMA_a2*G[0]->Value(),delta_t);
+    Yr->setCNN(qe,qep,Q->Value(),P->Value(),Vcm,Psi->Value(),K->Value(),Kw->Value());
     
     Yr->ActorCritic_Compute(delta_t);
 
-    Eigen::Vector3f tau = -Kdm*nur + Yr->YrOutput();
+    Eigen::Vector3f Yrv = Yr->YrOutput();
+
+    Eigen::Vector3f tau2 = -Kdm*nur;
+
+    Eigen::Vector3f tau = tau2 + Yrv;
 
     flair::core::Time dt_ori = GetTime() - t0_o;
 
@@ -653,15 +763,15 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(10, 0, nuq.x());
     state->SetValueNoMutex(11, 0, nuq.y());
     state->SetValueNoMutex(12, 0, nuq.z());
-    // state->SetValueNoMutex(13, 0, Kdm(0,0));
-    // state->SetValueNoMutex(14, 0, Kdm(1,1));
-    // state->SetValueNoMutex(15, 0, Kdm(2,2));
-    // state->SetValueNoMutex(16, 0, reward(0));
-    // state->SetValueNoMutex(17, 0, reward(1));
-    // state->SetValueNoMutex(18, 0, reward(2));
-    // state->SetValueNoMutex(19, 0, ec(0));
-    // state->SetValueNoMutex(20, 0, ec(1));
-    // state->SetValueNoMutex(21, 0, ec(2));
+    state->SetValueNoMutex(13, 0, Yrv(0));
+    state->SetValueNoMutex(14, 0, Yrv(1));
+    state->SetValueNoMutex(15, 0, Yrv(2));
+    state->SetValueNoMutex(16, 0, tau2(0));
+    state->SetValueNoMutex(17, 0, tau2(1));
+    state->SetValueNoMutex(18, 0, tau2(2));
+    state->SetValueNoMutex(19, 0, tau(0));
+    state->SetValueNoMutex(20, 0, tau(1));
+    state->SetValueNoMutex(21, 0, tau(2));
     // state->SetValueNoMutex(22, 0, J(0));
     // state->SetValueNoMutex(23, 0, J(1));
     // state->SetValueNoMutex(24, 0, J(2));
