@@ -69,7 +69,7 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
     desc->SetElementName(19, 0, "tauf_phi");
     desc->SetElementName(20, 0, "tauf_theta");
     desc->SetElementName(21, 0, "tauf_psi");
-    desc->SetElementName(22, 0, "J_phi");
+    desc->SetElementName(22, 0, "IntTD");
     desc->SetElementName(23, 0, "J_theta");
     desc->SetElementName(24, 0, "J_psi");
     desc->SetElementName(25, 0, "battery");
@@ -195,11 +195,11 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
 		Wc[i] = new DoubleSpinBox(position, "Wc " + std::to_string(i+1), -100000, 100000,1,2);
 	}
 
-    Q = new DoubleSpinBox(criticBox_LP->NewRow(),"Q",-2000,2000,0.1,2);
-    P = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"P",-2000,2000,0.1,2);
-    Psi = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"Psi",-2000,2000,0.1,2);
-    K = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"K",-2000,2000,0.1,2);
-    Kw = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"Kw",-2000,2000,0.1,2);
+    Q = new DoubleSpinBox(criticBox_LP->NewRow(),"Q",-200000,200000,1,3);
+    P = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"P",-200000,200000,1,3);
+    Psi = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"Psi",-200000,200000,1,3);
+    K = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"K",-200000,200000,1,3);
+    Kw = new DoubleSpinBox(criticBox_LP->LastRowLastCol(),"Kw",-200000,200000,1,3);
 
     sgnpos_p << 0,0,0;
     sgnpos << 0,0,0;
@@ -445,10 +445,10 @@ void Sliding_LP::UseDefaultPlot12(const LayoutPosition *position) {
 }
 
 void Sliding_LP::UseDefaultPlot13(const LayoutPosition *position) {    
-    DataPlot1D *J = new DataPlot1D(position, "J", 0, 3000);
-    J->AddCurve(state->Element(22), DataPlot::Green);
-    J->AddCurve(state->Element(23), DataPlot::Red);
-    J->AddCurve(state->Element(24), DataPlot::Black);
+    DataPlot1D *J = new DataPlot1D(position, "IntTD", -5, 5);
+    J->AddCurve(state->Element(22), DataPlot::Black);
+    //J->AddCurve(state->Element(23), DataPlot::Red);
+    //J->AddCurve(state->Element(24), DataPlot::Black);
     
 }
 
@@ -720,12 +720,14 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
 	// }
 
 
-    Yr->setANN(nuq,Vam,GAMMA_a2*G[0]->Value(),delta_t);
+    Yr->setANN(nur,Vam,GAMMA_a2*G[0]->Value(),delta_t);
     Yr->setCNN(qe,qep,Q->Value(),P->Value(),Vcm,Psi->Value(),K->Value(),Kw->Value());
     
     Yr->ActorCritic_Compute(delta_t);
 
     Eigen::Vector3f Yrv = Yr->YrOutput();
+
+    float gamma_hat = Yr->gamma_hat;
 
     Eigen::Vector3f tau2 = -Kdm*nur;
 
@@ -772,7 +774,7 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(19, 0, tau(0));
     state->SetValueNoMutex(20, 0, tau(1));
     state->SetValueNoMutex(21, 0, tau(2));
-    // state->SetValueNoMutex(22, 0, J(0));
+    state->SetValueNoMutex(22, 0, gamma_hat);
     // state->SetValueNoMutex(23, 0, J(1));
     // state->SetValueNoMutex(24, 0, J(2));
     state->SetValueNoMutex(25, 0, battery);

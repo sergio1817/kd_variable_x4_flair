@@ -20,6 +20,7 @@ class Actor_tauContribution_LP
         void setCNN(Eigen::Quaternionf& qe_,Eigen::Quaternionf qep_, float Q_, float P_,const Eigen::Matrix<float,4,10>& Vc2,const float psi_,const float K_,const float Kw_);
         void ActorCritic_Compute(float delta_t);
         Eigen::Vector3f  YrOutput();
+        float gamma_hat;
         //template<typename Derived>
         // Eigen::Matrix3f learnDampingInjection(const Eigen::Vector3f& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep, const Eigen::Vector3f& sq,const Eigen::Quaternionf& qd, const Eigen::Quaternionf& q, const Eigen::Quaternionf& qp, const Eigen::Quaternionf& qdp, float delta_t);
 

@@ -58,7 +58,6 @@ void CNN_LP::getInputs( Eigen::Quaternionf& qe_,Eigen::Quaternionf qep_, float Q
     Kw=Kw_;
     xc(0) = -1;
     xc.segment(1,3) = qe.vec().transpose();
-    sgn_gamma_hat=0;
 
 }
 

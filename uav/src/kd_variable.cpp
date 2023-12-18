@@ -257,6 +257,7 @@ kd_variable::kd_variable(TargetController *controller): UavStateMachine(controll
     u_sliding_LP->UseDefaultPlot10(setupLawTabACLP->At(0, 1));
     u_sliding_LP->UseDefaultPlot11(setupLawTabACLP->At(0, 0));
     u_sliding_LP->UseDefaultPlot12(setupLawTabACLP->At(0, 2));
+    u_sliding_LP->UseDefaultPlot13(setupLawTabACLP->At(0, 3));
     
     customOrientation=new AhrsData(this,"orientation");
 

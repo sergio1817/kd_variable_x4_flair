@@ -39,7 +39,7 @@ void Actor_tauContribution_LP::ActorCritic_Compute(float delta_t)
 
 float r=critic->compute_reward() ;
 critic->computeVect_Zc();
-float gamma_hat=critic->computeIntTDerror(delta_t);
+gamma_hat=critic->computeIntTDerror(delta_t);
 critic -> updateWeights(delta_t) ;
 
 
