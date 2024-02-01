@@ -4,7 +4,7 @@
 
 CNN_LP::CNN_LP()
 {   
-    printf("CNN constructor in\n");
+    //printf("CNN constructor in\n");
     Vc=Eigen::Matrix<float,4,10>::Zero();
     wc  = Eigen::Matrix<float,10,1>::Zero();
     wcp =Eigen::Matrix<float,10,1>::Zero();
@@ -18,7 +18,7 @@ CNN_LP::CNN_LP()
     int_r = 0;
 
 
-    printf("CNN constructor out\n");
+    //printf("CNN constructor out\n");
 }
 
 CNN_LP::~CNN_LP() { }

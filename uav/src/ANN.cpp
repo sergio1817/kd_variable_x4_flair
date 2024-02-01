@@ -3,14 +3,14 @@
 
 ANN::ANN(const int& DoF)
 {   
-    printf("ANN constructor in\n");
+    //printf("ANN constructor in\n");
     Lambda = Eigen::Matrix3f::Zero();
     xa     = Eigen::Matrix3f::Zero();
     K      = Eigen::Matrix3f::Zero();
     wa     = Eigen::Matrix3f::Zero();
     Psi    = Eigen::Matrix3f::Zero();
 
-    printf("ANN constructor out\n");
+    //printf("ANN constructor out\n");
 }
 
 ANN::~ANN() { }

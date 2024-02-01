@@ -5,14 +5,14 @@
 
 ANN_LP::ANN_LP()
 {   
-    printf("ANN constructor in\n");
+    //printf("ANN constructor in\n");
     Va=Eigen::Matrix<float,4,10>::Zero();
     Wa=Eigen::Matrix<float,10,3>::Zero();
     Za=Eigen::Matrix<float,10,1>::Zero();
     Xi=Eigen::Matrix<float,10,1>::Zero();
     GAMMA_a=Eigen::Matrix<float,10,10>::Zero();
     xa=Eigen::Vector4f::Zero();
-    printf("ANN constructor out\n");
+    //printf("ANN constructor out\n");
 }
 
 

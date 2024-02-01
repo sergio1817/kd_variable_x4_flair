@@ -3,7 +3,7 @@
 
 CNN::CNN(const int& DoF, const int& criticDoF)
 {   
-    printf("CNN constructor in\n");
+    //printf("CNN constructor in\n");
     wc    = Eigen::Vector4f::Zero();
     xc    = Eigen::Matrix<float, 4, 3>::Zero();
     xcp   = Eigen::Matrix<float, 4, 3>::Zero();
@@ -14,7 +14,7 @@ CNN::CNN(const int& DoF, const int& criticDoF)
 
     levant = Levant_diff("tanh", 8, 6, 3000);
 
-    printf("CNN constructor out\n");
+    //printf("CNN constructor out\n");
 }
 
 CNN::~CNN() { }

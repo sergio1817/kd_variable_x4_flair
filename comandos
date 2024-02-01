@@ -5,6 +5,10 @@ $FLAIR_ROOT/flair-install/bin/tools/core2-64/launch_flairgcs.sh
 ${FLAIR_ROOT}/flair-install/bin/tools/core2-64/dualshock3_usb.sh <ip_dron>
 $FLAIR_ROOT/flair-install/bin/tools/core2-64/dualshock3_local_usb.sh
 
+- JR3
+$FLAIR_ROOT/flair-install/bin/tools/core2-64/JR3Sensor.sh <ip_dron>
+
+
 - Control BT
 sudo -E ${FLAIR_ROOT}/flair-install/bin/tools/core2-64/dualshock3_bt.sh <ip_dron>
 sudo -E $FLAIR_ROOT/flair-install/bin/tools/core2-64/dualshock3_local_bt.sh

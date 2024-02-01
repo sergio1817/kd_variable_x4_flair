@@ -7,14 +7,14 @@
 
 DILWAC::DILWAC(const int& DoF, const int& criticDoF)
 {   
-    printf("Critic\n");
+    //printf("Critic\n");
     critic = new CNN(DoF, criticDoF);
-    printf("Actor-Critic\n");
+    //printf("Actor-Critic\n");
     actor = new ANN(DoF);
     
     
     r = Eigen::Vector3f::Zero();
-    printf("DILWAC constructor\n");
+    //printf("DILWAC constructor\n");
 }
 
 DILWAC::~DILWAC() { }
