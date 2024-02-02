@@ -36,19 +36,23 @@ void Actor_tauContribution_LP::setCNN(Eigen::Quaternionf& qe_,Eigen::Quaternionf
 
 void Actor_tauContribution_LP::ActorCritic_Compute(float delta_t)
 {
+    r = critic->compute_reward() ;
+    critic->computeVect_Zc();
+    gamma_hat=critic->computeIntTDerror(delta_t);
+    critic -> updateWeights(delta_t) ;
 
-float r=critic->compute_reward() ;
-critic->computeVect_Zc();
-gamma_hat=critic->computeIntTDerror(delta_t);
-critic -> updateWeights(delta_t) ;
 
-
-actor->computeVect_Za();
-actor->updateWeights(gamma_hat, r, delta_t);
+    actor->computeVect_Za();
+    actor->updateWeights(gamma_hat, r, delta_t);
 
 }
 
-
+Eigen::Matrix<float,10,3> Actor_tauContribution_LP::getActorWeights(){
+    return actor->getWeights();
+}
+Eigen::Matrix<float,10,1> Actor_tauContribution_LP::getCriticWeights(){
+    return critic->getWeights();
+}
 
 Eigen::Vector3f Actor_tauContribution_LP::YrOutput()
 {

@@ -88,6 +88,8 @@ public:
     
     flair::core::Time t0;
     flair::core::Matrix *state;
+    flair::core::Matrix *wa;
+    flair::core::Matrix *wc;
 
 private:
     

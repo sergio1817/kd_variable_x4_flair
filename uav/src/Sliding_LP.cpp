@@ -46,7 +46,7 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
     // init matrix
     input = new Matrix(this, 4, 11, floatType, name);
 
-    MatrixDescriptor *desc = new MatrixDescriptor(26, 1);
+    MatrixDescriptor *desc = new MatrixDescriptor(29, 1);
     desc->SetElementName(0, 0, "u_roll");
     desc->SetElementName(1, 0, "u_pitch");
     desc->SetElementName(2, 0, "u_yaw");
@@ -54,12 +54,12 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
     desc->SetElementName(4, 0, "roll_d");
     desc->SetElementName(5, 0, "pitch_d");
     desc->SetElementName(6, 0, "yaw_d");
-    desc->SetElementName(7, 0, "nurp_x");
-    desc->SetElementName(8, 0, "nurp_y");
-    desc->SetElementName(9, 0, "nurp_z");
-    desc->SetElementName(10, 0, "nur_roll");
-    desc->SetElementName(11, 0, "nur_pitch");
-    desc->SetElementName(12, 0, "nur_yaw");
+    desc->SetElementName(7, 0, "Srp_x");
+    desc->SetElementName(8, 0, "Srp_y");
+    desc->SetElementName(9, 0, "Srp_z");
+    desc->SetElementName(10, 0, "Sq_roll");
+    desc->SetElementName(11, 0, "Sq_pitch");
+    desc->SetElementName(12, 0, "Sq_yaw");
     desc->SetElementName(13, 0, "Yr_phi");
     desc->SetElementName(14, 0, "Yr_theta");
     desc->SetElementName(15, 0, "Yr_psi");
@@ -69,12 +69,68 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
     desc->SetElementName(19, 0, "tauf_phi");
     desc->SetElementName(20, 0, "tauf_theta");
     desc->SetElementName(21, 0, "tauf_psi");
-    desc->SetElementName(22, 0, "IntTD");
+    desc->SetElementName(22, 0, "gamma_hat");
     desc->SetElementName(23, 0, "J_theta");
     desc->SetElementName(24, 0, "J_psi");
-    desc->SetElementName(25, 0, "battery");
+    desc->SetElementName(25, 0, "batery");
+    desc->SetElementName(26, 0, "Sr_roll");
+    desc->SetElementName(27, 0, "Sr_ptich");
+    desc->SetElementName(28, 0, "Sr_yaw");
     state = new Matrix(this, desc, floatType, name);
     delete desc;
+
+    MatrixDescriptor *desc2 = new MatrixDescriptor(10, 3);
+    desc2->SetElementName(0, 0, "wa(0,0)");
+    desc2->SetElementName(1, 0, "wa(1,0)");
+    desc2->SetElementName(2, 0, "wa(2,0)");
+    desc2->SetElementName(3, 0, "wa(3,0)");
+    desc2->SetElementName(4, 0, "wa(4,0)");
+    desc2->SetElementName(5, 0, "wa(5,0)");
+    desc2->SetElementName(6, 0, "wa(6,0)");
+    desc2->SetElementName(7, 0, "wa(7,0)");
+    desc2->SetElementName(8, 0, "wa(8,0)");
+    desc2->SetElementName(9, 0, "wa(9,0)");
+
+    desc2->SetElementName(0, 1, "wa(0,1)");
+    desc2->SetElementName(1, 1, "wa(1,1)");
+    desc2->SetElementName(2, 1, "wa(2,1)");
+    desc2->SetElementName(3, 1, "wa(3,1)");
+    desc2->SetElementName(4, 1, "wa(4,1)");
+    desc2->SetElementName(5, 1, "wa(5,1)");
+    desc2->SetElementName(6, 1, "wa(6,1)");
+    desc2->SetElementName(7, 1, "wa(7,1)");
+    desc2->SetElementName(8, 1, "wa(8,1)");
+    desc2->SetElementName(9, 1, "wa(9,1)");
+
+    desc2->SetElementName(0, 2, "wa(0,2)");
+    desc2->SetElementName(1, 2, "wa(1,2)");
+    desc2->SetElementName(2, 2, "wa(2,2)");
+    desc2->SetElementName(3, 2, "wa(3,2)");
+    desc2->SetElementName(4, 2, "wa(4,2)");
+    desc2->SetElementName(5, 2, "wa(5,2)");
+    desc2->SetElementName(6, 2, "wa(6,2)");
+    desc2->SetElementName(7, 2, "wa(7,2)");
+    desc2->SetElementName(8, 2, "wa(8,2)");
+    desc2->SetElementName(9, 2, "wa(9,2)");
+
+
+    wa = new Matrix(this, desc2, floatType, name);
+    delete desc2;
+
+    MatrixDescriptor *desc3 = new MatrixDescriptor(10, 1);
+    desc3->SetElementName(0, 0, "wc(0,0)");
+    desc3->SetElementName(1, 0, "wc(1,0)");
+    desc3->SetElementName(2, 0, "wc(2,0)");
+    desc3->SetElementName(3, 0, "wc(3,0)");
+    desc3->SetElementName(4, 0, "wc(4,0)");
+    desc3->SetElementName(5, 0, "wc(5,0)");
+    desc3->SetElementName(6, 0, "wc(6,0)");
+    desc3->SetElementName(7, 0, "wc(7,0)");
+    desc3->SetElementName(8, 0, "wc(8,0)");
+    desc3->SetElementName(9, 0, "wc(9,0)");
+    wc = new Matrix(this, desc3, floatType, name);
+    delete desc3;
+
 
 
     GroupBox *reglages_groupbox = new GroupBox(position, name);
@@ -213,6 +269,8 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
     pert_g = new DoubleSpinBox(num->LastRowLastCol(), "Gain Pert:", 0, 1, 0.1);
 
     AddDataToLog(state);
+    AddDataToLog(wa);
+    AddDataToLog(wc);
     
     
 }
@@ -729,6 +787,9 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
 
     float gamma_hat = Yr->gamma_hat;
 
+    Eigen::Matrix<float,10,3> wa_m = Yr->getActorWeights();
+    Eigen::Matrix<float,10,1> wc_m = Yr->getCriticWeights();
+
     Eigen::Vector3f tau2 = -Kdm*nur;
 
     Eigen::Vector3f tau = tau2 + Yrv;
@@ -778,8 +839,60 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
     // state->SetValueNoMutex(23, 0, J(1));
     // state->SetValueNoMutex(24, 0, J(2));
     state->SetValueNoMutex(25, 0, battery);
+    state->SetValueNoMutex(26, 0, nur(0));
+    state->SetValueNoMutex(27, 0, nur(1));
+    state->SetValueNoMutex(28, 0, nur(2));
     //state->SetDataTime(data->DataTime());
     state->ReleaseMutex();
+
+    wa->GetMutex();
+    wa->SetValueNoMutex(0,0,wa_m(0,0));
+    wa->SetValueNoMutex(1,0,wa_m(1,0));
+    wa->SetValueNoMutex(2,0,wa_m(2,0));
+    wa->SetValueNoMutex(3,0,wa_m(3,0));
+    wa->SetValueNoMutex(4,0,wa_m(4,0));
+    wa->SetValueNoMutex(5,0,wa_m(5,0));
+    wa->SetValueNoMutex(6,0,wa_m(6,0));
+    wa->SetValueNoMutex(7,0,wa_m(7,0));
+    wa->SetValueNoMutex(8,0,wa_m(8,0));
+    wa->SetValueNoMutex(9,0,wa_m(9,0));
+
+    wa->SetValueNoMutex(0,1,wa_m(0,1));
+    wa->SetValueNoMutex(1,1,wa_m(1,1));
+    wa->SetValueNoMutex(2,1,wa_m(2,1));
+    wa->SetValueNoMutex(3,1,wa_m(3,1));
+    wa->SetValueNoMutex(4,1,wa_m(4,1));
+    wa->SetValueNoMutex(5,1,wa_m(5,1));
+    wa->SetValueNoMutex(6,1,wa_m(6,1));
+    wa->SetValueNoMutex(7,1,wa_m(7,1));
+    wa->SetValueNoMutex(8,1,wa_m(8,1));
+    wa->SetValueNoMutex(9,1,wa_m(9,1));
+
+    wa->SetValueNoMutex(0,2,wa_m(0,2));
+    wa->SetValueNoMutex(1,2,wa_m(1,2));
+    wa->SetValueNoMutex(2,2,wa_m(2,2));
+    wa->SetValueNoMutex(3,2,wa_m(3,2));
+    wa->SetValueNoMutex(4,2,wa_m(4,2));
+    wa->SetValueNoMutex(5,2,wa_m(5,2));
+    wa->SetValueNoMutex(6,2,wa_m(6,2));
+    wa->SetValueNoMutex(7,2,wa_m(7,2));
+    wa->SetValueNoMutex(8,2,wa_m(8,2));
+    wa->SetValueNoMutex(9,2,wa_m(9,2));
+    wa->ReleaseMutex();
+
+    wc->GetMutex();
+    wc->SetValueNoMutex(0,0,wc_m(0,0));
+    wc->SetValueNoMutex(1,0,wc_m(1,0));
+    wc->SetValueNoMutex(2,0,wc_m(2,0));
+    wc->SetValueNoMutex(3,0,wc_m(3,0));
+    wc->SetValueNoMutex(4,0,wc_m(4,0));
+    wc->SetValueNoMutex(5,0,wc_m(5,0));
+    wc->SetValueNoMutex(6,0,wc_m(6,0));
+    wc->SetValueNoMutex(7,0,wc_m(7,0));
+    wc->SetValueNoMutex(8,0,wc_m(8,0));
+    wc->SetValueNoMutex(9,0,wc_m(9,0));
+    wc->ReleaseMutex();
+
 
 
     output->SetValue(0, 0, tau_roll);

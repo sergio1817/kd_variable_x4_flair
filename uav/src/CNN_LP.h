@@ -49,6 +49,8 @@ class CNN_LP
 
         float computeIntTDerror(float delta_t);
 
+        Eigen::Matrix<float,10,1> getWeights();
+
         
   
 };

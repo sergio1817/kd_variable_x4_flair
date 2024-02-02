@@ -294,6 +294,7 @@ kd_variable::kd_variable(TargetController *controller): UavStateMachine(controll
     AddDeviceToControlLawLog(u_sliding_kdvar);
     AddDeviceToControlLawLog(u_sliding_kdvar_h);
     AddDeviceToControlLawLog(u_sliding_pos);
+    AddDeviceToControlLawLog(u_sliding_LP);
     //AddDeviceToControlLawLog(u_sliding_force);
 
     //getFrameworkManager()->AddDeviceToLog(b);

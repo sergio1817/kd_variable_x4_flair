@@ -31,6 +31,7 @@ class ANN_LP
         void computeVect_Za();
         void updateWeights(float gamma_hat, float r, float delta_t);
         Eigen::Vector3f computeActorOutput();
+        Eigen::Matrix<float,10,3> getWeights();
 };
 
 #endif // ANN_H

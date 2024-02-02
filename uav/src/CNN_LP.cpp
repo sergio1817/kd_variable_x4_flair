@@ -38,9 +38,7 @@ void CNN_LP::reset(Eigen::Matrix<float,10,1> Wc_0){
 
 float CNN_LP::compute_reward() 
 {
-    
-
-        r=(float) (0.5*qe.vec().transpose()*qe.vec()*Q+0.5*qep.vec().transpose()*qep.vec()*P).value();
+    r=(float) (0.5*qe.vec().transpose()*qe.vec()*Q+0.5*qep.vec().transpose()*qep.vec()*P).value();
    
     return r;
 }
@@ -52,7 +50,7 @@ void CNN_LP::getInputs( Eigen::Quaternionf& qe_,Eigen::Quaternionf qep_, float Q
     Q=Q_;
     qe=qe_;
     qep=qep_;
-     Vc=Vc2;
+    Vc=Vc2;
     psi=psi_;
     K=K_;
     Kw=Kw_;
@@ -104,6 +102,10 @@ float CNN_LP::computeIntTDerror(float delta_t)
     
     }
 
+Eigen::Matrix<float,10,1> CNN_LP::getWeights(){
+    return wc;
+}
+
 void CNN_LP::updateWeights(float delta_t) 
 {
    
@@ -114,7 +116,7 @@ void CNN_LP::updateWeights(float delta_t)
 
    wcp=-K*(Zc/(Zc.transpose()*Zc))*sgn_gamma_hat-Kw*SignodeWc;
 
-    wc(0,0)=rk4(function1d, wc(0,0), wcp(0,0), delta_t);
+    wc(0,0)=rk4(function1d, wc(0,0), wcp(0,0), delta_t);///
     wc(1,0)=rk4(function1d, wc(1,0), wcp(1,0), delta_t);
     wc(2,0)=rk4(function1d, wc(2,0), wcp(2,0), delta_t);
     wc(3,0)=rk4(function1d, wc(3,0), wcp(3,0), delta_t);

@@ -60,12 +60,16 @@ void ANN_LP::computeVect_Za()
     Za(9)=Sigmoid(Xi(9));
 }
 
+Eigen::Matrix<float,10,3> ANN_LP::getWeights(){
+    return Wa;
+}
+
 void  ANN_LP::updateWeights(float gamma_hat, float r, float delta_t) //falta calcular reward y gammahat ADEMAS DEFINIR BIEN LAS DIMENSIONES
 {
     
     Wadot = -GAMMA_a*Za*(nur.transpose())-GAMMA_a*Wa*(gamma_hat*r)*(gamma_hat*r); //DEFINIR BIEN LAS DIMENSIONES
     
-    Wa(0,0)=rk4(function1d, Wa(0,0), Wadot(0,0), delta_t);
+    Wa(0,0)=rk4(function1d, Wa(0,0), Wadot(0,0), delta_t);///
     Wa(1,0)=rk4(function1d, Wa(1,0), Wadot(1,0), delta_t);
     Wa(2,0)=rk4(function1d, Wa(2,0), Wadot(2,0), delta_t);
     Wa(3,0)=rk4(function1d, Wa(3,0), Wadot(3,0), delta_t);
