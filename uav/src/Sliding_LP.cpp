@@ -46,7 +46,7 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
     // init matrix
     input = new Matrix(this, 4, 11, floatType, name);
 
-    MatrixDescriptor *desc = new MatrixDescriptor(29, 1);
+    MatrixDescriptor *desc = new MatrixDescriptor(30, 1);
     desc->SetElementName(0, 0, "u_roll");
     desc->SetElementName(1, 0, "u_pitch");
     desc->SetElementName(2, 0, "u_yaw");
@@ -70,12 +70,13 @@ Sliding_LP::Sliding_LP(const LayoutPosition *position, const LayoutPosition *pos
     desc->SetElementName(20, 0, "tauf_theta");
     desc->SetElementName(21, 0, "tauf_psi");
     desc->SetElementName(22, 0, "gamma_hat");
-    desc->SetElementName(23, 0, "J_theta");
-    desc->SetElementName(24, 0, "J_psi");
+    desc->SetElementName(23, 0, "reward");
+    desc->SetElementName(24, 0, "J");
     desc->SetElementName(25, 0, "batery");
     desc->SetElementName(26, 0, "Sr_roll");
     desc->SetElementName(27, 0, "Sr_ptich");
     desc->SetElementName(28, 0, "Sr_yaw");
+    desc->SetElementName(29, 0, "J_hat");
     state = new Matrix(this, desc, floatType, name);
     delete desc;
 
@@ -786,6 +787,7 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
     Eigen::Vector3f Yrv = Yr->YrOutput();
 
     float gamma_hat = Yr->gamma_hat;
+    float r = Yr->getReward();
 
     Eigen::Matrix<float,10,3> wa_m = Yr->getActorWeights();
     Eigen::Matrix<float,10,1> wc_m = Yr->getCriticWeights();
@@ -797,6 +799,9 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
     flair::core::Time dt_ori = GetTime() - t0_o;
 
     //lo->SetText("Latecia ori: %.3f ms",(float)dt_ori/1000000);
+
+    float J_hat = Yr->getApproximateValueFnc();
+    float J = Yr->getValueFnc(tactual,delta_t);
 
     
     tau_roll = (float)tau(0)/km->Value();
@@ -836,12 +841,13 @@ void Sliding_LP::UpdateFrom(const io_data *data) {
     state->SetValueNoMutex(20, 0, tau(1));
     state->SetValueNoMutex(21, 0, tau(2));
     state->SetValueNoMutex(22, 0, gamma_hat);
-    // state->SetValueNoMutex(23, 0, J(1));
-    // state->SetValueNoMutex(24, 0, J(2));
+    state->SetValueNoMutex(23, 0, r);
+    state->SetValueNoMutex(24, 0, J);
     state->SetValueNoMutex(25, 0, battery);
     state->SetValueNoMutex(26, 0, nur(0));
     state->SetValueNoMutex(27, 0, nur(1));
     state->SetValueNoMutex(28, 0, nur(2));
+    state->SetValueNoMutex(29, 0, J_hat);
     //state->SetDataTime(data->DataTime());
     state->ReleaseMutex();
 

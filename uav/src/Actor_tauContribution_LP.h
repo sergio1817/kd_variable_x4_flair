@@ -25,6 +25,7 @@ class Actor_tauContribution_LP
 
         Eigen::Matrix<float,10,3> getActorWeights();
         Eigen::Matrix<float,10,1> getCriticWeights();
+        float getReward();
         //template<typename Derived>
         // Eigen::Matrix3f learnDampingInjection(const Eigen::Vector3f& we, const Eigen::Quaternionf& qe, const Eigen::Quaternionf& qep, const Eigen::Vector3f& sq,const Eigen::Quaternionf& qd, const Eigen::Quaternionf& q, const Eigen::Quaternionf& qp, const Eigen::Quaternionf& qdp, float delta_t);
 
@@ -34,6 +35,8 @@ class Actor_tauContribution_LP
         // Eigen::Matrix3f getK() const { return actor->getK(); }       
         // Eigen::Matrix3f getPsi() const { return actor->getPsi(); }
 
+        float getApproximateValueFnc();
+        float getValueFnc(float t, float delta_t);
 
     private:
 

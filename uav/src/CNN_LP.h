@@ -21,6 +21,8 @@ class CNN_LP
         float P;
         float int_wc_Zc;
         float sgn_gamma_hat;
+        float R;
+        float J_hat;
 
         Eigen::Matrix<float,10,1> Zc;
         Eigen::Matrix<float,10,1> wcp;
@@ -43,7 +45,8 @@ class CNN_LP
         void computeVect_Zc();
 
         void reset(Eigen::Matrix<float,10,1> Wc_0);
-        void approximateValueFunction();
+        float approximateValueFunction();
+        float ValueFunction(float t, float delta_t);
 
         void updateWeights(float delta_t);
 

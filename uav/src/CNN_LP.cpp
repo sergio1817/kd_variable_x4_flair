@@ -34,6 +34,8 @@ void CNN_LP::reset(Eigen::Matrix<float,10,1> Wc_0){
     Xic=Eigen::Matrix<float,10,1>::Zero();
     int_wc_Zc=0;
     int_r = 0;
+    R = 0;
+    J_hat = 0;
 }
 
 float CNN_LP::compute_reward() 
@@ -82,9 +84,21 @@ void CNN_LP::computeVect_Zc()
 
 }
 
-void CNN_LP::approximateValueFunction()
+float CNN_LP::ValueFunction(float t, float delta_t)
 {
-    J = wc.transpose()*Zc;
+    float m = 1;
+
+    R = exp(-(m-t)/psi)*r;
+
+    J = rk4(function1d,J,R,delta_t);
+
+    return J;
+}
+
+float CNN_LP::approximateValueFunction()
+{
+    J_hat = wc.transpose()*Zc;
+    return J_hat;
 }
 
 float CNN_LP::computeIntTDerror(float delta_t)

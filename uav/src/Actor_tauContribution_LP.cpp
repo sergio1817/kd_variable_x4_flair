@@ -47,6 +47,10 @@ void Actor_tauContribution_LP::ActorCritic_Compute(float delta_t)
 
 }
 
+float Actor_tauContribution_LP::getReward(){
+    return r;
+}
+
 Eigen::Matrix<float,10,3> Actor_tauContribution_LP::getActorWeights(){
     return actor->getWeights();
 }
@@ -58,4 +62,12 @@ Eigen::Vector3f Actor_tauContribution_LP::YrOutput()
 {
 return actor->computeActorOutput();
 
+}
+
+float Actor_tauContribution_LP::getApproximateValueFnc(){
+    return critic->approximateValueFunction();
+}
+
+float Actor_tauContribution_LP::getValueFnc(float t, float delta_t){
+    return critic->ValueFunction(t,delta_t);
 }
