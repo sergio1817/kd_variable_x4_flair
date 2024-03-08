@@ -236,9 +236,9 @@ kd_variable::kd_variable(TargetController *controller): UavStateMachine(controll
     u_sliding_kdvar_h->UseDefaultPlot4(graphLawKDvarh->At(1, 2));
     u_sliding_kdvar_h->UseDefaultPlot8(graphLawKDvarh->At(1, 0));
     u_sliding_kdvar_h->UseDefaultPlot9(graphLawKDvarh->At(1, 1));
-    u_sliding_kdvar_h->UseDefaultPlot5(positiongTab->At(1, 0));
-    u_sliding_kdvar_h->UseDefaultPlot6(positiongTab->At(1, 1));
-    u_sliding_kdvar_h->UseDefaultPlot7(positiongTab->At(1, 2));
+    //u_sliding_kdvar_h->UseDefaultPlot5(positiongTab->At(1, 0));
+    //u_sliding_kdvar_h->UseDefaultPlot6(positiongTab->At(1, 1));
+    //u_sliding_kdvar_h->UseDefaultPlot7(positiongTab->At(1, 2));
 
     u_sliding_kdvar_h->UseDefaultPlot10(setupLawTabACph->At(0, 0));
     u_sliding_kdvar_h->UseDefaultPlot11(setupLawTabACph->At(0, 1));
@@ -258,6 +258,14 @@ kd_variable::kd_variable(TargetController *controller): UavStateMachine(controll
     u_sliding_LP->UseDefaultPlot11(setupLawTabACLP->At(0, 0));
     u_sliding_LP->UseDefaultPlot12(setupLawTabACLP->At(0, 2));
     u_sliding_LP->UseDefaultPlot13(setupLawTabACLP->At(0, 3));
+
+    u_sliding_LP->UseDefaultPlot14(setupLawTabACLP->At(1, 0));
+    u_sliding_LP->UseDefaultPlot15(setupLawTabACLP->At(1, 1));
+    u_sliding_LP->UseDefaultPlot16(setupLawTabACLP->At(1, 2));
+
+    u_sliding_LP->UseDefaultPlot5(positiongTab->At(0, 0));
+    u_sliding_LP->UseDefaultPlot6(positiongTab->At(0, 1));
+    u_sliding_LP->UseDefaultPlot7(positiongTab->At(0, 2));
     
     customOrientation=new AhrsData(this,"orientation");
 

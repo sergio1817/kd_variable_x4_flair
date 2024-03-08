@@ -511,6 +511,21 @@ void Sliding_LP::UseDefaultPlot13(const LayoutPosition *position) {
     
 }
 
+void Sliding_LP::UseDefaultPlot14(const LayoutPosition *position) {
+    DataPlot1D *J = new DataPlot1D(position, "reward", -1, 1);
+    J->AddCurve(state->Element(23), DataPlot::Black);
+}
+
+void Sliding_LP::UseDefaultPlot15(const LayoutPosition *position) {
+    DataPlot1D *J = new DataPlot1D(position, "J", -1, 1);
+    J->AddCurve(state->Element(24), DataPlot::Black);
+}
+
+void Sliding_LP::UseDefaultPlot16(const LayoutPosition *position) {
+    DataPlot1D *J = new DataPlot1D(position, "J_hat", -1, 1);
+    J->AddCurve(state->Element(29), DataPlot::Black);
+}
+
 
 void Sliding_LP::UpdateFrom(const io_data *data) {
     float tactual=double(GetTime())/1000000000-t0;
